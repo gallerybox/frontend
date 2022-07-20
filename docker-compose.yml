@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  frontend:
+    container_name: frontend
+    restart: unless-stopped
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: development
+      args:
+        - NODE_VERSION=${NODE_VERSION}
+        - NGINX_VERSION=${NGINX_VERSION}
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - WDS_SOCKET_PORT=${FRONTEND_PORT:-3000}
+    command: npm run start
+    ports:
+      - ${FRONTEND_PORT:-3000}:3000 
+    volumes:
+      - ./:/usr/src/app/frontend
+      - ./node_modules:/usr/src/app/frontend/node_modules
+    networks:
+      - gallerybox-network
+
+networks:
+  gallerybox-network:
+    name: gallerybox-network
+    external: true  
