@@ -1,0 +1,89 @@
+
+
+
+
+.MainHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--main-color);
+  height: 20%;
+  width: 100%;
+}
+
+.photo-container {
+  margin-left: 1em;
+  width: auto;
+  height: 90%;
+  aspect-ratio: 1;
+}
+
+.profile-photo {
+  background-size: cover;
+  border-radius: 50%;
+  width: 100%;
+  padding-bottom: 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.gallery-box {
+    width: auto;
+    margin-right: 1em;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 10rem;
+}
+
+/* Main*/
+.Main {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 80%;
+  width: 100%;
+}
+
+.Menu {
+  background-color: var(--main-color);
+  height: 100%;
+  width: 80%;
+  margin: 0px;
+}
+.item {
+  width: 100%;
+  padding-left: 1rem;
+}
+.content {
+  display: flex;
+  background-color: white;
+  height: 100%;
+  width: 20%;
+  color: black;
+}
+
+/* Tablet menu */
+@media all and (min-width: 600px) {
+    .Menu {
+        width: 30%;
+    }
+    .Content {
+        width: 70%;
+    }
+    .gallery-box {
+        font-size: 25rem;
+    }
+}
+
+/* Desktop menu */ @media all and (min-width: 950px) {
+    .Menu {
+        width: 15%;
+    }
+    .Content {
+        width: 85%;
+    }
+    .gallery-box {
+        font-size: 45rem;
+    }
+}
