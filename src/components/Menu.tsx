@@ -1,26 +1,34 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
+import profilePhoto from '../assets/ft.jpg'
+import {RouterContext} from "../views/router";
 
-interface MainHeaderProps {
-    profilePhoto: string
+interface MenuProps {
+    isVisible: boolean;
 }
 
-function MainHeader(){
-
+function Menu({isVisible}: MenuProps){
+    let setView = useContext(RouterContext);
     return (
-        <div className="Menu">
-            <div className="item">
-                <a href="#">Espacios</a>
-                <div className="item">
-                    <div className="item"><a href="#">Propios</a></div>
-                    <div className="item"><a href="#">De otros usuarios</a></div>
+
+        <div className={isVisible ? 'Menu active-color' : 'Menu invisible'} >
+            <div className="menu-column">
+                <div className="photo-container">
+                    <div className="profile-photo" style={{backgroundImage: `url(${profilePhoto})`}}></div>
                 </div>
+                <div className="item">
+                    <span>Espacios</span>
+                    <div className="item">
+                        <div className="item clickable" onClick={()=>setView("spaces")}><span>Propios</span></div>
+                        <div className="item clickable" onClick={()=>setView("spaces")}><span>De otros usuarios</span></div>
+                    </div>
+                </div>
+                <div className="item clickable" onClick={()=>setView("collections")}><span>Colecciones</span></div>
+                <div className="item clickable" onClick={()=>setView("collections")}><span>Cerrar sesión</span></div>
             </div>
-            <div className="item"><a href="#">Colecciones</a></div>
-            <div className="item"><a href="#">Notificaciones</a></div>
-            <div className="item"><a href="#">Cerrar sesión</a></div>
+
         </div>
 
     );
 }
 
-export default MainHeader;
+export default Menu;

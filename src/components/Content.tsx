@@ -1,13 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, {ReactElement, useState, useEffect, useContext} from 'react';
+import {ViewContext} from "../views/router";
 
-interface MainHeaderProps {
-    profilePhoto: string
-}
 
-function Content(){
+
+function Content( ){
+    let View: React.FC = useContext(ViewContext);
+
     return (
         <div className="Content">
-            <span>El mierdaco este hecho con css asqueroso</span>
+                <View/>
         </div>
     );
 }

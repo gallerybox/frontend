@@ -1,11 +1,16 @@
-import {JsonType} from "./ValueObjects";
+import {DynamicType} from "./ValueObjects";
 
-export module ThematicSpaceRepository {
-
+export interface CollectibleDTO {
+    _id: string;
+    __v: number;
+    attributes: DynamicType;
+    thematicSpace: string;
+}
+export module CollectibleRepository {
     const url = "http://localhost:3000"
-    export async function test(): Promise<JsonType> {
+    export async function test(): Promise<Array<CollectibleDTO>> {
 
-        const endpoint = url + "/thematic-spaces/"
+        const endpoint = url + "/collectible/"
         const options = {
             method: "GET",
             headers: {
@@ -20,7 +25,7 @@ export module ThematicSpaceRepository {
             */
 
         };
-        let response: JsonType = "meh"
+        let response: Array<CollectibleDTO> = [];
         response = await fetch(endpoint, options)
             .then((response) => response.json())
             .then((data) => {

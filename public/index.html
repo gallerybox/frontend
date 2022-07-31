@@ -45,11 +45,12 @@
   </body>
 
   <script>
-
-    window.addEventListener('resize', () => {
+    let resizer =  () => {
       let vh = window.innerHeight * 0.01;
       document.documentElement.style.setProperty('--vh', `${vh}px`);
-    });
+    }
+    window.onAllReady(resizer);
+    window.addEventListener('resize' ,resizer);
 
   </script>
 

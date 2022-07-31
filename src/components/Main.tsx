@@ -1,16 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, ReactElement} from 'react';
 import Menu from "./Menu";
 import Content from "./Content";
-
-interface MainHeaderProps {
-    profilePhoto: string
+interface MainProps {
+    menuIsVisible: boolean
 }
 
-function Main(){
-
+function Main({menuIsVisible}: MainProps){
     return (
         <div className="Main">
-            <Menu/>
+            <Menu isVisible={menuIsVisible}/>
             <Content/>
         </div>
     );

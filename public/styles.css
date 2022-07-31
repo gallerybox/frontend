@@ -1,21 +1,37 @@
 
 
-
-
 .MainHeader {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   background-color: var(--main-color);
-  height: 20%;
+  height: 8rem;
   width: 100%;
 }
 
+.menu-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: 90%;
+    border-radius: 15%;
+    aspect-ratio: 1;
+}
+.icon {
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 40%;
+    padding-bottom: 40%;
+    filter: invert(100%); /* Esto para que el icono negro salga blanco*/
+}
+
+
 .photo-container {
-  margin-left: 1em;
-  width: auto;
-  height: 90%;
+  width: 100%;
+  height: auto;
   aspect-ratio: 1;
 }
 
@@ -33,34 +49,136 @@
     margin-right: 1em;
     padding: 10px;
     font-weight: bold;
-    font-size: 10rem;
+    font-size: 1.33rem;
+    cursor:pointer;
+    border-radius: var(--border-radius);
 }
+
 
 /* Main*/
 .Main {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  height: 80%;
-  width: 100%;
+    position: relative;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 80%;
+    width: 100%;
 }
 
 .Menu {
-  background-color: var(--main-color);
-  height: 100%;
-  width: 80%;
-  margin: 0px;
+    background-color: var(--main-color);
+    height: 100%;
+    width: 80%;
+    margin: 0px;
+    z-index: 10;
 }
+
+.MainHeader > .Menu{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0.26rem;
+}
+
+.Main > .Menu, .Main > .Content {
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+
+@keyframes slide {
+    0%   {width: 0%;}
+    100% {width: 80%;}
+}
+.Main > .Menu {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 0.26rem;
+    animation: slide;
+    animation-duration: 0.5s;
+
+}
+
+
+.menu-column{
+    margin-left: 3rem;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: auto;
+    height: 100%;
+    gap: 1.5rem;
+}
+
+.clickable:hover {
+    cursor:pointer;
+    background: var(--hover-color);
+    box-shadow: 2px 2px 2px var(--shadow-box-color);
+}
+
 .item {
-  width: 100%;
-  padding-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    width: 100%;
+    padding-left: 0.5rem;
+    padding: 0.5rem 0rem 0.5rem 0.5rem;
+    font-weight: bold;
+    border-radius: var(--border-radius);
 }
-.content {
-  display: flex;
-  background-color: white;
-  height: 100%;
-  width: 20%;
-  color: black;
+
+.Content {
+    display: flex;
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    color: black;
+}
+
+.full {
+    margin: 2rem;
+    width: calc(100% - 4rem);
+}
+
+.Collections, .MainViewTimeline  {
+    background: red;
+    width: 100%;
+}
+
+
+.ReducedCollectible {
+    display: flex;
+    flex-direction: column;
+    height: 10rem;
+    background: aqua;
+    border-radius: var(--border-radius);
+    box-shadow: 2px 2px 2px var(--shadow-box-color);
+}
+
+.invisible {
+    display: none!important;
+}
+
+.active-color {
+    background: var(--secondary-color); /*var(--secondary-color);*/
+    box-shadow: 2px 2px 2px var(--shadow-box-color);
+}
+
+.Main > .Menu.active-color {
+    background: linear-gradient(180deg, var(--main-color), var(--secondary-color) 20%); /*var(--secondary-color);*/
+}
+
+.halfable {
+    display: flex;
+    margin: 2rem;
+    width: calc(100% - 4rem);
 }
 
 /* Tablet menu */
@@ -68,11 +186,20 @@
     .Menu {
         width: 30%;
     }
+    @keyframes slide {
+        0%   {width: 0%;}
+        100% {width: 15%;}
+    }
     .Content {
-        width: 70%;
+        width: 100%;
     }
     .gallery-box {
-        font-size: 25rem;
+        font-size: 3.33rem;
+    }
+
+    .halfable {
+        display: flex;
+        width: 50%;
     }
 }
 
@@ -80,10 +207,22 @@
     .Menu {
         width: 15%;
     }
-    .Content {
-        width: 85%;
+    @keyframes slide {
+        0%   {width: 0%;}
+        100% {width: 15%;}
     }
+
+    .Content {
+        width: 100%;
+
+    }
+
     .gallery-box {
-        font-size: 45rem;
+        font-size: 6rem;
+    }
+
+    .halfable {
+        display: flex;
+        width: 50%;
     }
 }

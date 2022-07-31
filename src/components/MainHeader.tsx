@@ -1,19 +1,25 @@
-import React, {useState, useEffect} from 'react';
-
+import React, {useState, useEffect, useContext, useCallback} from 'react';
+import menuIcon from "../assets/bars-solid.svg"
+import profilePhoto from "../assets/ft.jpg";
+import {RouterContext} from "../views/router";
 interface MainHeaderProps {
-    profilePhoto: string
+    buttonActive: boolean;
+    onActivate: React.MouseEventHandler<any>;
 }
 
-function MainHeader({profilePhoto}: MainHeaderProps){
-
+function MainHeader({buttonActive, onActivate}: MainHeaderProps){
+    let setView = useContext(RouterContext);
     return (
         <header className="MainHeader">
-            <div className="photo-container">
-                <div className="profile-photo" style={{backgroundImage: `url(${profilePhoto})`}}></div>
+            <div className="Menu">
+                <div className={buttonActive ? 'menu-button active-color clickable' : 'menu-button clickable'} onClick={onActivate}>
+                        <div className="icon" style={{backgroundImage: `url(${menuIcon})`}}></div>
+                </div>
             </div>
-            <span className="gallery-box">GalleryBox</span>
+            <span className="gallery-box clickable" onClick={()=>setView("mainViewTimeline")}>GalleryBox</span>
         </header>
     );
+
 }
 
 export default MainHeader;

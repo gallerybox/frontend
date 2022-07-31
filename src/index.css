@@ -1,11 +1,18 @@
 /* Basic styling */
 
 :root {
+  font-size: 16px;
   --main-color: rgb(144, 105, 172);
+  --secondary-color: #a80df1;/*#a80df1;*/
+  --shadow-box-color: rgba(0, 0, 0, 0.3);
+  --hover-color: #79e779;
   --font-menu-color: white;
-  font-size: 15%;
+  --border-radius: 0.2rem;
+  scrollbar-width: none; /* For firefox */
 }
-
+::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
+}
 body,
 a {
   font-family: Arial, Helvetica, sans-serif;
