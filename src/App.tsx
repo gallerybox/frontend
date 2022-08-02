@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import logo from './logo.svg';
 import ft from './assets/ft.jpg'
 import menuIcon from './assets/bars-solid.svg'
@@ -9,30 +9,43 @@ import Hamburger from 'hamburger-react'
 import MainHeader from "./components/MainHeader";
 import Main from "./components/Main";
 import {RouterContextProvider} from "./views/router";
+import Login from "./components/Login";
+import {UserContext, UserContextProvider} from "./Auth";
 
 interface JavascripterProps {
   [key: string]: any;
 }
 
 const App: React.FC<JavascripterProps>=  () => {
-  let [menuIsVisible, setMenuIsVisible] = useState(false);
+  const [menuIsVisible, setMenuIsVisible] = useState(false);
+  const [token,setToken] = useContext(UserContext)
+  const user: boolean = false;
+  if (token) {
+      return (
+          //{...{profilePhoto:profileImage}}
 
-  return (
-      //{...{profilePhoto:profileImage}}
-      <RouterContextProvider>
+             <RouterContextProvider>
+                 <div className="App">
+                     <MainHeader
+                         {...{
+                             buttonActive: menuIsVisible,
+                             onActivate: () => {
+                                 setMenuIsVisible(current => !current)
+                             }
+                         }
+                         }
+                     />
+                     <Main menuIsVisible={menuIsVisible}/>
+                 </div>
+             </RouterContextProvider>
+      );
+  } else {
+      return(
           <div className="App">
-              <MainHeader
-                  {...{
-                      buttonActive: menuIsVisible,
-                      onActivate:()=>{setMenuIsVisible(current => !current)}
-                  }
-                  }
-              />
-              <Main menuIsVisible={menuIsVisible}/>
+              <Login/>
           </div>
-      </RouterContextProvider>
-
-  );
+      )
+  }
 }
 
 export default App;

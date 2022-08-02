@@ -13,3 +13,13 @@ export type DynamicType = {
                     value: string
                  }
 }
+
+
+
+type ErrorMessage = {
+    message?: any,
+    error?: string,
+    statusCode?: number
+}
+
+export type Response<T> = Partial<T & ErrorMessage>;

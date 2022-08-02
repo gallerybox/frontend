@@ -1,35 +1,34 @@
-import {DynamicType} from "./ValueObjects";
+import {Response} from "./ValueObjects";
 import {backend_url} from "./config";
 
-export interface CollectibleDTO {
-    _id: string;
-    __v: number;
-    attributes: DynamicType;
-    thematicSpace: string;
+export interface UserLoginDTO {
+    user: any;
+    access_token: string;
 }
-export module CollectibleRepository {
+export module AuthRepository {
     const url = backend_url
-    export async function test(): Promise<Array<CollectibleDTO>> {
+    export async function login(email: string, password: string): Promise<Response<UserLoginDTO>> {
 
-        const endpoint = url + "/collectible/"
+        const endpoint = url + "/auth/login/"
         const options = {
-            method: "GET",
+            method: "POST",
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json;charset=UTF-8",
             },
-            /*
+
             body: JSON.stringify({
-                a: 10,
-                b: 20,
+                email: email,
+                password: password
             }),
-            */
+
 
         };
-        let response: Array<CollectibleDTO> = [];
+        let response: Response<UserLoginDTO>;
         response = await fetch(endpoint, options)
             .then((response) => response.json())
             .then((data) => {
+                console.log("repo")
                 console.log(data);
                 return data;
             });

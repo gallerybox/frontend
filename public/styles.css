@@ -142,14 +142,12 @@
     color: black;
 }
 
-.full {
-    margin: 2rem;
-    width: calc(100% - 4rem);
-}
-
-.Collections, .MainViewTimeline  {
-    background: red;
+.Collections, .MainViewTimeline, .Login {
+    display: flex;
+    flex-direction: column;
+    background: darkgreen;
     width: 100%;
+
 }
 
 
@@ -171,14 +169,33 @@
     box-shadow: 2px 2px 2px var(--shadow-box-color);
 }
 
+
 .Main > .Menu.active-color {
     background: linear-gradient(180deg, var(--main-color), var(--secondary-color) 20%); /*var(--secondary-color);*/
 }
 
 .halfable {
-    display: flex;
     margin: 2rem;
     width: calc(100% - 4rem);
+}
+.full {
+    margin: 2rem;
+    width: calc(100% - 4rem);
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 1rem;
+
 }
 
 /* Tablet menu */

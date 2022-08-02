@@ -1,13 +1,15 @@
 import React, {useState, useEffect, useContext} from 'react';
 import profilePhoto from '../assets/ft.jpg'
 import {RouterContext} from "../views/router";
+import {UserContext} from "../Auth";
 
 interface MenuProps {
     isVisible: boolean;
 }
 
 function Menu({isVisible}: MenuProps){
-    let setView = useContext(RouterContext);
+    const setView = useContext(RouterContext);
+    const [token, setToken] = useContext(UserContext)
     return (
 
         <div className={isVisible ? 'Menu active-color' : 'Menu invisible'} >
@@ -23,7 +25,12 @@ function Menu({isVisible}: MenuProps){
                     </div>
                 </div>
                 <div className="item clickable" onClick={()=>setView("collections")}><span>Colecciones</span></div>
-                <div className="item clickable" onClick={()=>setView("collections")}><span>Cerrar sesión</span></div>
+                <div className="item clickable" onClick={()=>{
+                                                        setToken(false);
+                                                        localStorage.removeItem("token");
+                                                        }}>
+                    <span>Cerrar sesión</span>
+                </div>
             </div>
 
         </div>

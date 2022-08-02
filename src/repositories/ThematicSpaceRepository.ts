@@ -1,8 +1,9 @@
 import {JsonType} from "./ValueObjects";
+import {backend_url} from "./config";
 
 export module ThematicSpaceRepository {
 
-    const url = "http://localhost:3000"
+    const url = backend_url
     export async function test(): Promise<JsonType> {
 
         const endpoint = url + "/thematic-spaces/"
