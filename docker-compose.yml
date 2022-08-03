@@ -18,13 +18,14 @@ services:
     command: npm run start
     ports:
       - ${FRONTEND_PORT:-3000}:3000 
+      - ${FRONTEND_DEBUG_PORT:-9223}:9223   # Debug port node for inspect-brk
     volumes:
       - ./:/usr/src/app/frontend
       - ./node_modules:/usr/src/app/frontend/node_modules
-    networks:
-      - gallerybox-network
+#    networks:
+#      - gallerybox-network
 
-networks:
-  gallerybox-network:
-    name: gallerybox-network
-    external: true  
+#networks:
+#  gallerybox-network:
+#    name: gallerybox-network
+#    external: true  
