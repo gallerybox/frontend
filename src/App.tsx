@@ -11,6 +11,7 @@ import Main from "./components/Main";
 import {RouterContextProvider} from "./views/router";
 import Login from "./components/Login";
 import {UserContext, UserContextProvider} from "./Auth";
+import Content from "./components/Content";
 
 interface JavascripterProps {
   [key: string]: any;
@@ -23,7 +24,6 @@ const App: React.FC<JavascripterProps>=  () => {
   if (token) {
       return (
           //{...{profilePhoto:profileImage}}
-
              <RouterContextProvider>
                  <div className="App">
                      <MainHeader
@@ -42,7 +42,9 @@ const App: React.FC<JavascripterProps>=  () => {
   } else {
       return(
           <div className="App">
-              <Login/>
+              <Content>
+                  <Login/>
+              </Content>
           </div>
       )
   }

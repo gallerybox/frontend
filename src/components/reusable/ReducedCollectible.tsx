@@ -11,7 +11,7 @@ function ReducedCollectible({collectible}: ReducedCollectibleProps){
 
 
     return (
-        <div className="ReducedCollectible full">
+        <div className="ReducedCollectible full-margin">
             <p>
                 Mira, un colleccionable
             </p>

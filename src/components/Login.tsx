@@ -3,9 +3,11 @@ import {AuthRepository} from "../repositories/AuthRepository";
 import {CollectibleRepository} from "../repositories/CollectibleRepository";
 import {UserContext} from "../Auth";
 import FormError from "./reusable/FormError";
+import Link from "./reusable/Link";
+import {Button} from '@material-ui/core';
 
 
-function Login(){
+const Login: React.FC = function (){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [submitEvent, setSubmitEvent] = useState<React.FormEvent<HTMLFormElement> | null>(null);
@@ -46,23 +48,23 @@ function Login(){
 
     },[errors])
     return (
-        <div className="flex-row full">
-            <div className="halfable">
-
+        <div className="full flex-row">
+            <div className="landing-left-side halfable flex-col">
+                <span className="gallery-box">GalleryBox</span>
+                <p className="explicative-text full-margin">Organiza tu colecciones y colabora con otro usuarios con nuestro software de gestión.</p>
             </div>
-            <div className="Login halfable">
+            <div className="Login halfable flex-col">
                 <form className="flex-col full" onSubmit={e => handleSubmit(e)}>
-                    <label className="flex-row full">
-                        email:
-                        <input value={email} onChange={(e)=>setEmail(e.target.value)} type="text" name="email" />
-                    </label>
-                    <label className="flex-row full">
-                        password:
-                        <input value={password} onChange={(e)=>setPassword(e.target.value)} type="password" name="password" />
-                    </label>
-                    <input type="submit" value="Submit" />
+                    <input placeholder="email" value={email} onChange={(e)=>setEmail(e.target.value)} type="text" name="email" />
+                    <input placeholder="password" value={password} onChange={(e)=>setPassword(e.target.value)} type="password" name="password" />
+                    <input className="mdc-button" type="submit" value="Iniciar sesión" />
+                    <
                     <FormError message={errors["incorrectEmailPassword"]}/>
                 </form>
+
+                <Link text="¿Olvidaste tu contraseña?" onClickAction={()=>alert("olvido contraseña")}/>
+
+                <Link text="¿Aún no tienes cuenta en GalleryBox? ¡Registrate!" onClickAction={()=>alert("Registro")}/>
             </div>
         </div>
 

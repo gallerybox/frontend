@@ -66,6 +66,11 @@
     width: 100%;
 }
 
+.landing-left-side{
+    background: linear-gradient(180deg, var(--main-color), var(--secondary-color) 80%);
+    order: 1;
+}
+
 .Menu {
     background-color: var(--main-color);
     height: 100%;
@@ -139,7 +144,6 @@
     background-color: white;
     height: 100%;
     width: 100%;
-    color: black;
 }
 
 .Collections, .MainViewTimeline, .Login {
@@ -147,9 +151,24 @@
     flex-direction: column;
     background: darkgreen;
     width: 100%;
+    color: black;
 
 }
 
+.explicative-text {
+    font-size: 2rem;
+}
+.Link {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-decoration: underline;
+    color: var(--link-color);
+}
+.FormError{
+    color: var(--error-color);
+}
 
 .ReducedCollectible {
     display: flex;
@@ -174,13 +193,20 @@
     background: linear-gradient(180deg, var(--main-color), var(--secondary-color) 20%); /*var(--secondary-color);*/
 }
 
+.halfable-margin {
+    margin: 1rem;
+    width: calc(100% - 2rem);
+}
+.full-margin {
+    margin: 1rem;
+    width: calc(100% - 2rem);
+}
+
 .halfable {
-    margin: 2rem;
-    width: calc(100% - 4rem);
+    width: calc(100%);
 }
 .full {
-    margin: 2rem;
-    width: calc(100% - 4rem);
+    width: calc(100%);
 }
 
 .flex-col {
@@ -193,9 +219,9 @@
 .flex-row {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    overflow: auto;
     align-items: stretch;
-    gap: 1rem;
-
 }
 
 /* Tablet menu */
@@ -210,13 +236,23 @@
     .Content {
         width: 100%;
     }
+    .landing-left-side{
+        order: 0;
+    }
     .gallery-box {
         font-size: 3.33rem;
     }
 
     .halfable {
-        display: flex;
         width: 50%;
+    }
+    .halfable-margin {
+        margin: 2rem;
+        width: calc(100% - 4rem);
+    }
+    .full-margin {
+        margin: 2rem;
+        width: calc(100% - 4rem);
     }
 }
 
@@ -233,13 +269,24 @@
         width: 100%;
 
     }
+    .landing-left-side{
+        order: 0;
+    }
 
     .gallery-box {
         font-size: 6rem;
     }
 
     .halfable {
-        display: flex;
+
         width: 50%;
+    }
+    .halfable-margin {
+        margin: 2rem;
+        width: calc(50% - 4rem);
+    }
+    .full-margin {
+        margin: 2rem;
+        width: calc(100% - 4rem);
     }
 }
