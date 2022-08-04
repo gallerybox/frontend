@@ -58,7 +58,7 @@ const Login: React.FC = function (){
                     <input placeholder="email" value={email} onChange={(e)=>setEmail(e.target.value)} type="text" name="email" />
                     <input placeholder="password" value={password} onChange={(e)=>setPassword(e.target.value)} type="password" name="password" />
                     <input className="mdc-button" type="submit" value="Iniciar sesión" />
-                    <
+                    <Button> Press me </Button>
                     <FormError message={errors["incorrectEmailPassword"]}/>
                 </form>
 
