@@ -4,7 +4,7 @@ import {CollectibleRepository} from "../repositories/CollectibleRepository";
 import {UserContext} from "../Auth";
 import FormError from "./reusable/FormError";
 import Link from "./reusable/Link";
-import {Button} from '@material-ui/core';
+import Button from '@mui/material/Button';
 
 
 const Login: React.FC = function (){
