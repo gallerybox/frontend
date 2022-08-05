@@ -12,6 +12,8 @@ import {RouterContextProvider} from "./views/router";
 import Login from "./components/Login";
 import {UserContext, UserContextProvider} from "./Auth";
 import Content from "./components/Content";
+import { createTheme } from '@mui/material/styles';
+import blue from '@mui/material/colors/blue';
 
 interface JavascripterProps {
   [key: string]: any;
@@ -21,7 +23,15 @@ const App: React.FC<JavascripterProps>=  () => {
   const [menuIsVisible, setMenuIsVisible] = useState(false);
   const [token,setToken] = useContext(UserContext)
   const user: boolean = false;
-  if (token) {
+
+
+    const theme = createTheme({
+        palette: {
+            primary: blue,
+        },
+    });
+
+    if (token) {
       return (
           //{...{profilePhoto:profileImage}}
              <RouterContextProvider>
