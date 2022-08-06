@@ -148,7 +148,7 @@
 .Collections, .MainViewTimeline, .Login {
     display: flex;
     flex-direction: column;
-    background: darkgreen;
+    background: white;
     width: 100%;
     color: black;
 
@@ -169,7 +169,7 @@
     color: var(--error-color);
 }
 
-.ReducedCollectible {
+.ReducedCollectible, .MiniCollectibleCard{
     display: flex;
     flex-direction: column;
     height: 10rem;

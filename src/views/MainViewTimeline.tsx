@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import {TokenContext, UserContext} from '../Auth';
 import ReducedCollectible from "../components/reusable/ReducedCollectible";
 import {CollectibleRepository, CollectibleDTO} from "../repositories/CollectibleRepository";
+import MiniCollectibleCard from "../components/reusable/MiniCollectibleCard";
 
 
 const MainViewTimeline: React.FC  = function (){
@@ -14,9 +15,16 @@ const MainViewTimeline: React.FC  = function (){
             .then(data => {setCollectibles(data)})
     },[]);
     return (
+
         <div className="MainViewTimeline">
+            {/*
+
             {collectibles.map((collectible) => <ReducedCollectible collectible={collectible}/> )}
+
+             */}
+            {collectibles.map((collectible) => <MiniCollectibleCard collectible={collectible}/> )}
         </div>
+
     );
 }
 

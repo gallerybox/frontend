@@ -1,11 +1,12 @@
 import { DynamicType, JsonType } from "./ValueObjects";
 import { backend_url } from "./config";
+import {ThematicSpaceDTO} from "./ThematicSpaceRepository";
 
 export interface CollectibleDTO {
     _id: string;
     __v: number;
     attributes: DynamicType;
-    thematicSpace: string;
+    thematicSpace: ThematicSpaceDTO;
 }
 export module CollectibleRepository {
     const url = backend_url + "/collectible/"
