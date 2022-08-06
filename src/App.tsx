@@ -10,10 +10,11 @@ import MainHeader from "./components/MainHeader";
 import Main from "./components/Main";
 import {RouterContextProvider} from "./views/router";
 import Login from "./components/Login";
-import {UserContext, UserContextProvider} from "./Auth";
+import {TokenContext, UserContext, UserContextProvider} from "./Auth";
 import Content from "./components/Content";
-import { createTheme } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import blue from '@mui/material/colors/blue';
+import {red} from "@mui/material/colors";
 
 interface JavascripterProps {
   [key: string]: any;
@@ -21,13 +22,15 @@ interface JavascripterProps {
 
 const App: React.FC<JavascripterProps>=  () => {
   const [menuIsVisible, setMenuIsVisible] = useState(false);
-  const [token,setToken] = useContext(UserContext)
+  const [token,setToken] = useContext(TokenContext)
   const user: boolean = false;
 
 
-    const theme = createTheme({
+    const appTheme = createTheme({
         palette: {
-            primary: blue,
+            primary: {
+                main: "rgb(144, 105, 172)"
+            },
         },
     });
 
@@ -51,11 +54,13 @@ const App: React.FC<JavascripterProps>=  () => {
       );
   } else {
       return(
-          <div className="App">
-              <Content>
-                  <Login/>
-              </Content>
-          </div>
+          <ThemeProvider theme={appTheme}>
+              <div className="App">
+                  <Content>
+                      <Login/>
+                  </Content>
+              </div>
+          </ThemeProvider>
       )
   }
 }

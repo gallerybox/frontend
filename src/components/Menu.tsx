@@ -1,7 +1,8 @@
 import React, {useState, useEffect, useContext} from 'react';
 import profilePhoto from '../assets/ft.jpg'
 import {RouterContext} from "../views/router";
-import {UserContext} from "../Auth";
+import {TokenContext, UserContext} from "../Auth";
+import {HomeSharp, PowerSettingsNewSharp, AutoAwesomeMotionSharp} from '@mui/icons-material'
 
 interface MenuProps {
     isVisible: boolean;
@@ -9,7 +10,7 @@ interface MenuProps {
 
 function Menu({isVisible}: MenuProps){
     const setView = useContext(RouterContext);
-    const [token, setToken] = useContext(UserContext)
+    const [token, setToken] = useContext(TokenContext)
     return (
 
         <div className={isVisible ? 'Menu active-color' : 'Menu invisible'} >
@@ -18,18 +19,33 @@ function Menu({isVisible}: MenuProps){
                     <div className="profile-photo" style={{backgroundImage: `url(${profilePhoto})`}}></div>
                 </div>
                 <div className="item">
-                    <span>Espacios</span>
+                    <div className="full flex-text-row">
+                        <HomeSharp/>
+                        <span>
+                            Espacios
+                        </span>
+                    </div>
+
                     <div className="item">
                         <div className="item clickable" onClick={()=>setView("spaces")}><span>Propios</span></div>
                         <div className="item clickable" onClick={()=>setView("spaces")}><span>De otros usuarios</span></div>
                     </div>
                 </div>
-                <div className="item clickable" onClick={()=>setView("collections")}><span>Colecciones</span></div>
+                <div className="item clickable" onClick={()=>setView("collections")}>
+                    <div className="full flex-text-row">
+                        <AutoAwesomeMotionSharp/>
+                        <span>Colecciones</span>
+                    </div>
+                </div>
                 <div className="item clickable" onClick={()=>{
                                                         setToken(false);
                                                         localStorage.removeItem("token");
+
                                                         }}>
-                    <span>Cerrar sesión</span>
+                    <div className="full flex-text-row">
+                        <PowerSettingsNewSharp/>
+                        <span>Cerrar sesión</span>
+                    </div>
                 </div>
             </div>
 

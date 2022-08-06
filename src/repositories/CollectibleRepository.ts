@@ -14,7 +14,26 @@ export module CollectibleRepository {
     export async function createCollection(){
         // TODO
     }
+    export async function getTimeline(userId: string): Promise<Array<CollectibleDTO>> {
+        const endpoint = url + "timeline/" + userId;
+        const options = {
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json;charset=UTF-8",
+                "Authorization": `Bearer ${token.value}`
+            }
+        };
 
+        let response: Array<CollectibleDTO> = [];
+
+        response = await fetch(endpoint, options)
+            .then(response => response.json())
+            .then(data => data);
+        console.log(response);
+
+        return response;
+    }
     export async function findOne(id: string): Promise<Array<CollectibleDTO>>{
         const endpoint = url + "id/" + id;
         const options = {

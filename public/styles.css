@@ -1,5 +1,4 @@
 
-
 .MainHeader {
   display: flex;
   flex-direction: row;
@@ -222,6 +221,13 @@
     flex-wrap: wrap;
     overflow: auto;
     align-items: stretch;
+}
+
+.flex-text-row { /* Used to combine text with icons in menu*/
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
 }
 
 /* Tablet menu */
