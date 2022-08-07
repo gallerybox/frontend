@@ -46,11 +46,11 @@ const Login: React.FC = function (){
 
     return (
         <div className="full flex-row">
-            <div className="landing-left-side halfable flex-col">
+            <div className="landing-left-side halfable flex-col-center">
                 <span className="gallery-box">GalleryBox</span>
                 <p className="explicative-text halfable">Organiza tu colecciones y colabora con otro usuarios con nuestro software de gestión.</p>
             </div>
-            <div className="Login halfable flex-col">
+            <div className="Login halfable flex-col-center">
                 <form className="flex-col full" onSubmit={e => handleSubmit(e)}>
                     {/*
                         <input placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} type="text"

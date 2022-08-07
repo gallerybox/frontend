@@ -1,12 +1,15 @@
-import { DynamicType, JsonType } from "./ValueObjects";
+import { DynamicAttribute, JsonType } from "./ValueObjects";
 import { backend_url } from "./config";
 import {ThematicSpaceDTO} from "./ThematicSpaceRepository";
+import {UserDTO} from "./UserRepository";
 
 export interface CollectibleDTO {
     _id: string;
     __v: number;
-    attributes: DynamicType;
+    attributes: DynamicAttribute;
     thematicSpace: ThematicSpaceDTO;
+    user: UserDTO;
+    lastModified: Date;
 }
 export module CollectibleRepository {
     const url = backend_url + "/collectible/"
@@ -16,7 +19,7 @@ export module CollectibleRepository {
         // TODO
     }
     export async function getTimeline(userId: string): Promise<Array<CollectibleDTO>> {
-        const endpoint = url + "timeline/" + userId;
+        const endpoint = url + "timeline/loggedUserId/" + userId;
         const options = {
             method: "GET",
             headers: {

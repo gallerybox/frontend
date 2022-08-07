@@ -1,7 +1,7 @@
 import {Response} from "./ValueObjects";
 import {backend_url} from "./config";
 
-export interface UserDTO {
+export interface UserAuthDTO {
     "_id": string,
     "nickname": string,
     "email": string,
@@ -11,7 +11,7 @@ export interface UserDTO {
 }
 
 export interface UserLoginDTO {
-    user: UserDTO;
+    user: UserAuthDTO;
     access_token: string;
 }
 export module AuthRepository {

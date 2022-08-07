@@ -146,13 +146,16 @@
 }
 
 .Collections, .MainViewTimeline, .Login {
+    color: black;
+}
+
+.Login{
     display: flex;
     flex-direction: column;
     background: white;
     width: 100%;
-    color: black;
-
 }
+
 
 .explicative-text {
     font-size: 2rem;
@@ -172,9 +175,12 @@
 .ReducedCollectible, .MiniCollectibleCard{
     display: flex;
     flex-direction: column;
-    height: 10rem;
-    background: aqua;
+    background: var(--card-main-color);
     border-radius: var(--border-radius);
+    box-shadow: 2px 2px 2px var(--shadow-box-color);
+}
+.card-body {
+    background: white;
     box-shadow: 2px 2px 2px var(--shadow-box-color);
 }
 
@@ -192,28 +198,32 @@
     background: linear-gradient(180deg, var(--main-color), var(--secondary-color) 20%); /*var(--secondary-color);*/
 }
 
-.halfable-margin {
-    margin: 1rem;
-    width: calc(100% - 2rem);
-}
-.full-margin {
+.full-margin, .halfable-margin{
     margin: 1rem;
     width: calc(100% - 2rem);
 }
 
+.full-margin ~ .full-margin, .halfable-margin ~ .halfable-margin{
+    margin: 0rem 1rem 1rem 1rem;
+}
+
 .halfable {
-    width: calc(100%);
+    width: 100%;
 }
 .full {
-    width: calc(100%);
+    width: 100%;
 }
 
 .flex-col {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    gap: 1rem;
+}
+.flex-col-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 .flex-row {
     display: flex;
@@ -223,11 +233,21 @@
     align-items: stretch;
 }
 
+.flex-row-space-between {
+    justify-content: space-between;
+}
+
 .flex-text-row { /* Used to combine text with icons in menu*/
     display: flex;
     flex-direction: row;
     align-items: center;
 
+}
+.bold { /* Used to combine text with icons in menu*/
+    font-weight: bold;
+}
+.big-font{
+    font-size: 1.5rem;
 }
 
 /* Tablet menu */
@@ -252,13 +272,13 @@
     .halfable {
         width: 50%;
     }
-    .halfable-margin {
+    .full-margin, .halfable-margin{
         margin: 2rem;
         width: calc(100% - 4rem);
     }
-    .full-margin {
-        margin: 2rem;
-        width: calc(100% - 4rem);
+
+    .full-margin ~ .full-margin, .halfable-margin ~ .halfable-margin{
+        margin: 0rem 2rem 2rem 2rem;
     }
 }
 
@@ -287,12 +307,18 @@
 
         width: 50%;
     }
-    .halfable-margin {
+    .full-margin, .halfable-margin{
         margin: 2rem;
+    }
+    .full-margin ~ .full-margin, .halfable-margin ~ .halfable-margin{
+        margin: 0rem 2rem 2rem 2rem;
+    }
+    .halfable-margin {
+
         width: calc(50% - 4rem);
     }
     .full-margin {
-        margin: 2rem;
         width: calc(100% - 4rem);
     }
+
 }
