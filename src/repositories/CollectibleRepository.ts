@@ -1,5 +1,5 @@
 import { DynamicAttribute, JsonType } from "./ValueObjects";
-import { backend_url } from "./config";
+import {backend_url, headers} from "./config";
 import {ThematicSpaceDTO} from "./ThematicSpaceRepository";
 import {UserDTO} from "./UserRepository";
 
@@ -20,13 +20,10 @@ export module CollectibleRepository {
     }
     export async function getTimeline(userId: string): Promise<Array<CollectibleDTO>> {
         const endpoint = url + "timeline/loggedUserId/" + userId;
+        headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "GET",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json;charset=UTF-8",
-                "Authorization": `Bearer ${token.value}`
-            }
+            headers: headers
         };
 
         let response: Array<CollectibleDTO> = [];
@@ -40,6 +37,7 @@ export module CollectibleRepository {
     }
     export async function findOne(id: string): Promise<Array<CollectibleDTO>>{
         const endpoint = url + "id/" + id;
+        headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "GET",
             headers: {
@@ -60,7 +58,9 @@ export module CollectibleRepository {
     }
 
     export async function findAll(): Promise<Array<CollectibleDTO>> {
-        const endpoint = url
+
+        const endpoint = url;
+        headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "GET",
             headers: {
@@ -81,6 +81,7 @@ export module CollectibleRepository {
     export async function deleteCollectible(id: string): Promise<JsonType>{
 
         const endpoint = url + id;
+        headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "DELETE",
             headers: {

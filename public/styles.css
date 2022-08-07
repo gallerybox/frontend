@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: space-between;
   background-color: var(--main-color);
-  height: 8rem;
+  height: 6rem;
   width: 100%;
 }
 
@@ -121,6 +121,7 @@
 }
 
 .clickable:hover {
+    transition-duration: 0.5s;
     cursor:pointer;
     background: var(--hover-color);
     box-shadow: 2px 2px 2px var(--shadow-box-color);
@@ -158,7 +159,7 @@
 
 
 .explicative-text {
-    font-size: 2rem;
+    font-size: 1rem;
 }
 .Link {
     display: flex;
@@ -172,13 +173,13 @@
     color: var(--error-color);
 }
 
-.ReducedCollectible, .MiniCollectibleCard{
-    display: flex;
-    flex-direction: column;
+.ReducedCollectible, .MiniCollectibleCard, .CollectionCard
+{
     background: var(--card-main-color);
     border-radius: var(--border-radius);
     box-shadow: 2px 2px 2px var(--shadow-box-color);
 }
+
 .card-body {
     background: white;
     box-shadow: 2px 2px 2px var(--shadow-box-color);
@@ -204,6 +205,14 @@
 }
 
 .full-margin ~ .full-margin, .halfable-margin ~ .halfable-margin{
+    margin: 0rem 1rem 1rem 1rem;
+}
+.margin {
+    margin: 1rem;
+    width: calc(100% - 2rem);
+}
+
+.margin ~ .margin{
     margin: 0rem 1rem 1rem 1rem;
 }
 
@@ -233,8 +242,8 @@
     align-items: stretch;
 }
 
-.flex-row-space-between {
-    justify-content: space-between;
+.flex-row-space {
+    justify-content: space-around;
 }
 
 .flex-text-row { /* Used to combine text with icons in menu*/
@@ -247,11 +256,17 @@
     font-weight: bold;
 }
 .big-font{
-    font-size: 1.5rem;
+    font-size: 1.2rem;
+}
+.big-font{
+    font-size: 1rem;
 }
 
 /* Tablet menu */
 @media all and (min-width: 600px) {
+    .MainHeader {
+        height: 8rem;
+    }
     .Menu {
         width: 30%;
     }
@@ -280,9 +295,21 @@
     .full-margin ~ .full-margin, .halfable-margin ~ .halfable-margin{
         margin: 0rem 2rem 2rem 2rem;
     }
+    .explicative-text {
+        font-size: 1.5rem;
+    }
+    .big-font{
+        font-size: 1.2rem;
+    }
+    .flex-row-space {
+        justify-content: space-between;
+    }
 }
 
 /* Desktop menu */ @media all and (min-width: 950px) {
+    .MainHeader {
+        height: 8rem;
+    }
     .Menu {
         width: 15%;
     }
@@ -319,6 +346,16 @@
     }
     .full-margin {
         width: calc(100% - 4rem);
+    }
+
+    .explicative-text {
+        font-size: 2rem;
+    }
+    .big-font{
+        font-size: 1.5rem;
+    }
+    .flex-row-space {
+        justify-content: space-between;
     }
 
 }

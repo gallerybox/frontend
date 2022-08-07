@@ -1,5 +1,5 @@
 import {Response} from "./ValueObjects";
-import {backend_url} from "./config";
+import {backend_url, headers} from "./config";
 
 export interface UserAuthDTO {
     "_id": string,
@@ -21,10 +21,7 @@ export module AuthRepository {
         const endpoint = url + "/auth/login/"
         const options = {
             method: "POST",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json;charset=UTF-8",
-            },
+            headers: headers,
 
             body: JSON.stringify({
                 email: email,

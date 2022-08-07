@@ -12,8 +12,6 @@ interface ReducedCollectibleProps{
 
 function MiniCollectibleCard({collectible}: ReducedCollectibleProps){
     const tags: Array<string> = Object.keys(collectible.attributes);
-    console.log("date is: " + typeof collectible.lastModified);
-
     let time_ago_number: number = Math.abs(Date.now()-new Date(collectible.lastModified).getTime()) / 36e5;
     let time_unit: string = " hora"
 
@@ -28,12 +26,13 @@ function MiniCollectibleCard({collectible}: ReducedCollectibleProps){
         time_unit = time_unit + "s";
     }
     let time_ago_string: string = Math.round(time_ago_number) + time_unit;
+
     return (
         <div className="MiniCollectibleCard flex-col halfable-margin">
             <header className="flex-row full-margin bold big-font">
                 {collectible.thematicSpace.name}
             </header>
-            <div className="card-body flex-col full-margin">
+            <div className="card-body flex-col full-margin clickable">
                 {
                     tags.sort(tag => collectible.attributes[tag].representationOrder)
                         .map(function (tag) {
@@ -41,7 +40,7 @@ function MiniCollectibleCard({collectible}: ReducedCollectibleProps){
                         })
                 }
             </div>
-            <footer className="flex-row flex-row-space-between full-margin">
+            <footer className="flex-row flex-row-space full-margin">
                 <div className="flex-text-row">
                     <span className="bold">Por:&nbsp;</span><Link text={collectible.user.nickname} onClickAction={()=>alert(collectible.user.nickname)}/>
                 </div>

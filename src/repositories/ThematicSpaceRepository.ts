@@ -1,5 +1,5 @@
 import {JsonType} from "./ValueObjects";
-import {backend_url} from "./config";
+import {backend_url, headers} from "./config";
 
 export interface TypeDTO {
     "category": string;
@@ -27,15 +27,14 @@ export interface ThematicSpaceDTO {
 export module ThematicSpaceRepository {
 
     const url = backend_url
+    export const token: {value: string | boolean | null}= {value: null};
     export async function test(): Promise<ThematicSpaceDTO> {
 
         const endpoint = url + "/thematic-spaces/"
+        headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "GET",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json;charset=UTF-8",
-            },
+            headers: headers,
             /*
             body: JSON.stringify({
                 a: 10,

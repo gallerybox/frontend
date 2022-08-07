@@ -28,7 +28,7 @@ function Attribute({tag, attribute, className=""}: AttributeProps){
     }
 
     return (
-        <div className={"Attribute " + way_to_show_tag + " " +className}>
+        <div className={"Attribute " + way_to_show_tag + " " +className} style={{order: attribute.representationOrder}}>
             <span className={attribute.showTag?"":"invisible"}>{tag}:&nbsp;</span>
             <Representation value={attribute.value} representation={attribute.representation}/>
         </div>

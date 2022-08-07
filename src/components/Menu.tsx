@@ -22,19 +22,19 @@ function Menu({isVisible}: MenuProps){
                     <div className="full flex-text-row">
                         <HomeSharp/>
                         <span>
-                            Espacios
+                            &nbsp;Espacios
                         </span>
                     </div>
 
                     <div className="item">
-                        <div className="item clickable" onClick={()=>setView("spaces")}><span>Propios</span></div>
-                        <div className="item clickable" onClick={()=>setView("spaces")}><span>De otros usuarios</span></div>
+                        <div className="item clickable" onClick={()=>setView("spaces")}><span>&nbsp;Propios</span></div>
+                        <div className="item clickable" onClick={()=>setView("spaces")}><span>&nbsp;De otros usuarios</span></div>
                     </div>
                 </div>
                 <div className="item clickable" onClick={()=>setView("collections")}>
                     <div className="full flex-text-row">
                         <AutoAwesomeMotionSharp/>
-                        <span>Colecciones</span>
+                        <span>&nbsp;Colecciones</span>
                     </div>
                 </div>
                 <div className="item clickable" onClick={()=>{
@@ -44,7 +44,7 @@ function Menu({isVisible}: MenuProps){
                                                         }}>
                     <div className="full flex-text-row">
                         <PowerSettingsNewSharp/>
-                        <span>Cerrar sesión</span>
+                        <span>&nbsp;Cerrar sesión</span>
                     </div>
                 </div>
             </div>
