@@ -6,7 +6,6 @@ export interface UserAuthDTO {
     "nickname": string,
     "email": string,
     "password": string,
-    "isPrivate": true,
     "__v": 0
 }
 
@@ -30,6 +29,36 @@ export module AuthRepository {
 
 
         };
+        let response: Response<UserLoginDTO>;
+        response = await fetch(endpoint, options)
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("repo")
+                console.log(data);
+                return data;
+            });
+
+        return response
+    }
+
+    export async function register(nombre: string, apellidos: string, nickname: string, 
+        email: string, password: string, hasConsented: string) {
+            
+        const endpoint = url + "/auth/register/"
+        const options = {
+            method: "POST",
+            headers: headers,
+
+            body: JSON.stringify({
+                nombre: nombre,
+                apellidos: apellidos,
+                nickname: nickname,
+                email: email,
+                password: password,
+                hasConsented: hasConsented
+            }),
+        }
+
         let response: Response<UserLoginDTO>;
         response = await fetch(endpoint, options)
             .then((response) => response.json())
