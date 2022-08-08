@@ -49,12 +49,15 @@ function SpaceCard({space}: SpaceCardProps){
         <div className="SpaceCard flex-col halfable-margin">
             <header className="flex-row flex-col full bold big-font full-margin">
                 <div className="flex-text-row flex-row-space full-margin">
-                    <span className="bold">{space.name}</span>
-                    <span className="bold">{collectibles.length} coleccionables</span>
+                    <span className="bold clickable">{space.name}</span>
+                    <span className="bold clickable">{collectibles.length} coleccionables</span>
                 </div>
                 <div className="flex-text-row flex-row-space full-margin">
-                    <span><span className="bold">De:&nbsp;</span>{owner.nickname}</span>
-                    <span className="bold">{users.length} usuarios</span>
+                    <div className="flex-text-row">
+                        <span className="bold">De:&nbsp;</span>
+                        <Link text={owner.nickname!} onClickAction={()=>alert(owner.nickname)}/>
+                    </div>
+                    <span className="bold clickable">{users.length} usuarios</span>
                 </div>
             </header>
 
