@@ -146,7 +146,7 @@
     width: 100%;
 }
 
-.Collections, .MainViewTimeline, .Login {
+.Collections, .MainViewTimeline, .Login, .Spaces {
     color: black;
 }
 
@@ -173,7 +173,7 @@
     color: var(--error-color);
 }
 
-.ReducedCollectible, .MiniCollectibleCard, .CollectionCard
+.ReducedCollectible, .MiniCollectibleCard, .CollectionCard, .SpaceCard
 {
     background: var(--card-main-color);
     border-radius: var(--border-radius);

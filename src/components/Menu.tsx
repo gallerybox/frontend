@@ -27,8 +27,8 @@ function Menu({isVisible}: MenuProps){
                     </div>
 
                     <div className="item">
-                        <div className="item clickable" onClick={()=>setView("spaces")}><span>&nbsp;Propios</span></div>
-                        <div className="item clickable" onClick={()=>setView("spaces")}><span>&nbsp;De otros usuarios</span></div>
+                        <div className="item clickable" onClick={()=>setView("spacesOwned")}><span>&nbsp;Propios</span></div>
+                        <div className="item clickable" onClick={()=>setView("spacesFollowed")}><span>&nbsp;De otros usuarios</span></div>
                     </div>
                 </div>
                 <div className="item clickable" onClick={()=>setView("collections")}>

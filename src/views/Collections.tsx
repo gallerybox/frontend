@@ -9,6 +9,7 @@ import CollectionCard from "../components/reusable/CollectionCard";
 
 
 
+
 const Collections: React.FC = function (){
     const [token, setToken] = useContext(TokenContext);
     const [user, setUser] = useContext(UserContext);
@@ -21,7 +22,7 @@ const Collections: React.FC = function (){
 
     return (
 
-        <div className="MainViewTimeline flex-col full">
+        <div className="Collections flex-col full">
             {collections!.map((collection) => <CollectionCard collection={collection}/> )}
             <div className="loadContent full flex-col"> Loading... </div>
         </div>

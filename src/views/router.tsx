@@ -7,7 +7,8 @@ import React, {ReactElement, useCallback, useReducer, useState} from "react";
 
 
 const routes: {[view: string]: React.FC} = {
-    "spaces": Spaces,
+    "spacesOwned": () => Spaces({ownSpaces:true}),
+    "spacesFollowed": () => Spaces({ownSpaces:false}),
     "mainViewTimeline": MainViewTimeline,
     "collections": Collections
 }
