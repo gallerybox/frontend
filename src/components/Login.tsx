@@ -5,9 +5,11 @@ import {TokenContext, UserContext} from "../Auth";
 import FormError from "./reusable/FormError";
 import Link from "./reusable/Link";
 import {Button, TextField} from '@mui/material';
+import {RouterContext} from "../views/router";
 
 
 const Login: React.FC = function (){
+    const setView = useContext(RouterContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [submitEvent, setSubmitEvent] = useState<React.FormEvent<HTMLFormElement> | null>(null);
@@ -67,7 +69,7 @@ const Login: React.FC = function (){
 
                 <Link text="¿Olvidaste tu contraseña?" onClickAction={()=>alert("olvido contraseña")}/>
 
-                <Link text="¿Aún no tienes cuenta en GalleryBox? ¡Registrate!" onClickAction={()=>alert("Registro")}/>
+                <Link text="¿Aún no tienes cuenta en GalleryBox? ¡Registrate!" onClickAction={()=>setView("register")}/>
             </div>
         </div>
 
