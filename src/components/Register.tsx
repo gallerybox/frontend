@@ -73,12 +73,14 @@ export function register(email: any, password: any) {
     };
 
     useEffect(() => {
-        AuthRepository.register(formState.nombre, formState.apellidos, formState.nickname, 
-                                formState.email, formState.password, formState.hasConsented)
-        .then(data =>{
-            console.log(data);
-        }
-    );
+        if (submitEvent != null) {
+            AuthRepository.register(formState.nombre, formState.apellidos, formState.nickname, 
+                                    formState.email, formState.password, formState.hasConsented)
+            .then(data =>{
+                console.log(data);
+            }
+            );
+    };
     },[submitEvent]);
 
     return (
