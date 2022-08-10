@@ -35,6 +35,24 @@ export module CollectibleRepository {
 
         return response;
     }
+    export async function getSpaceTimeline(thematicSpaceId: string): Promise<Array<CollectibleDTO>> {
+
+        const endpoint = url +  `timeline/thematicSpaceId/${thematicSpaceId}`;
+        headers["Authorization"] = `Bearer ${token.value}`
+        const options = {
+            method: "GET",
+            headers: headers
+        };
+
+        let response: Array<CollectibleDTO> = [];
+
+        response = await fetch(endpoint, options)
+            .then(response => response.json())
+            .then(data => data);
+        console.log(response);
+
+        return response;
+    }
     export async function findOne(id: string): Promise<Array<CollectibleDTO>>{
         const endpoint = url + "id/" + id;
         headers["Authorization"] = `Bearer ${token.value}`

@@ -8,61 +8,47 @@ import {ThematicSpaceRepository} from "./repositories/ThematicSpaceRepository";
 import Hamburger from 'hamburger-react'
 import MainHeader from "./components/MainHeader";
 import Main from "./components/Main";
-import {RouterContextProvider} from "./views/router";
+import {RouterContext, RouterContextProvider} from "./views/router";
 import Login from "./components/Login";
 import {TokenContext, UserContext, UserContextProvider} from "./Auth";
 import Content from "./components/Content";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import blue from '@mui/material/colors/blue';
 import {red} from "@mui/material/colors";
+import content from "./components/Content";
+import mainViewTimeline from "./views/MainViewTimeline";
 
 interface JavascripterProps {
   [key: string]: any;
 }
 
 const App: React.FC<JavascripterProps>=  () => {
-  const [menuIsVisible, setMenuIsVisible] = useState(false);
-  const [token,setToken] = useContext(TokenContext)
-  const user: boolean = false;
-
-
-    const appTheme = createTheme({
-        palette: {
-            primary: {
-                main: "rgb(144, 105, 172)"
-            },
-        },
-    });
-
+    const [menuIsVisible, setMenuIsVisible] = useState(false);
+    const [token,setToken] = useContext(TokenContext);
     if (token) {
-      return (
-          //{...{profilePhoto:profileImage}}
-             <RouterContextProvider>
-                 <div className="App">
-                     <MainHeader
-                         {...{
-                             buttonActive: menuIsVisible,
-                             onActivate: () => {
-                                 setMenuIsVisible(current => !current)
-                             }
+        return (
+             <div className="App">
+                 <MainHeader
+                     {...{
+                         buttonActive: menuIsVisible,
+                         onActivate: () => {
+                             setMenuIsVisible(current => !current)
                          }
-                         }
-                     />
-                     <Main menuIsVisible={menuIsVisible}/>
-                 </div>
-             </RouterContextProvider>
-      );
-  } else {
-      return(
-          <ThemeProvider theme={appTheme}>
-              <div className="App">
-                  <Content>
-                      <Login/>
-                  </Content>
-              </div>
-          </ThemeProvider>
-      )
-  }
+                     }
+                     }
+                 />
+                 <Main menuIsVisible={menuIsVisible}/>
+             </div>
+
+
+        );
+    } else {
+        return(
+                  <div className="App">
+                      <Content/>
+                  </div>
+        )
+    }
 }
 
 export default App;

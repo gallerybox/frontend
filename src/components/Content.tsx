@@ -5,11 +5,10 @@ interface OptionalChildrenProps {
     children?: ReactElement;
 }
 
-function Content({children}: OptionalChildrenProps){
+function Content(){
     let View: React.FC = useContext(ViewContext);
-    if (children){
-        View = ()=>children;
-    }
+
+
     return (
         <div className="Content">
                 <View/>

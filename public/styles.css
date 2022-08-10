@@ -33,6 +33,10 @@
   height: auto;
   aspect-ratio: 1;
 }
+.photo-container2 {
+    height: 100px;
+    aspect-ratio: 1;
+}
 
 .profile-photo {
   background-size: cover;
@@ -146,7 +150,7 @@
     width: 100%;
 }
 
-.Collections, .MainViewTimeline, .Login {
+.Collections, .MainViewTimeline, .Login, .Spaces {
     color: black;
 }
 
@@ -173,7 +177,7 @@
     color: var(--error-color);
 }
 
-.ReducedCollectible, .MiniCollectibleCard, .CollectionCard
+.ReducedCollectible, .MiniCollectibleCard, .CollectionCard, .SpaceCard, .MiniUserCard
 {
     background: var(--card-main-color);
     border-radius: var(--border-radius);
@@ -209,7 +213,6 @@
 }
 .margin {
     margin: 1rem;
-    width: calc(100% - 2rem);
 }
 
 .margin ~ .margin{
@@ -227,6 +230,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+.flex-col-start {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 .flex-col-center {
     display: flex;

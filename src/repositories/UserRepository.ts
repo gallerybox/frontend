@@ -19,6 +19,8 @@ export interface UserDTO  {
     "ownedThematicSpaces": Array<ThematicSpaceDTO>;
     "followedThematicSpaces": Array<ThematicSpaceDTO>;
     "collections": Array<CollectionDTO>;
+    "nombre"?: string;
+    "apellidos"?: string;
     "__v": number;
 }
 
@@ -44,6 +46,58 @@ export module UserRepository {
             .then(response => response.json())
             .then(data => data);
         console.log(response);
+
+        return response;
+    }
+
+    export async function getUsersByFollowedSpaceId(spaceId: string): Promise<Response<Array<UserDTO>>> {
+        const endpoint = url + `/followed-space-id/${spaceId}`;
+        headers["Authorization"] = `Bearer ${token.value}`
+        const options = {
+            method: "GET",
+            headers: headers
+        };
+
+        let response: Response<Array<UserDTO>>;
+
+        response = await fetch(endpoint, options)
+            .then(response => response.json())
+            .then(data => data);
+
+        return response;
+    }
+
+    export async function getUserByOwnedSpaceId(spaceId: string): Promise<Response<UserDTO>> {
+        const endpoint = url + `/owned-space-id/${spaceId}`;
+        headers["Authorization"] = `Bearer ${token.value}`
+        const options = {
+            method: "GET",
+            headers: headers
+        };
+
+        let response: Response<UserDTO>;
+
+        response = await fetch(endpoint, options)
+            .then(response => response.json())
+            .then(data => data);
+
+        return response;
+    }
+
+
+    export async function getUsersByFollowedUserId(userId: string): Promise<Response<Array<UserDTO>>> {
+        const endpoint = url + `/followed-user/${userId}`;
+        headers["Authorization"] = `Bearer ${token.value}`
+        const options = {
+            method: "GET",
+            headers: headers
+        };
+
+        let response: Response<Array<UserDTO>>;
+
+        response = await fetch(endpoint, options)
+            .then(response => response.json())
+            .then(data => data);
 
         return response;
     }
