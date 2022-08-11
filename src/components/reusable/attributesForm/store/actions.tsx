@@ -9,7 +9,6 @@ import {
     TEXT_TOGGLE_UNDERLINED,
     TEXT_COLOR_PICKER,
     TEXT_SELECTOR_SIZE,
-    TEXT_TOOGLE_LARGE_TEXT,
     MULTIMEDIA_SELECTOR_TYPE,
     MULTIMEDIA_SELECTOR_SIZE,
     TOOGLE_SELECTOR_ICON,
@@ -64,11 +63,6 @@ export const handleTextColor = (color: any) => ({
 export const handleTextSize = (event: any) => ({
     type: TEXT_SELECTOR_SIZE,
     payload: event
-})
-
-export const handleTextLargeText = (tamanyo: any) => ({
-    type: TEXT_TOOGLE_LARGE_TEXT,
-    payload: tamanyo
 })
 
 export const handleMultimediaType = (multimediaType: any) => ({

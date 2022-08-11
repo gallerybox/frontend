@@ -10,8 +10,7 @@ export interface TextRepresentation {
     "italics": boolean,
     "underlined": boolean,
     "size": FontSize
-    "color": string,
-    "largeText": boolean
+    "color": string
 }
 
 export enum FontSize {
@@ -62,8 +61,7 @@ export const INITIAL_STATE_TEXT_REPRESENTATION: TextRepresentation = {
     "italics": false,
     "underlined": false,
     "color": "#aabbcc",
-    "size": FontSize.Pequenyo,
-    "largeText": false
+    "size": FontSize.Pequenyo
 }
 
 export const INITIAL_STATE_MULTIMEDIA_REPRESENTATION: MultimediaRepresentation = {

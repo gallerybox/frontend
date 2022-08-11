@@ -9,7 +9,6 @@ import {
     TEXT_TOGGLE_UNDERLINED,
     TEXT_COLOR_PICKER,
     TEXT_SELECTOR_SIZE,
-    TEXT_TOOGLE_LARGE_TEXT,
     MULTIMEDIA_SELECTOR_SIZE,
     MULTIMEDIA_SELECTOR_TYPE,
     TOOGLE_COLOR_PICKER_TRUE,
@@ -103,14 +102,6 @@ export function reduceAttribute(state: any, action: any) {
                 representation: {
                     ...state.representation,
                     size: size
-                }
-            }
-        case TEXT_TOOGLE_LARGE_TEXT:
-            return {
-                ...state,
-                representation: {
-                    ...state.representation,
-                    largeText: !state.representation.largeText
                 }
             }
         case MULTIMEDIA_SELECTOR_TYPE:

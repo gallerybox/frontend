@@ -1,7 +1,7 @@
 import { Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select } from "@mui/material";
 import { useContext, useReducer } from "react";
 import { HexColorPicker } from "react-colorful";
-import { handleTextBold, handleTextColor, handleTextItalics, handleTextLargeText, handleTextSize, handleTextUnderlined } from "./store/actions";
+import { handleTextBold, handleTextColor, handleTextItalics, handleTextSize, handleTextUnderlined } from "./store/actions";
 import AttributeContext from "./store/attributeContext";
 
 
@@ -57,18 +57,6 @@ const TextEditAttributeComp: React.FC = () => {
                 <MenuItem value="Grande"    onClick={(e) => dispatch( handleTextSize("Grande"))}>Grande</MenuItem>
             </Select>
         </FormControl>
-
-        <FormControlLabel
-            label="Texto largo"
-            value={state.representation.underlined}
-            name="largeText"
-            control={
-                <Checkbox   value={state.representation.largeText}
-                            name="largeText"
-                            checked={state.representation.largeText}
-                            onChange={ e => dispatch(handleTextLargeText(e))}/>
-                    }
-        />
 
         <HexColorPicker color={state.representation.color} onChange={ e => dispatch(handleTextColor(e)) }/> 
         <label id="color"> {state.representation.color} </label>
