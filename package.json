@@ -19,7 +19,8 @@
     "@mui/material":  "^5.9.3",
     "@mui/icons-material": "^5.8.4",
     "@emotion/react": "^11.10.0",
-    "@emotion/styled": "^11.10.0"
+    "@emotion/styled": "^11.10.0",
+    "react-player": "^2.10.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -2,6 +2,7 @@ import React from 'react';
 
 import {Category, DynamicRepresentation, DynamicType} from "../../../repositories/ValueObjects";
 import {TextRepresentationComp, TextRepresentationCompProps} from "./TextRepresentationComp";
+import MultimediaRepresentationComp from "./MultimediaRepresentationComp";
 
 interface AttributeProps{
     tag: string;
@@ -15,7 +16,7 @@ function Attribute({tag, attribute, className=""}: AttributeProps){
     let way_to_show_tag: string = "flex-text-row";
     switch (attribute.category) {
         case Category.Multimedia:
-            Representation = TextRepresentationComp;
+            Representation = MultimediaRepresentationComp;
             way_to_show_tag = "flex-col";
             break;
         case Category.Text:
