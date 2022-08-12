@@ -7,9 +7,6 @@ import Register from "../components/Register";
 import Login from "../components/Login";
 import {TokenContext} from "../Auth";
 
-
-
-
 const routes: {[view: string]: React.FC<any>} = {
     "spacesOwned": () => Spaces({ownSpaces:true}),
     "spacesFollowed": () => Spaces({ownSpaces:false}),
@@ -19,8 +16,6 @@ const routes: {[view: string]: React.FC<any>} = {
     "register": Register,
     "login": Login
 }
-
-
 
 export let RouterContext: React.Context<any> = React.createContext(MainViewTimeline);
 export let ViewContext: React.Context<React.FC> = React.createContext(Login);

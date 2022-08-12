@@ -22,10 +22,10 @@ services:
     volumes:
       - ./:/usr/src/app/frontend
       - ./node_modules:/usr/src/app/frontend/node_modules
-#    networks:
-#      - gallerybox-network
+    networks:
+     - gallerybox-network
 
-#networks:
-#  gallerybox-network:
-#    name: gallerybox-network
-#    external: true  
+networks:
+ gallerybox-network:
+   name: gallerybox-network
+   external: true  

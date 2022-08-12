@@ -26,7 +26,6 @@ const Login: React.FC = function (){
     // Submit
     useEffect(() => {
         if (submitEvent != null) {
-            console.log("logiiiiiin")
             AuthRepository.login(email, password).then(data =>{
                     // Aquí habría que poner algún mecanismo de control... más escalable, lo del dicc no está mal, pero alguna funciocita o algo, y validators con lista de valores, etc, antes de enviar el form y eso.
                     if (!data.access_token){
@@ -50,7 +49,7 @@ const Login: React.FC = function (){
         <div className="full flex-row">
             <div className="landing-left-side halfable flex-col-center">
                 <span className="gallery-box">GalleryBox</span>
-                <p className="explicative-text halfable">Organiza tu colecciones y colabora con otro usuarios con nuestro software de gestión.</p>
+                <p className="explicative-text halfable">Organiza tus colecciones y colabora con otros usuarios con nuestro software de gestión.</p>
             </div>
             <div className="Login halfable flex-col-center">
                 <form className="flex-col full" onSubmit={e => handleSubmit(e)}>
