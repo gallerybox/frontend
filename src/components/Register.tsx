@@ -1,8 +1,10 @@
 import { Button, Checkbox, FormControlLabel, TextField } from "@mui/material";
-import { useEffect, useReducer, useState } from "react";
+import { useContext, useEffect, useReducer, useState } from "react";
 import { AuthRepository } from "../repositories/AuthRepository";
 import FormError from "./reusable/FormError";
 import Link from "./reusable/Link";
+
+import {RouterContext} from "../views/router";
 
 const formReducer = (state: any, action: any) => {
     let newState;
@@ -35,31 +37,11 @@ const initialFormState = {
 };
 
 const Register: React.FC = () => {
-    /* Descripción de las variables
-     * formState: estado actual del formulario
-     * dispatch: trigger. Se lanza cuando hay un evento. Envía la acción a realizar
-     *           al formReducer.
-     
-
-
-
-export function register(email: any, password: any) {
-    throw new Error("Function not implemented.");
-}
-export function register(email: any, password: any) {
-        throw new Error("Function not implemented.");
-    }
-* formReducer: contiene todas las acciones disponibles. Cada una de ellas actualiza
-     *           el formState.
-     **/  
+    const setView = useContext(RouterContext);
     const [formState, dispatch] = useReducer(formReducer, initialFormState);
     const [submitEvent, setSubmitEvent] = useState<React.FormEvent<HTMLFormElement> | null>(null);
 
-    // Si alguno de los texto cambia...
     const handleTextChange = (e: any) => {
-        // Enviamos la acción "HANDLE-INPUT-TEXT" al formReducer
-        console.log("Entra")
-        
         dispatch({
             type: "HANDLE-INPUT-TEXT",
             field: e.target.name,
@@ -78,8 +60,8 @@ export function register(email: any, password: any) {
                                     formState.email, formState.password, formState.hasConsented)
             .then(data =>{
                 console.log(data);
-            }
-            );
+                setView("login");
+            });
     };
     },[submitEvent]);
 
@@ -124,7 +106,7 @@ export function register(email: any, password: any) {
                     <Button type="submit" variant="contained" color="primary"> Crear cuenta </Button>
                 
                 </form>
-                <Link text="¿Ya tiene cuenta? Inicie sesión" onClickAction={()=>alert("TODO: Redirección a Login")}/>
+                <Link text="¿Ya tiene cuenta? Inicie sesión" onClickAction={()=>setView("login")}/>
             </div>
         </div>
     );

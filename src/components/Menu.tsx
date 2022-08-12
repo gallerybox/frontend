@@ -46,7 +46,7 @@ function Menu({isVisible}: MenuProps){
                     </div>
                     <div className="flex-col-start">
                         <span className="bold clickable full-margin" onClick={()=>setView("users",{users:followers})}>{followers?.length}&nbsp;&nbsp;seguidor{followers?.length==1?"":"es"}</span>
-                        <span className="bold clickable full-margin" onClick={()=>setView("users",{users:followedUsers})}>{followedUsers?.length}&nbsp;&nbsp;seguido{followedUsers?.length==1?"":"es"}</span>
+                        <span className="bold clickable full-margin" onClick={()=>setView("users",{users:followedUsers})}>{followedUsers?.length}&nbsp;&nbsp;seguido{followedUsers?.length==1?"":"s"}</span>
                     </div>
                 </div>
                 <div className="item">

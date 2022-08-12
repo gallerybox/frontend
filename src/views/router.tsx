@@ -8,9 +8,6 @@ import Login from "../components/Login";
 import {TokenContext} from "../Auth";
 import AttributeForm from "../components/reusable/attributesForm/AttributeFormComp";
 
-
-
-
 const routes: {[view: string]: React.FC<any>} = {
     "spacesOwned": () => Spaces({ownSpaces:true}),
     "spacesFollowed": () => Spaces({ownSpaces:false}),
@@ -21,8 +18,6 @@ const routes: {[view: string]: React.FC<any>} = {
     "login": Login,
     "spaceAttributeForm": AttributeForm
 }
-
-
 
 export let RouterContext: React.Context<any> = React.createContext(MainViewTimeline);
 export let ViewContext: React.Context<React.FC> = React.createContext(Login);
