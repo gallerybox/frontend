@@ -79,6 +79,12 @@ function Menu({isVisible}: MenuProps){
                     </div>
                 </div>
             </div>
+            <div className="item clickable" onClick={()=>setView("spaceAttributeForm")}>
+                <div className="full flex-text-row">
+                    <AutoAwesomeMotionSharp/>
+                    <span>&nbsp;Test form Utri</span>
+                </div>
+            </div>
 
         </div>
 

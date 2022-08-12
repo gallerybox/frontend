@@ -6,6 +6,7 @@ import Users from "./Users";
 import Register from "../components/Register";
 import Login from "../components/Login";
 import {TokenContext} from "../Auth";
+import AttributeForm from "../components/reusable/attributesForm/AttributeFormComp";
 
 
 
@@ -17,7 +18,8 @@ const routes: {[view: string]: React.FC<any>} = {
     "collections": Collections,
     "users": Users,
     "register": Register,
-    "login": Login
+    "login": Login,
+    "spaceAttributeForm": AttributeForm
 }
 
 

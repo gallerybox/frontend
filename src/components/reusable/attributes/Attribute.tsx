@@ -3,6 +3,7 @@ import React from 'react';
 import {Category, DynamicRepresentation, DynamicType} from "../../../repositories/ValueObjects";
 import {TextRepresentationComp, TextRepresentationCompProps} from "./TextRepresentationComp";
 import MultimediaRepresentationComp from "./MultimediaRepresentationComp";
+import ToggleRepresentationComp from "./ToggleRepresentationComp";
 
 interface AttributeProps{
     tag: string;
@@ -24,7 +25,7 @@ function Attribute({tag, attribute, className=""}: AttributeProps){
             way_to_show_tag = attribute.value.length>100? "flex-col":"flex-text-row";
             break;
         case Category.Toggle:
-            Representation = TextRepresentationComp;
+            Representation = ToggleRepresentationComp;
             break;
     }
 
