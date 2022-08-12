@@ -1,21 +1,40 @@
+import {JsonType} from "./ValueObjects";
+import {backend_url, headers} from "./config";
+
+export interface TypeDTO {
+    "category": string;
+    "representation": {[props: string]: any};
+    "_id": string;
+}
+
+export interface AttributeDTO {
+    "type": TypeDTO;
+    "tag": string;
+    "showTag": boolean;
+    "representationOrder": number;
+}
+export interface TemplateDTO {
+    "attributes": Array<AttributeDTO>;
+    "_id": string;
+}
+export interface ThematicSpaceDTO {
+    "_id": string;
+    "__v": number;
+    "description": string;
+    "name": string;
+    "template": TemplateDTO;
+}
 export module ThematicSpaceRepository {
-    export type JSONValue =
-        | string
-        | number
-        | boolean
-        | { [x: string]: JSONValue }
-        | Array<JSONValue>;
 
-    const url = "http://localhost:3000"
-    export async function test(): Promise<JSONValue> {
+    const url = backend_url
+    export const token: {value: string | boolean | null}= {value: null};
+    export async function test(): Promise<ThematicSpaceDTO> {
 
-        const endpoint = url + "/tematic-spaces/tests"
+        const endpoint = url + "/thematic-spaces/"
+        headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "GET",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json;charset=UTF-8",
-            },
+            headers: headers,
             /*
             body: JSON.stringify({
                 a: 10,
@@ -24,7 +43,7 @@ export module ThematicSpaceRepository {
             */
 
         };
-        let response: JSONValue = "meh"
+        let response: ThematicSpaceDTO;
         response = await fetch(endpoint, options)
             .then((response) => response.json())
             .then((data) => {

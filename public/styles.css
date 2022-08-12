@@ -1,0 +1,369 @@
+
+.MainHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--main-color);
+  height: 6rem;
+  width: 100%;
+}
+
+.menu-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: 90%;
+    border-radius: 15%;
+    aspect-ratio: 1;
+}
+.icon {
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 40%;
+    padding-bottom: 40%;
+    filter: invert(100%); /* Esto para que el icono negro salga blanco*/
+}
+
+
+.photo-container {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+}
+.photo-container2 {
+    height: 100px;
+    aspect-ratio: 1;
+}
+
+.profile-photo {
+  background-size: cover;
+  border-radius: 50%;
+  width: 100%;
+  padding-bottom: 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.gallery-box {
+    width: auto;
+    margin-right: 1em;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 1.33rem;
+    cursor:pointer;
+    border-radius: var(--border-radius);
+}
+
+
+/* Main*/
+.Main {
+    position: relative;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 80%;
+    width: 100%;
+}
+
+.landing-left-side{
+    background: linear-gradient(180deg, var(--main-color), var(--secondary-color) 80%);
+    order: 1;
+}
+
+.Menu {
+    background-color: var(--main-color);
+    height: 100%;
+    width: 80%;
+    margin: 0px;
+    z-index: 10;
+}
+
+.MainHeader > .Menu{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0.26rem;
+}
+
+.Main > .Menu, .Main > .Content {
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+
+@keyframes slide {
+    0%   {width: 0%;}
+    100% {width: 80%;}
+}
+.Main > .Menu {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 0.26rem;
+    animation: slide;
+    animation-duration: 0.5s;
+
+}
+
+
+.menu-column{
+    margin-left: 3rem;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: auto;
+    height: 100%;
+    gap: 1.5rem;
+}
+
+.clickable:hover {
+    transition-duration: 0.5s;
+    cursor:pointer;
+    background: var(--hover-color);
+    box-shadow: 2px 2px 2px var(--shadow-box-color);
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    width: 100%;
+    padding-left: 0.5rem;
+    padding: 0.5rem 0rem 0.5rem 0.5rem;
+    font-weight: bold;
+    border-radius: var(--border-radius);
+}
+
+.Content {
+    display: flex;
+    background-color: white;
+    height: 100%;
+    width: 100%;
+}
+
+.Collections, .MainViewTimeline, .Login, .Spaces {
+    color: black;
+}
+
+.Login{
+    display: flex;
+    flex-direction: column;
+    background: white;
+    width: 100%;
+}
+
+
+.explicative-text {
+    font-size: 1rem;
+}
+.Link {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-decoration: underline;
+    color: var(--link-color);
+}
+.FormError{
+    color: var(--error-color);
+}
+
+.ReducedCollectible, .MiniCollectibleCard, .CollectionCard, .SpaceCard, .MiniUserCard
+{
+    background: var(--card-main-color);
+    border-radius: var(--border-radius);
+    box-shadow: 2px 2px 2px var(--shadow-box-color);
+}
+
+.card-body {
+    background: white;
+    box-shadow: 2px 2px 2px var(--shadow-box-color);
+}
+
+.invisible {
+    display: none!important;
+}
+
+.active-color {
+    background: var(--secondary-color); /*var(--secondary-color);*/
+    box-shadow: 2px 2px 2px var(--shadow-box-color);
+}
+
+
+.Main > .Menu.active-color {
+    background: linear-gradient(180deg, var(--main-color), var(--secondary-color) 20%); /*var(--secondary-color);*/
+}
+
+.full-margin, .halfable-margin{
+    margin: 1rem;
+    width: calc(100% - 2rem);
+}
+
+.full-margin ~ .full-margin, .halfable-margin ~ .halfable-margin{
+    margin: 0rem 1rem 1rem 1rem;
+}
+.margin {
+    margin: 1rem;
+}
+
+.margin ~ .margin{
+    margin: 0rem 1rem 1rem 1rem;
+}
+
+.halfable {
+    width: 100%;
+}
+.full {
+    width: 100%;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.flex-col-start {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.flex-col-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow: auto;
+    align-items: stretch;
+}
+
+.flex-row-space {
+    justify-content: space-around;
+}
+
+.flex-text-row { /* Used to combine text with icons in menu*/
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+.bold { /* Used to combine text with icons in menu*/
+    font-weight: bold;
+}
+.big-font{
+    font-size: 1.2rem;
+}
+.big-font{
+    font-size: 1rem;
+}
+
+/* Tablet menu */
+@media all and (min-width: 600px) {
+    .MainHeader {
+        height: 8rem;
+    }
+    .Menu {
+        width: 30%;
+    }
+    @keyframes slide {
+        0%   {width: 0%;}
+        100% {width: 15%;}
+    }
+    .Content {
+        width: 100%;
+    }
+    .landing-left-side{
+        order: 0;
+    }
+    .gallery-box {
+        font-size: 3.33rem;
+    }
+
+    .halfable {
+        width: 50%;
+    }
+    .full-margin, .halfable-margin{
+        margin: 2rem;
+        width: calc(100% - 4rem);
+    }
+
+    .full-margin ~ .full-margin, .halfable-margin ~ .halfable-margin{
+        margin: 0rem 2rem 2rem 2rem;
+    }
+    .explicative-text {
+        font-size: 1.5rem;
+    }
+    .big-font{
+        font-size: 1.2rem;
+    }
+    .flex-row-space {
+        justify-content: space-between;
+    }
+}
+
+/* Desktop menu */ @media all and (min-width: 950px) {
+    .MainHeader {
+        height: 8rem;
+    }
+    .Menu {
+        width: 15%;
+    }
+    @keyframes slide {
+        0%   {width: 0%;}
+        100% {width: 15%;}
+    }
+
+    .Content {
+        width: 100%;
+
+    }
+    .landing-left-side{
+        order: 0;
+    }
+
+    .gallery-box {
+        font-size: 6rem;
+    }
+
+    .halfable {
+
+        width: 50%;
+    }
+    .full-margin, .halfable-margin{
+        margin: 2rem;
+    }
+    .full-margin ~ .full-margin, .halfable-margin ~ .halfable-margin{
+        margin: 0rem 2rem 2rem 2rem;
+    }
+    .halfable-margin {
+
+        width: calc(50% - 4rem);
+    }
+    .full-margin {
+        width: calc(100% - 4rem);
+    }
+
+    .explicative-text {
+        font-size: 2rem;
+    }
+    .big-font{
+        font-size: 1.5rem;
+    }
+    .flex-row-space {
+        justify-content: space-between;
+    }
+
+}

@@ -1,40 +1,54 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import logo from './logo.svg';
+import ft from './assets/ft.jpg'
+import menuIcon from './assets/bars-solid.svg'
+import utri2 from './assets/utri2.png'
 import './App.css';
 import {ThematicSpaceRepository} from "./repositories/ThematicSpaceRepository";
-
+import Hamburger from 'hamburger-react'
+import MainHeader from "./components/MainHeader";
+import Main from "./components/Main";
+import {RouterContext, RouterContextProvider} from "./views/router";
+import Login from "./components/Login";
+import {TokenContext, UserContext, UserContextProvider} from "./Auth";
+import Content from "./components/Content";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import blue from '@mui/material/colors/blue';
+import {red} from "@mui/material/colors";
+import content from "./components/Content";
+import mainViewTimeline from "./views/MainViewTimeline";
 
 interface JavascripterProps {
   [key: string]: any;
 }
 
-const App: React.FC<JavascripterProps>=  ({subject}) => {
-  const [json, setJson] = useState({});
+const App: React.FC<JavascripterProps>=  () => {
+    const [menuIsVisible, setMenuIsVisible] = useState(false);
+    const [token,setToken] = useContext(TokenContext);
+    if (token) {
+        return (
+             <div className="App">
+                 <MainHeader
+                     {...{
+                         buttonActive: menuIsVisible,
+                         onActivate: () => {
+                             setMenuIsVisible(current => !current)
+                         }
+                     }
+                     }
+                 />
+                 <Main menuIsVisible={menuIsVisible}/>
+             </div>
 
-  useEffect(() => {
-    ThematicSpaceRepository.test().then(data => {setJson(data)})
-  },[]); // Importante poner las dependencias en el array ese a vacío y se actualizará todo el rato, me ha tperato el mongodb
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-          {JSON.stringify(json)}
-          {subject}
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+        );
+    } else {
+        return(
+                  <div className="App">
+                      <Content/>
+                  </div>
+        )
+    }
 }
 
 export default App;
