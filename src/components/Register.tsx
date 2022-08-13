@@ -22,7 +22,7 @@ const formReducer = (state: any, action: any) => {
             }
             return newState;
         default:
-            console.log(state)
+
             return state;
     }
 };
@@ -59,7 +59,7 @@ const Register: React.FC = () => {
             AuthRepository.register(formState.nombre, formState.apellidos, formState.nickname, 
                                     formState.email, formState.password, formState.hasConsented)
             .then(data =>{
-                console.log(data);
+
                 setView("login");
             });
     };

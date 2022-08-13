@@ -13,7 +13,7 @@ interface UsersProps {
 }
 
 const Users: React.FC<UsersProps> = function ({users}:UsersProps){
-
+    console.log(JSON.stringify(users));
     return (
         <div className="Spaces flex-col full">
             {users.map(user => <MiniUserCard user={user}/> )}

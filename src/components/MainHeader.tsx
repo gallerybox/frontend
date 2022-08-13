@@ -16,7 +16,7 @@ function MainHeader({buttonActive, onActivate}: MainHeaderProps){
                         <div className="icon" style={{backgroundImage: `url(${menuIcon})`}}></div>
                 </div>
             </div>
-            <span className="gallery-box clickable" onClick={()=>setView("mainViewTimeline")}>GalleryBox</span>
+            <span className="gallery-box clickable" onClick={()=>setView("/main-view-timeline")}>GalleryBox</span>
         </header>
     );
 

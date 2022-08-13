@@ -47,7 +47,7 @@ export module ThematicSpaceRepository {
         response = await fetch(endpoint, options)
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
+
                 return data;
             });
 

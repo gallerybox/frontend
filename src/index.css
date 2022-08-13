@@ -13,13 +13,73 @@
   --border-radius: 0.2rem;
   scrollbar-width: none; /* For firefox */
 }
+
+/* Rye */
+@font-face {
+  font-family: "Rye";
+  src:url('assets/fonts/Rye-Regular.ttf');
+  src: url('assets/fonts/Rye-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Gloria */
+@font-face {
+  font-family: "Gloria";
+  src:url('assets/fonts/GloriaHallelujah-Regular.ttf');
+  src: url('assets/fonts/GloriaHallelujah-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Gloria */
+@font-face {
+  font-family: "Gloria Hallelujah";
+  src:url('assets/fonts/GloriaHallelujah-Regular.ttf');
+  src: url('assets/fonts/GloriaHallelujah-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Roboto Mono */
+@font-face {
+  font-family: "Roboto Mono";
+  src:url('assets/fonts/RobotoMono-VariableFont_wght.ttf');
+  src: url('assets/fonts/RobotoMono-VariableFont_wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Roboto Sans */
+@font-face {
+  font-family: "Roboto";
+  src:url('assets/fonts/Roboto-Regular.ttf');
+  src: url('assets/fonts/Roboto-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Roboto Serif */
+@font-face {
+  font-family: "Roboto Serif";
+  src:url('assets/fonts/RobotoSlab-VariableFont_wght.ttf');
+  src: url('assets/fonts/RobotoSlab-VariableFont_wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Press Start */
+@font-face {
+  font-family: "Press Start 2P";
+  src:url('assets/fonts/PressStart2P-Regular.ttf');
+  src: url('assets/fonts/PressStart2P-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 ::-webkit-scrollbar {
   display: none; /* for Chrome, Safari, and Opera */
 }
 body,
 a {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
   color: var(--font-menu-color);
   margin: 0;
   overflow: hidden;
 }
+

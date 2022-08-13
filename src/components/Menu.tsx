@@ -22,8 +22,8 @@ function Menu({isVisible}: MenuProps){
         UserRepository.getUser(user)
             .then(data => {
                     setLoggedUser(data);
-                    console.log("Followed")
-                    console.log(data.followedUsers)
+
+
                     setFollowedUsers(data!.followedUsers);
                 }
             )
@@ -45,8 +45,8 @@ function Menu({isVisible}: MenuProps){
                         <div className="profile-photo" style={{backgroundImage: `url(${profilePhoto})`}}></div>
                     </div>
                     <div className="flex-col-start">
-                        <span className="bold clickable full-margin" onClick={()=>setView("users",{users:followers})}>{followers?.length}&nbsp;&nbsp;seguidor{followers?.length==1?"":"es"}</span>
-                        <span className="bold clickable full-margin" onClick={()=>setView("users",{users:followedUsers})}>{followedUsers?.length}&nbsp;&nbsp;seguido{followedUsers?.length==1?"":"s"}</span>
+                        <span className="bold clickable full-margin" onClick={()=>setView("/users",{users:followers})}>{followers?.length}&nbsp;&nbsp;seguidor{followers?.length==1?"":"es"}</span>
+                        <span className="bold clickable full-margin" onClick={()=>setView("/users",{users:followedUsers})}>{followedUsers?.length}&nbsp;&nbsp;seguido{followedUsers?.length==1?"":"s"}</span>
                     </div>
                 </div>
                 <div className="item">
@@ -58,11 +58,11 @@ function Menu({isVisible}: MenuProps){
                     </div>
 
                     <div className="item">
-                        <div className="item clickable" onClick={()=>setView("spacesOwned")}><span>&nbsp;Propios</span></div>
-                        <div className="item clickable" onClick={()=>setView("spacesFollowed")}><span>&nbsp;De otros usuarios</span></div>
+                        <div className="item clickable" onClick={()=>setView("/spaces-owned")}><span>&nbsp;Propios</span></div>
+                        <div className="item clickable" onClick={()=>setView("/spaces-followed")}><span>&nbsp;De otros usuarios</span></div>
                     </div>
                 </div>
-                <div className="item clickable" onClick={()=>setView("collections")}>
+                <div className="item clickable" onClick={()=>setView("/collections")}>
                     <div className="full flex-text-row">
                         <AutoAwesomeMotionSharp/>
                         <span>&nbsp;Colecciones</span>
@@ -79,7 +79,7 @@ function Menu({isVisible}: MenuProps){
                     </div>
                 </div>
             </div>
-            <div className="item clickable" onClick={()=>setView("spaceAttributeForm")}>
+            <div className="item clickable" onClick={()=>setView("/space-attribute-form")}>
                 <div className="full flex-text-row">
                     <AutoAwesomeMotionSharp/>
                     <span>&nbsp;Test form Utri</span>

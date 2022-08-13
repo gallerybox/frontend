@@ -38,6 +38,7 @@ const Login: React.FC = function (){
                     }else{
                         setToken(data.access_token);
                         setUser(data.user!._id);
+                        setView("/main-view-timeline");
                     }
                 }
             );

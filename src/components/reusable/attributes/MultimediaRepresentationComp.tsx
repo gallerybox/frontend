@@ -29,7 +29,7 @@ export const MultimediaRepresentationComp: React.FC<VideoRepresentationCompProps
                             ;
             break;
     }
-    console.log(representation);
+
     return (
             <Representation/>
     );

@@ -31,7 +31,7 @@ export module CollectibleRepository {
         response = await fetch(endpoint, options)
             .then(response => response.json())
             .then(data => data);
-        console.log(response);
+
 
         return response;
     }
@@ -49,7 +49,7 @@ export module CollectibleRepository {
         response = await fetch(endpoint, options)
             .then(response => response.json())
             .then(data => data);
-        console.log(response);
+
 
         return response;
     }
@@ -70,7 +70,7 @@ export module CollectibleRepository {
         response = await fetch(endpoint, options)
             .then(response => response.json())
             .then(data => data);
-        console.log(response);
+
         
         return response;
     }

@@ -15,8 +15,8 @@ export const ToggleRepresentationComp: React.FC<ToggleRepresentationCompProps> =
         "Bookmark": ()=> <Bookmark fontSize='inherit' color='inherit'/>,
         "Star": ()=> <StarRateSharp fontSize='inherit' color='inherit'/>
     };
-    console.log("icon")
-    console.log(representation.icon)
+
+
     const Icon: React.FC = textToIcon[representation.icon!];
     return (
 

@@ -25,6 +25,8 @@ interface JavascripterProps {
 const App: React.FC<JavascripterProps>=  () => {
     const [menuIsVisible, setMenuIsVisible] = useState(false);
     const [token,setToken] = useContext(TokenContext);
+
+    const setView = useContext(RouterContext);
     if (token) {
         return (
              <div className="App">

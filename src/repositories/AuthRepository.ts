@@ -33,8 +33,8 @@ export module AuthRepository {
         response = await fetch(endpoint, options)
             .then((response) => response.json())
             .then((data) => {
-                console.log("repo")
-                console.log(data);
+
+
                 return data;
             });
 
@@ -63,8 +63,8 @@ export module AuthRepository {
         response = await fetch(endpoint, options)
             .then((response) => response.json())
             .then((data) => {
-                console.log("repo")
-                console.log(data);
+
+
                 return data;
             });
 

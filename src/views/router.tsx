@@ -9,40 +9,81 @@ import {TokenContext} from "../Auth";
 import AttributeForm from "../components/reusable/attributesForm/AttributeFormComp";
 
 const routes: {[view: string]: React.FC<any>} = {
-    "spacesOwned": () => Spaces({ownSpaces:true}),
-    "spacesFollowed": () => Spaces({ownSpaces:false}),
-    "mainViewTimeline": MainViewTimeline,
-    "collections": Collections,
-    "users": Users,
-    "register": Register,
-    "login": Login,
-    "spaceAttributeForm": AttributeForm
+    "/spaces-owned": () => Spaces({ownSpaces:true}),
+    "/spaces-followed": () => Spaces({ownSpaces:false}),
+    "/main-view-timeline": MainViewTimeline,
+    "/collections": Collections,
+    "/users": Users,
+    "/register": Register,
+    "/login": Login,
+    "/space-attribute-form": AttributeForm,
+    "/not-found": ()=>(<div style={{color: "black"}}><h1>Error 404, esta página no existe</h1></div>)
 }
+const history: {[entry:number]: {route:string, props:string}}= {}
 
-export let RouterContext: React.Context<any> = React.createContext(MainViewTimeline);
+export let RouterContext: React.Context<any> = React.createContext(Login);
 export let ViewContext: React.Context<React.FC> = React.createContext(Login);
 export function RouterContextProvider({children}: any){
 
+    const urlRoute = window.location.pathname;
+
+    const params = new URLSearchParams(window.location.search);
+    const urlProps: {[param: string]: string|number|boolean} = {};
+    params.forEach((value, param) => {
+        urlProps[param] = JSON.parse(value);
+    });
+
+    const [props, setProps] = useState<{[prop: string]: any}>(urlProps);
+    //const [routeOld,setRouteOld] = useState<string>("");
+    console.log("Por aqui entra");
+
     const [token,setToken] = useContext(TokenContext);
-    const [route, setRoute] = useState<string>('mainViewTimeline');
+    const [route, setRoute] = useState<string>(urlRoute);
+
+
+    const setRouteWithParams: Function = (newRoute: string, newProps :{[prop: string]: any}={}) =>{
+        console.log("Ruta en setRouteWithParams");
+        console.log(newRoute);
+        if((newRoute+JSON.stringify(newProps)) !== (route+JSON.stringify(props))){
+            console.log("se guarda historial");
+            setRoute(newRoute);
+            setProps(newProps);
+           window.history.pushState({entry: Object.keys(history).length}, "GalleryBox", newRoute);
+           history[Object.keys(history).length]={route: newRoute, props: JSON.stringify(newProps)};
+        }
+    }
+
+    useEffect(() =>{
+            window.onpopstate = function(e){
+                if(e.state){
+                    const historyEntry = history[e.state.entry];
+                    setRoute(historyEntry.route);
+                    setProps(JSON.parse(historyEntry.props));
+                }
+            };
+        },[])
+
     useEffect(()=>{
+            console.log("Token changes");
             if (!token) {
-                setRoute("login")
+                setRoute("/login")
             }else{
-                setRoute("mainViewTimeline")
+                setRoute(route)
             }
         }
     , [token]);
 
-    const [props, setProps] = useState<{[prop: string]: any}>({});
-
-    const setRouteWithParams: Function = (route: string, props :{[prop: string]: any}={}) =>{
-        setRoute(route);
-        setProps(props);
+    if(route=="/"){
+        console.log("la ruta es una barra");
+        if (token){
+            setRouteWithParams("/main-view-timeline");
+        }else{
+            setRouteWithParams("/login");
+        }
+    }else if (!(route in routes)){ // 404 Not Found
+        setRouteWithParams("/not-found")
     }
-
-    let View: React.FC = ()=>routes[route](props);
-
+    const View: React.FC = ()=>routes[route](props);
 
     return (
             <RouterContext.Provider value={setRouteWithParams}>

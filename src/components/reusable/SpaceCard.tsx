@@ -22,7 +22,7 @@ function SpaceCard({space}: SpaceCardProps){
     useEffect( () => {
             UserRepository.getUsersByFollowedSpaceId(space._id)
                 .then(data => {
-                    console.log('users: ' + JSON.stringify(data))
+
                     setUsers(data);
                 })
         }
@@ -30,7 +30,7 @@ function SpaceCard({space}: SpaceCardProps){
     useEffect( () => {
             CollectibleRepository.getSpaceTimeline(space._id)
                 .then(data => {
-                    console.log('timeline: ' + JSON.stringify(data))
+
                     setCollectibles(data);
                 })
         }
@@ -38,7 +38,7 @@ function SpaceCard({space}: SpaceCardProps){
     useEffect( () => {
             UserRepository.getUserByOwnedSpaceId(space._id)
                 .then(data => {
-                    console.log('owned: ' + JSON.stringify(data))
+
                     setOwner(data);
                 })
         }
