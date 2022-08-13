@@ -51,10 +51,10 @@
     width: auto;
     margin-right: 1em;
     padding: 10px;
-    font-weight: bold;
     font-size: 1.33rem;
     cursor:pointer;
     border-radius: var(--border-radius);
+    font-family: "Rye";
 }
 
 
