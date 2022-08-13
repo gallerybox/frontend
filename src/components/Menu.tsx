@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import profilePhoto from '../assets/ft.jpg'
+import profilePhoto from '../assets/avatar-default.png'
 import {RouterContext} from "../views/router";
 import {TokenContext, UserContext} from "../Auth";
 import {HomeSharp, PowerSettingsNewSharp, AutoAwesomeMotionSharp} from '@mui/icons-material'
@@ -42,7 +42,7 @@ function Menu({isVisible}: MenuProps){
             <div className="menu-column">
                 <div className="full flex-col">
                     <div className="photo-container">
-                        <div className="profile-photo" style={{backgroundImage: `url(${profilePhoto})`}}></div>
+                        <div className="profile-photo" style={{backgroundImage: `url(${loggedUser.profileImage?loggedUser.profileImage:profilePhoto})`}}></div>
                     </div>
                     <div className="flex-col-start">
                         <span className="bold clickable full-margin" onClick={()=>setView("/users",{users:followers})}>{followers?.length}&nbsp;&nbsp;seguidor{followers?.length==1?"":"es"}</span>

@@ -21,6 +21,7 @@ export interface UserDTO  {
     "collections": Array<CollectionDTO>;
     "nombre"?: string;
     "apellidos"?: string;
+    "profileImage"?: string;
     "__v": number;
 }
 

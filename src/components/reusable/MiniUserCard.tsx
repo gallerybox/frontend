@@ -7,7 +7,7 @@ import {DynamicAttribute, DynamicRepresentation, DynamicType} from "../../reposi
 import Attribute from "./attributes/Attribute";
 import Link from "./Link";
 import {CollectionDTO, UserDTO} from "../../repositories/UserRepository";
-import profilePhoto from "../../assets/ft.jpg";
+import profilePhoto from "../../assets/avatar-default.png";
 import {UserContext} from "../../Auth";
 interface MiniUserCardProps{
     user: UserDTO;
@@ -20,7 +20,7 @@ function MiniUserCard({user}: MiniUserCardProps){
             <div className="flex-text-row full flex-row-space">
                 <div className="flex-text-row">
                     <div className="photo-container2 margin">
-                        <div className="profile-photo" style={{backgroundImage: `url(${profilePhoto})`}}></div>
+                        <div className="profile-photo" style={{backgroundImage: `url(${user.profileImage?user.profileImage:profilePhoto})`}}></div>
                     </div>
                     <div className="flex-col margin">
                         <header className="flex-row full-margin bold big-font">
