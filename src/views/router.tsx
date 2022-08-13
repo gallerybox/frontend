@@ -7,13 +7,17 @@ import Register from "../components/Register";
 import Login from "../components/Login";
 import {TokenContext} from "../Auth";
 import AttributeForm from "../components/reusable/attributesForm/AttributeFormComp";
+import User from "./User";
+import Space from "./Space";
 
 const routes: {[view: string]: React.FC<any>} = {
     "/spaces-owned": () => Spaces({ownSpaces:true}),
     "/spaces-followed": () => Spaces({ownSpaces:false}),
+    "/space": Space,
     "/main-view-timeline": MainViewTimeline,
     "/collections": Collections,
     "/users": Users,
+    "/user": User,
     "/register": Register,
     "/login": Login,
     "/space-attribute-form": AttributeForm,

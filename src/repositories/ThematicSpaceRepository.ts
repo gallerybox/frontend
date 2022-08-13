@@ -1,4 +1,4 @@
-import {JsonType} from "./ValueObjects";
+import {JsonType, Response} from "./ValueObjects";
 import {backend_url, headers} from "./config";
 
 export interface TypeDTO {
@@ -30,8 +30,8 @@ export module ThematicSpaceRepository {
     export const token: {value: string | boolean | null}= {value: null};
     export async function test(): Promise<ThematicSpaceDTO> {
 
-        const endpoint = url + "/thematic-spaces/"
-        headers["Authorization"] = `Bearer ${token.value}`
+        const endpoint = url + "/thematic-spaces/";
+        headers["Authorization"] = `Bearer ${token.value}`;
         const options = {
             method: "GET",
             headers: headers,
@@ -48,6 +48,30 @@ export module ThematicSpaceRepository {
             .then((response) => response.json())
             .then((data) => {
 
+                return data;
+            });
+
+        return response
+    }
+    export async function getSpaceById(spaceId: string): Promise<Response<ThematicSpaceDTO>> {
+
+        const endpoint = url + `/thematic-spaces/id/${spaceId}`;
+        headers["Authorization"] = `Bearer ${token.value}`;
+        const options = {
+            method: "GET",
+            headers: headers,
+            /*
+            body: JSON.stringify({
+                a: 10,
+                b: 20,
+            }),
+            */
+
+        };
+        let response: Response<ThematicSpaceDTO>;
+        response = await fetch(endpoint, options)
+            .then((response) => response.json())
+            .then((data) => {
                 return data;
             });
 
