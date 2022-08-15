@@ -115,7 +115,7 @@ const Register: React.FC = () => {
                 
                     <FormError message={errors["incorrectRegister"]}/>
                 </form>
-                <Link text="Consulta los términos y condiciones de GalleryBox" onClickAction={()=>setView("/terms-and-conditions")}/>
+                    <Link text="Consulta los términos y condiciones de GalleryBox" onClickAction={()=>setView("/terms-and-conditions")}/>
                 <Link text="¿Ya tiene cuenta? Inicie sesión" onClickAction={()=>setView("/login")}/>
             </div>
         </div>

@@ -67,8 +67,7 @@ const Login: React.FC = function (){
                     <FormError message={errors["incorrectEmailPassword"]}/>
                 </form>
 
-                <Link text="¿Olvidaste tu contraseña?" onClickAction={()=>alert("olvido contraseña")}/>
-
+                <Link text="¿Olvidaste tu contraseña?" onClickAction={()=>setView("/forgot-password")}/>
                 <Link text="¿Aún no tienes cuenta en GalleryBox? ¡Registrate!" onClickAction={()=>setView("/register")}/>
             </div>
         </div>

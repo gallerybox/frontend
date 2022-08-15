@@ -10,6 +10,7 @@ import AttributeForm from "../components/reusable/attributesForm/AttributeFormCo
 import User from "./User";
 import Space from "./Space";
 import TermsAndConditions from "./TermsAndConditions";
+import ForgotPassword from "./ForgotPassword";
 
 const routes: {[view: string]: React.FC<any>} = {
     "/spaces-owned": () => Spaces({ownSpaces:true}),
@@ -23,6 +24,7 @@ const routes: {[view: string]: React.FC<any>} = {
     "/login": Login,
     "/space-attribute-form": AttributeForm,
     "/terms-and-conditions": TermsAndConditions,
+    "/forgot-password": ForgotPassword,
     "/not-found": ()=>(<div style={{color: "black"}}><h1>Error 404, esta página no existe</h1></div>)
 }
 const history: {[entry:number]: {route:string, props:string}}= {}
