@@ -10,6 +10,7 @@ import AttributeForm from "../components/reusable/attributesForm/AttributeFormCo
 import User from "./User";
 import Space from "./Space";
 
+/*
 const routes: {[view: string]: React.FC<any>} = {
     "/spaces-owned": () => Spaces({ownSpaces:true}),
     "/spaces-followed": () => Spaces({ownSpaces:false}),
@@ -23,6 +24,26 @@ const routes: {[view: string]: React.FC<any>} = {
     "/space-attribute-form": AttributeForm,
     "/not-found": ()=>(<div style={{color: "black"}}><h1>Error 404, esta página no existe</h1></div>)
 }
+*/
+
+const routesNoAuth : {[view: string]: React.FC<any>} = {
+    "/space": Space,
+    "/collections": Collections,
+    "/users": Users,
+    "/user": User,
+    "/register": Register,
+    "/login": Login,
+    "/not-found": ()=>(<div style={{color: "black"}}><h1>Error 404, esta página no existe</h1></div>)
+}
+const routesAuth: {[view: string]: React.FC<any>} = {
+    "/spaces-owned": () => Spaces({ownSpaces:true}),
+    "/spaces-followed": () => Spaces({ownSpaces:false}),
+    "/main-view-timeline": MainViewTimeline,
+    "/space-attribute-form": AttributeForm,
+}
+
+const routes : {[view: string]: React.FC<any>} = {...routesNoAuth, ...routesAuth};
+
 const history: {[entry:number]: {route:string, props:string}}= {}
 
 export let RouterContext: React.Context<any> = React.createContext(Login);
@@ -69,7 +90,7 @@ export function RouterContextProvider({children}: any){
 
     useEffect(()=>{
             console.log("Token changes");
-            if (!token) {
+            if (!token && route in routesAuth) {
                 setRoute("/login")
             }else{
                 setRoute(route)
