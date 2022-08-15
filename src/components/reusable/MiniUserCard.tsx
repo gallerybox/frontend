@@ -3,10 +3,10 @@ import React, {useState, useEffect, ReactElement, useContext} from 'react';
 import {CollectibleDTO} from "../../repositories/CollectibleRepository";
 import {Card, CardHeader, Avatar, IconButton, CardMedia, CardContent, Typography, Button} from '@mui/material';
 import {MoreVert} from '@mui/icons-material'
-import {DynamicAttribute, DynamicRepresentation, DynamicType} from "../../repositories/ValueObjects";
+import {DynamicAttribute, DynamicRepresentation, DynamicType, Response} from "../../repositories/ValueObjects";
 import Attribute from "./attributes/Attribute";
 import Link from "./Link";
-import {CollectionDTO, UserDTO} from "../../repositories/UserRepository";
+import {CollectionDTO, UserDTO, UserRepository} from "../../repositories/UserRepository";
 import profilePhoto from "../../assets/avatar-default.png";
 import {UserContext} from "../../Auth";
 interface MiniUserCardProps{
@@ -14,7 +14,18 @@ interface MiniUserCardProps{
 }
 
 function MiniUserCard({user}: MiniUserCardProps){
-    const [userLogged, setUserLogged] = useContext(UserContext);
+    const [userId, setUserId] = useContext(UserContext);
+    const [loggedUser, setLoggedUser] = useState<Response<UserDTO>>({followedUsers:[]});
+    useEffect(() => {
+        UserRepository.getUser(userId)
+            .then(data => {
+                    console.log("Holaaaaa");
+                    console.log(loggedUser);
+                    setLoggedUser(data);
+
+                }
+            )
+    },[]);
     return (
         <div className="MiniUserCard flex-col halfable-margin">
             <div className="flex-text-row full flex-row-space">
@@ -25,7 +36,7 @@ function MiniUserCard({user}: MiniUserCardProps){
                     <div className="flex-col margin">
                         <header className="flex-row full-margin bold big-font">
                             <div className="flex-text-row">
-                                <span className="bold">{user.nickname}</span>
+                                <span className="bold clickable">{user.nickname}</span>
                             </div>
                         </header>
 
@@ -37,8 +48,8 @@ function MiniUserCard({user}: MiniUserCardProps){
                     </div>
                 </div>
                 <div className="margin">
-                    <Button variant="contained" color="primary" onClick={()=>alert(user.followedUsers.includes(userLogged)?"Dejar de seguir": "Seguir")}>
-                        {user.followedUsers.includes(userLogged)?"Dejar de seguir": "Seguir"}
+                    <Button variant="contained" color="primary" onClick={()=>alert(loggedUser.followedUsers!.some(f => f._id === user._id)?"Dejar de seguir": "Seguir")}>
+                        {loggedUser.followedUsers!.some(f => f._id === user._id)?"Dejar de seguir": "Seguir"}
                     </Button>
                 </div>
             </div>

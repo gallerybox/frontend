@@ -150,7 +150,7 @@
     width: 100%;
 }
 
-.Collections, .MainViewTimeline, .Login, .Spaces {
+.Collections, .MainViewTimeline, .Login, .Spaces, .Space, .User{
     color: black;
 }
 
@@ -177,7 +177,7 @@
     color: var(--error-color);
 }
 
-.ReducedCollectible, .MiniCollectibleCard, .CollectionCard, .SpaceCard, .MiniUserCard
+.ReducedCollectible, .MiniCollectibleCard, .CollectionCard, .SpaceCard, .MiniUserCard, .SpaceCard, .card
 {
     background: var(--card-main-color);
     border-radius: var(--border-radius);
@@ -211,11 +211,11 @@
 .full-margin ~ .full-margin, .halfable-margin ~ .halfable-margin{
     margin: 0rem 1rem 1rem 1rem;
 }
-.margin {
+.margin, margin-row {
     margin: 1rem;
 }
 
-.margin ~ .margin{
+.margin ~ .margin, margin-row ~ .margin-row{
     margin: 0rem 1rem 1rem 1rem;
 }
 
@@ -260,6 +260,7 @@
     align-items: center;
 
 }
+
 .bold { /* Used to combine text with icons in menu*/
     font-weight: bold;
 }
@@ -298,6 +299,9 @@
     .full-margin, .halfable-margin{
         margin: 2rem;
         width: calc(100% - 4rem);
+    }
+    .margin-row {
+        margin: 1rem;
     }
 
     .full-margin ~ .full-margin, .halfable-margin ~ .halfable-margin{
@@ -354,6 +358,9 @@
     }
     .full-margin {
         width: calc(100% - 4rem);
+    }
+    .margin-row {
+        margin: 1rem;
     }
 
     .explicative-text {

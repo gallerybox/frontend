@@ -9,6 +9,7 @@ import MiniCollectibleCard from "../components/reusable/MiniCollectibleCard";
 import MiniUserCard from "../components/reusable/MiniUserCard";
 import profilePhoto from "../assets/avatar-default.png";
 import {Button} from "@mui/material";
+import Link from "../components/reusable/Link";
 
 interface UserProps {
     userId: string;
@@ -18,45 +19,102 @@ interface UserProps {
 const User: React.FC<UserProps>= function ({userId}: UserProps){
     const [token, setToken] = useContext(TokenContext);
     const [loggedUser, setLoggedUser] = useContext(UserContext);
-    const [user, setUser] = useState<Response<UserDTO>>({});
-
+    const [user, setUser] = useState<Response<UserDTO>>({followedUsers:[], ownedThematicSpaces:[]});
+    const [followers, setFollowers] = useState<Response<Array<UserDTO>>| undefined>([]);
     UserRepository.token.value = token;
     useEffect(()=>{
         console.log(userId);
         UserRepository.getUser(userId).then(data=>{
             setUser(data);
+            console.log(data);
+            UserRepository.getUsersByFollowedUserId(data._id!)
+                .then(data => {
+                        setFollowers(data);
+                    }
+                )
         }
         )
         },[])
+    useEffect(() => {
+
+    },[]);
     return (
-        <div className="User flex-col halfable-margin">
-            <div className="flex-text-row full flex-row-space">
-                <div className="flex-text-row">
-                    <div className="photo-container2 margin">
-                        <div className="profile-photo" style={{backgroundImage: `url(${user.profileImage?user.profileImage:profilePhoto})`}}></div>
-                    </div>
-                    <div className="flex-col margin">
-                        <header className="flex-row full-margin bold big-font">
-                            <div className="flex-text-row">
-                                <span className="bold">{user.nickname}</span>
-                            </div>
-                        </header>
+        <div className="User flex-col full">
+            <div className="card flex-col halfable-margin">
 
-                        <footer className="flex-row full-margin">
-                            <div className="flex-text-row">
-                                <span>{user.nombre}&nbsp;{user.apellidos}</span>
-                            </div>
-                        </footer>
+                <div className="flex-row full flex-row-space">
+                    <div className="flex-text-row">
+                        <div className="photo-container2 margin">
+                            <div className="profile-photo" style={{backgroundImage: `url(${user.profileImage?user.profileImage:profilePhoto})`}}></div>
+                        </div>
+                        <div className="flex-col margin">
+                            <header className="flex-row full-margin bold big-font">
+                                <div className="flex-text-row">
+                                    <span className="bold">{user.nickname}</span>
+                                </div>
+                            </header>
+                            <footer className="flex-row full-margin">
+                                <div className="flex-text-row">
+                                    <span>{user.nombre}&nbsp;{user.apellidos}</span>
+                                </div>
+                            </footer>
+                        </div>
+                    </div>
+                    <div className="flex-col-center">
+                        <div className="flex-col-start">
+                            <span className="flex-text-row bold clickable margin">Seguidores {followers!.length}</span>
+                            <span className="flex-text-row bold clickable margin">Seguidos {user.followedUsers!.length}</span>
+                        </div>
                     </div>
                 </div>
-                <div className="margin">
-                    <Button variant="contained" color="primary" onClick={()=>alert("sdfs")}>
-                        sdfsdfsdf
-                    </Button>
+                <div className="flex-row flex-row-space full-margin">
+                    <div className="flex-text-row ">
+                        <span>{user.bio}</span>
+                    </div>
+
                 </div>
+                <div className="flex-col-start full">
+                    <div className="flex-row flex-row-space halfable">
+                        <div className="flex-col-start margin-row">
+                            <span className="bold margin">Espacios propios</span>
+                            {user.ownedThematicSpaces?.map(space=>
+                                <Link className="margin" text={space.name} onClickAction={()=>alert(space.name)}/>)}
+
+                        </div>
+                        <div className="flex-col-start margin-row">
+                            <span className="bold margin">Colaboraciones</span>
+                            <Link className="margin"  text="Ver espacios" onClickAction={()=>alert("Ver espacios")}/>
+                        </div>
+                    </div>
+                    <div className="flex-row flex-row-space halfable">
+                        <div className="flex-col-start margin">
+                            <span className="bold margin">Colecciones</span>
+                            <Link className="margin"  text="Ver colecciones" onClickAction={()=>alert("Ver colecciones")}/>
+                        </div>
+                    </div>
+                </div>
+
+                    <div className="flex-row flex-row-space full">
+                        <div className={loggedUser==user._id?"flex-col halfable":"invisible"}>
+                            <div className="margin">
+                                <Button  type="submit" variant="contained" color="primary" onClick={()=>alert("Editar perfil")}> Editar información </Button>
+                            </div>
+                            <div className="margin">
+                                <Button type="submit" variant="contained" color="primary" onClick={()=>alert("Editar perfil")}> Descargar tu información </Button>
+                            </div>
+                        </div>
+                        <div className="flex-col halfable">
+                            <div className="margin">
+                                <Button type="submit" variant="contained" color="primary" onClick={()=>alert("Editar perfil")}> Compartir perfil </Button>
+                            </div>
+                            <div className={loggedUser==user._id?"margin":"invisible"}>
+                                <Button type="submit" variant="contained" color="primary" onClick={()=>alert("Editar perfil")}> Eliminar perfil </Button>
+                            </div>
+                        </div>
+                    </div>
+
+
             </div>
-
-
         </div>
 
     );

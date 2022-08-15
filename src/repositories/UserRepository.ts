@@ -22,6 +22,7 @@ export interface UserDTO  {
     "nombre"?: string;
     "apellidos"?: string;
     "profileImage"?: string;
+    "bio"?: string;
     "__v": number;
 }
 

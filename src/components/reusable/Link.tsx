@@ -5,12 +5,13 @@ import {CollectibleDTO} from "../../repositories/CollectibleRepository";
 interface LinkProps{
     text: string;
     onClickAction: Function;
+    className?: string;
 }
 
-function Link({text, onClickAction}: LinkProps){
+function Link({text, onClickAction, className=""}: LinkProps){
 
     return (
-        <span className="Link clickable" onClick={()=>onClickAction()}>{text}</span>
+        <span className={"Link clickable"+" "+className} onClick={()=>onClickAction()}>{text}</span>
     );
 }
 
