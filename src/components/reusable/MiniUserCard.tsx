@@ -9,6 +9,7 @@ import Link from "./Link";
 import {CollectionDTO, UserDTO, UserRepository} from "../../repositories/UserRepository";
 import profilePhoto from "../../assets/avatar-default.png";
 import {UserContext} from "../../Auth";
+import {RouterContext} from "../../views/router";
 interface MiniUserCardProps{
     user: UserDTO;
 }
@@ -16,6 +17,7 @@ interface MiniUserCardProps{
 function MiniUserCard({user}: MiniUserCardProps){
     const [userId, setUserId] = useContext(UserContext);
     const [loggedUser, setLoggedUser] = useState<Response<UserDTO>>({followedUsers:[]});
+    const setView = useContext(RouterContext);
     useEffect(() => {
         UserRepository.getUser(userId)
             .then(data => {
@@ -30,13 +32,13 @@ function MiniUserCard({user}: MiniUserCardProps){
         <div className="MiniUserCard flex-col halfable-margin">
             <div className="flex-text-row full flex-row-space">
                 <div className="flex-text-row">
-                    <div className="photo-container2 margin">
+                    <div className="photo-container2 margin clickable" onClick={()=>setView("/user",{userId:user._id})}>
                         <div className="profile-photo" style={{backgroundImage: `url(${user.profileImage?user.profileImage:profilePhoto})`}}></div>
                     </div>
                     <div className="flex-col margin">
                         <header className="flex-row full-margin bold big-font">
                             <div className="flex-text-row">
-                                <span className="bold clickable">{user.nickname}</span>
+                                <span className="bold clickable" onClick={()=>setView("/user",{userId:user._id})}>{user.nickname}</span>
                             </div>
                         </header>
 

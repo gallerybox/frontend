@@ -1,4 +1,4 @@
-import React, {useState, useEffect, ReactElement} from 'react';
+import React, {useState, useEffect, ReactElement, useContext} from 'react';
 
 import {CollectibleDTO} from "../../repositories/CollectibleRepository";
 import {Card, CardHeader, Avatar, IconButton, CardMedia, CardContent, Typography } from '@mui/material';
@@ -6,11 +6,13 @@ import {MoreVert} from '@mui/icons-material'
 import {DynamicAttribute, DynamicRepresentation, DynamicType} from "../../repositories/ValueObjects";
 import Attribute from "./attributes/Attribute";
 import Link from "./Link";
+import {RouterContext} from "../../views/router";
 interface ReducedCollectibleProps{
     collectible: CollectibleDTO;
 }
 
 function MiniCollectibleCard({collectible}: ReducedCollectibleProps){
+    const setView = useContext(RouterContext);
     const tags: Array<string> = Object.keys(collectible.attributes);
     let time_ago_number: number = Math.abs(Date.now()-new Date(collectible.lastModified).getTime()) / 36e5;
     let time_unit: string = " hora"
@@ -30,7 +32,7 @@ function MiniCollectibleCard({collectible}: ReducedCollectibleProps){
     return (
         <div className="MiniCollectibleCard flex-col halfable-margin">
             <header className="flex-row full-margin bold big-font">
-                {collectible.thematicSpace.name}
+                <span className="clickable" onClick={()=>setView("/space",{spaceId:collectible.thematicSpace._id})}>{collectible.thematicSpace.name}</span>
             </header>
             <div className="card-body flex-col full-margin clickable">
                 {
@@ -42,7 +44,7 @@ function MiniCollectibleCard({collectible}: ReducedCollectibleProps){
             </div>
             <footer className="flex-row flex-row-space full-margin">
                 <div className="flex-text-row">
-                    <span className="bold">Por:&nbsp;</span><Link text={collectible.user.nickname} onClickAction={()=>alert(collectible.user.nickname)}/>
+                    <span className="bold">Por:&nbsp;</span><Link text={collectible.user.nickname} onClickAction={()=>setView("/user", {userId: collectible.user._id})}/>
                 </div>
                 <div className="flex-text-row">
                     <span>Hace&nbsp;</span><span>{time_ago_string}</span>

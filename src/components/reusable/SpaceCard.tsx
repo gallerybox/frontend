@@ -9,12 +9,14 @@ import Link from "./Link";
 import {CollectionDTO, UserDTO, UserRepository} from "../../repositories/UserRepository";
 import {ThematicSpaceDTO} from "../../repositories/ThematicSpaceRepository";
 import {TokenContext} from "../../Auth";
+import {RouterContext} from "../../views/router";
 interface SpaceCardProps{
     space: ThematicSpaceDTO;
 }
 
 function SpaceCard({space}: SpaceCardProps){
     const [token, setToken] = useContext(TokenContext);
+    const setView = useContext(RouterContext);
     const [users, setUsers] = useState<Response<Array<UserDTO>>>([]);
     const [collectibles, setCollectibles] = useState<Response<Array<CollectibleDTO>>>([]);
     const [owner, setOwner] = useState<Response<UserDTO>>({nickname: "loading"});
@@ -49,15 +51,15 @@ function SpaceCard({space}: SpaceCardProps){
         <div className="SpaceCard flex-col halfable-margin">
             <header className="flex-row flex-col full bold big-font full-margin">
                 <div className="flex-text-row flex-row-space full-margin">
-                    <span className="bold clickable">{space.name}</span>
+                    <span className="bold clickable" onClick={()=>setView("/space", {spaceId:space._id})}>{space.name}</span>
                     <span className="bold clickable">{collectibles.length} coleccionables</span>
                 </div>
                 <div className="flex-text-row flex-row-space full-margin">
                     <div className="flex-text-row">
                         <span className="bold">De:&nbsp;</span>
-                        <Link text={owner.nickname!} onClickAction={()=>alert(owner.nickname)}/>
+                        <Link text={owner.nickname!} onClickAction={()=>setView("/user",{userId:owner._id})}/>
                     </div>
-                    <span className="bold clickable">{users.length} usuarios</span>
+                    <span className="bold clickable" onClick={()=>setView("/users",{users:users})}>{users.length} colaboradores</span>
                 </div>
             </header>
 

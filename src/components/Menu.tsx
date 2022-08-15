@@ -41,7 +41,7 @@ function Menu({isVisible}: MenuProps){
         <div className={isVisible ? 'Menu active-color' : 'Menu invisible'} >
             <div className="menu-column">
                 <div className="full flex-col">
-                    <div className="photo-container">
+                    <div className="photo-container clickable" onClick={()=>setView("/user",{userId:user})}>
                         <div className="profile-photo" style={{backgroundImage: `url(${loggedUser.profileImage?loggedUser.profileImage:profilePhoto})`}}></div>
                     </div>
                     <div className="flex-col-start">

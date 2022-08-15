@@ -10,6 +10,7 @@ import MiniUserCard from "../components/reusable/MiniUserCard";
 import profilePhoto from "../assets/avatar-default.png";
 import {Button} from "@mui/material";
 import Link from "../components/reusable/Link";
+import {RouterContext} from "./router";
 
 interface UserProps {
     userId: string;
@@ -17,6 +18,7 @@ interface UserProps {
 
 
 const User: React.FC<UserProps>= function ({userId}: UserProps){
+    const setView = useContext(RouterContext);
     const [token, setToken] = useContext(TokenContext);
     const [loggedUser, setLoggedUser] = useContext(UserContext);
     const [user, setUser] = useState<Response<UserDTO>>({followedUsers:[], ownedThematicSpaces:[]});
@@ -62,8 +64,8 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
                     </div>
                     <div className="flex-col-center">
                         <div className="flex-col-start">
-                            <span className="flex-text-row bold clickable margin">Seguidores {followers!.length}</span>
-                            <span className="flex-text-row bold clickable margin">Seguidos {user.followedUsers!.length}</span>
+                            <span className="flex-text-row bold clickable margin" onClick={()=>setView("/users",{users:followers})}>Seguidores {followers!.length}</span>
+                            <span className="flex-text-row bold clickable margin" onClick={()=>setView("/users",{users:user.followedUsers})}>Seguidos {user.followedUsers!.length}</span>
                         </div>
                     </div>
                 </div>
@@ -74,20 +76,20 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
 
                 </div>
                 <div className="flex-col-start full">
-                    <div className="flex-row flex-row-space halfable">
-                        <div className="flex-col-start margin-row">
+                    <div className="flex-row flex-row-space">
+                        <div className="flex-col-start margin-row full-mobile">
                             <span className="bold margin">Espacios propios</span>
                             {user.ownedThematicSpaces?.map(space=>
                                 <Link className="margin" text={space.name} onClickAction={()=>alert(space.name)}/>)}
 
                         </div>
-                        <div className="flex-col-start margin-row">
+                        <div className="flex-col-start margin-row full-mobile">
                             <span className="bold margin">Colaboraciones</span>
                             <Link className="margin"  text="Ver espacios" onClickAction={()=>alert("Ver espacios")}/>
                         </div>
                     </div>
-                    <div className="flex-row flex-row-space halfable">
-                        <div className="flex-col-start margin">
+                    <div className="flex-row flex-row-space full">
+                        <div className="flex-col-start margin-row full-mobile">
                             <span className="bold margin">Colecciones</span>
                             <Link className="margin"  text="Ver colecciones" onClickAction={()=>alert("Ver colecciones")}/>
                         </div>

@@ -10,12 +10,14 @@ import {CollectibleDTO, CollectibleRepository} from "../repositories/Collectible
 import {Edit, Share} from '@mui/icons-material';
 import Link from "../components/reusable/Link";
 import {Button} from "@mui/material";
+import {RouterContext} from "./router";
 
 interface SpaceProps {
     spaceId: string;
 }
 
 const Space: React.FC<SpaceProps> = function ({spaceId}:SpaceProps){
+    const setView = useContext(RouterContext);
     const [token, setToken] = useContext(TokenContext);
     const [user, setUser] = useContext(UserContext);
     const [space, setSpace] = useState<Response<ThematicSpaceDTO>>({})
@@ -69,7 +71,7 @@ const Space: React.FC<SpaceProps> = function ({spaceId}:SpaceProps){
                             <span className="bold">De:&nbsp;</span>
                             <Link text={owner.nickname!} onClickAction={()=>alert(owner.nickname)}/>
                         </div>
-                        <span className="bold clickable">{colaborators.length} usuarios</span>
+                        <span className="bold clickable" onClick={()=>setView("/users",{users:colaborators})}>{colaborators.length} colaboradores</span>
                     </div>
                 </header>
 
@@ -82,7 +84,8 @@ const Space: React.FC<SpaceProps> = function ({spaceId}:SpaceProps){
                 <div className="flex-row flex-row-space full-margin">
                     <div className="flex-text-row" style={{width: "1px"}}></div>
                     <div className="flex-row">
-                        <Button type="submit" variant="contained" color="primary" onClick={()=>alert(colaborators.some?.(c => c._id === user)?"Nueva colección": "Participar")}> {colaborators.some?.(c => c._id === user)?"Nueva colección": "Participar"} </Button>
+                        <Button type="submit" variant="contained" color="primary" onClick={()=>alert(colaborators.some?.(c => c._id === user)||owner._id==user?"Nueva colección": "Participar")}>
+                            {colaborators.some?.(c => c._id === user)||owner._id===user?"Nueva colección": "Participar"} </Button>
                     </div>
                 </div>
 

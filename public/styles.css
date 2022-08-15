@@ -29,13 +29,15 @@
 
 
 .photo-container {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 1;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    border-radius: 15%;
 }
 .photo-container2 {
     height: 100px;
     aspect-ratio: 1;
+    border-radius: 15%;
 }
 
 .profile-photo {
@@ -270,7 +272,11 @@
 .big-font{
     font-size: 1rem;
 }
-
+@media all and (max-width: 600px) {
+    .full-mobile {
+        width: 100%;
+    }
+}
 /* Tablet menu */
 @media all and (min-width: 600px) {
     .MainHeader {
