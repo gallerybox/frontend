@@ -37,6 +37,8 @@ const routesNoAuth : {[view: string]: React.FC<any>} = {
     "/user": User,
     "/register": Register,
     "/login": Login,
+    "/terms-and-conditions": TermsAndConditions,
+    "/forgot-password": ForgotPassword,
     "/not-found": ()=>(<div style={{color: "black"}}><h1>Error 404, esta página no existe</h1></div>)
 }
 const routesAuth: {[view: string]: React.FC<any>} = {
