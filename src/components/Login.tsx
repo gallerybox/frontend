@@ -69,7 +69,7 @@ const Login: React.FC = function (){
 
                 <Link text="¿Olvidaste tu contraseña?" onClickAction={()=>alert("olvido contraseña")}/>
 
-                <Link text="¿Aún no tienes cuenta en GalleryBox? ¡Registrate!" onClickAction={()=>setView("register")}/>
+                <Link text="¿Aún no tienes cuenta en GalleryBox? ¡Registrate!" onClickAction={()=>setView("/register")}/>
             </div>
         </div>
 
