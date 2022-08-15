@@ -11,6 +11,8 @@ import User from "./User";
 import Space from "./Space";
 import TermsAndConditions from "./TermsAndConditions";
 import ForgotPassword from "./ForgotPassword";
+import SpaceForm from "./SpaceForm";
+import NotFound from "./not-found/NotFound";
 
 /*
 const routes: {[view: string]: React.FC<any>} = {
@@ -39,10 +41,11 @@ const routesNoAuth : {[view: string]: React.FC<any>} = {
     "/login": Login,
     "/terms-and-conditions": TermsAndConditions,
     "/forgot-password": ForgotPassword,
-    "/not-found": ()=>(<div style={{color: "black"}}><h1>Error 404, esta página no existe</h1></div>)
+    "/not-found": NotFound//()=>(<div style={{color: "black"}}><h1>Error 404, esta página no existe</h1></div>)
 }
 const routesAuth: {[view: string]: React.FC<any>} = {
     "/spaces-owned": () => Spaces({ownSpaces:true}),
+    "/space-form": SpaceForm,
     "/spaces-followed": () => Spaces({ownSpaces:false}),
     "/main-view-timeline": MainViewTimeline,
     "/space-attribute-form": AttributeForm,
