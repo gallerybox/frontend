@@ -9,6 +9,7 @@ import {TokenContext} from "../Auth";
 import AttributeForm from "../components/reusable/attributesForm/AttributeFormComp";
 import User from "./User";
 import Space from "./Space";
+import TermsAndConditions from "./TermsAndConditions";
 
 const routes: {[view: string]: React.FC<any>} = {
     "/spaces-owned": () => Spaces({ownSpaces:true}),
@@ -21,6 +22,7 @@ const routes: {[view: string]: React.FC<any>} = {
     "/register": Register,
     "/login": Login,
     "/space-attribute-form": AttributeForm,
+    "/terms-and-conditions": TermsAndConditions,
     "/not-found": ()=>(<div style={{color: "black"}}><h1>Error 404, esta página no existe</h1></div>)
 }
 const history: {[entry:number]: {route:string, props:string}}= {}
