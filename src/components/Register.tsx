@@ -40,6 +40,7 @@ const Register: React.FC = () => {
     const setView = useContext(RouterContext);
     const [formState, dispatch] = useReducer(formReducer, initialFormState);
     const [submitEvent, setSubmitEvent] = useState<React.FormEvent<HTMLFormElement> | null>(null);
+    const [errors, setErrors] = useState<{[error: string]: string}>({});
 
     const handleTextChange = (e: any) => {
         dispatch({
@@ -59,8 +60,16 @@ const Register: React.FC = () => {
             AuthRepository.register(formState.nombre, formState.apellidos, formState.nickname, 
                                     formState.email, formState.password, formState.hasConsented)
             .then(data =>{
-
-                setView("login");
+                if (data.error){
+                    setErrors(current => {
+                        current["incorrectRegister"] = data.error === undefined ? "Ha ocurrido un error": data.error;
+                        const next: {[error: string]: string} = {};
+                        Object.assign(next, current); // Hay que crear un objeto nuevo para que cambie la referencia del objeto y react detecte el cambio y vuelva a renderizar.
+                        return next
+                    })
+                }
+                else
+                    setView("/login");
             });
     };
     },[submitEvent]);
@@ -105,8 +114,9 @@ const Register: React.FC = () => {
 
                     <Button type="submit" variant="contained" color="primary"> Crear cuenta </Button>
                 
+                    <FormError message={errors["incorrectRegister"]}/>
                 </form>
-                <Link text="¿Ya tiene cuenta? Inicie sesión" onClickAction={()=>setView("login")}/>
+                <Link text="¿Ya tiene cuenta? Inicie sesión" onClickAction={()=>setView("/login")}/>
             </div>
         </div>
     );
