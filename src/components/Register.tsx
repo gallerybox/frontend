@@ -110,12 +110,12 @@ const Register: React.FC = () => {
                         />
                     
                  
-                    <Link text="Consulta los términos y condiciones de GalleryBox" onClickAction={()=>alert("TODO: Redirección a Términos y condiciones")}/>
 
                     <Button type="submit" variant="contained" color="primary"> Crear cuenta </Button>
                 
                     <FormError message={errors["incorrectRegister"]}/>
                 </form>
+                    <Link text="Consulta los términos y condiciones de GalleryBox" onClickAction={()=>setView("/terms-and-conditions")}/>
                 <Link text="¿Ya tiene cuenta? Inicie sesión" onClickAction={()=>setView("/login")}/>
             </div>
         </div>

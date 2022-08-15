@@ -166,6 +166,8 @@
 
 .explicative-text {
     font-size: 1rem;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
 }
 .Link {
     display: flex;

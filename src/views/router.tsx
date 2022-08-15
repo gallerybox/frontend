@@ -9,6 +9,8 @@ import {TokenContext} from "../Auth";
 import AttributeForm from "../components/reusable/attributesForm/AttributeFormComp";
 import User from "./User";
 import Space from "./Space";
+import TermsAndConditions from "./TermsAndConditions";
+import ForgotPassword from "./ForgotPassword";
 
 /*
 const routes: {[view: string]: React.FC<any>} = {
@@ -22,6 +24,8 @@ const routes: {[view: string]: React.FC<any>} = {
     "/register": Register,
     "/login": Login,
     "/space-attribute-form": AttributeForm,
+    "/terms-and-conditions": TermsAndConditions,
+    "/forgot-password": ForgotPassword,
     "/not-found": ()=>(<div style={{color: "black"}}><h1>Error 404, esta página no existe</h1></div>)
 }
 */
