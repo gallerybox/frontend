@@ -59,7 +59,7 @@ function SpaceCard({space}: SpaceCardProps){
                         <span className="bold">De:&nbsp;</span>
                         <Link text={owner.nickname!} onClickAction={()=>setView("/user",{userId:owner._id})}/>
                     </div>
-                    <span className="bold clickable" onClick={()=>setView("/users",{users:users})}>{users.length} colaboradores</span>
+                    <span className="bold clickable" onClick={()=>setView("/users",{spaceId:space._id})}>{users.length} colaboradores</span>
                 </div>
             </header>
 

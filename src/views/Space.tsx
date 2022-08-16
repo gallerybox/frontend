@@ -71,7 +71,7 @@ const Space: React.FC<SpaceProps> = function ({spaceId}:SpaceProps){
                             <span className="bold">De:&nbsp;</span>
                             <Link text={owner.nickname!} onClickAction={()=>alert(owner.nickname)}/>
                         </div>
-                        <span className="bold clickable" onClick={()=>setView("/users",{users:colaborators})}>{colaborators.length} colaboradores</span>
+                        <span className="bold clickable" onClick={()=>setView("/users",{spaceId:spaceId})}>{colaborators.length} colaboradores</span>
                     </div>
                 </header>
 

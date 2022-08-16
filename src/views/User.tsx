@@ -64,8 +64,8 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
                     </div>
                     <div className="flex-col-center">
                         <div className="flex-col-start">
-                            <span className="flex-text-row bold clickable margin" onClick={()=>setView("/users",{"users":followers})}>Seguidores {followers!.length}</span>
-                            <span className="flex-text-row bold clickable margin" onClick={()=>setView("/users",{"users":user.followedUsers})}>Seguidos {user.followedUsers!.length}</span>
+                            <span className="flex-text-row bold clickable margin" onClick={()=>setView("/users",{userId:userId, followers: true})}>Seguidores {followers!.length}</span>
+                            <span className="flex-text-row bold clickable margin" onClick={()=>setView("/users",{userId:userId})}>Seguidos {user.followedUsers!.length}</span>
                         </div>
                     </div>
                 </div>

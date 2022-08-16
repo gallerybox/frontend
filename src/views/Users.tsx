@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, useCallback} from 'react';
 import {TokenContext, UserContext} from "../Auth";
 import {CollectionDTO, UserDTO, UserRepository} from "../repositories/UserRepository";
 import CollectionCard from "../components/reusable/CollectionCard";
@@ -9,14 +9,39 @@ import MiniCollectibleCard from "../components/reusable/MiniCollectibleCard";
 import MiniUserCard from "../components/reusable/MiniUserCard";
 
 interface UsersProps {
-    users: Array<UserDTO>;
+    userId?: string;
+    followers?: boolean;
+    spaceId?: string;
 }
 
-const Users: React.FC<UsersProps> = function ({users}:UsersProps){
-    console.log(JSON.stringify(users));
+const Users: React.FC<UsersProps> = function ({userId, followers, spaceId}:UsersProps){
+    const [token, setToken] = useContext(TokenContext);
+    const [users, setUsers] = useState<Array<UserDTO>>([]);
+    UserRepository.token.value = token;
+    useEffect(()=>{
+            if(userId){
+                UserRepository.getUser(userId).then(data => {
+                        if(followers){
+                            UserRepository.getUsersByFollowedUserId(data._id!).then(
+                                data2 => setUsers(data2 as Array<UserDTO>)
+                            )
+                        }else{
+                            setUsers(data.followedUsers!);
+                        }
+                    }
+
+                )
+            }else if (spaceId) {
+                UserRepository.getUsersByFollowedSpaceId(spaceId).then(
+                    data => setUsers(data as Array<UserDTO>)
+                )
+            }
+        },[])
+
+
     return (
         <div className="Spaces flex-col full">
-            {users.map(user => <MiniUserCard user={user}/> )}
+            {users.map(user =><MiniUserCard user={user as UserDTO}/> )}
             <div className="loadContent full flex-col"> Loading... </div>
         </div>
     );
