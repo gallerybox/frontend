@@ -32,6 +32,20 @@ const routes: {[view: string]: React.FC<any>} = {
 }
 */
 
+const propsToQuery: Function = function (props: {[prop: string]: string|number|boolean}) {
+    let query: string="";
+    console.log(props);
+    if (Object.keys(props).length>0){
+        query = "?";
+        Object.keys(props).forEach((prop: string) => {
+           query = query +
+                (query.slice(-1)=="?"?"":"&") + prop + "=" + JSON.stringify(props[prop]);
+        });
+        return query;
+    }
+    return query;
+}
+
 const routesNoAuth : {[view: string]: React.FC<any>} = {
     "/space": Space,
     "/collections": Collections,
@@ -56,6 +70,7 @@ const routes : {[view: string]: React.FC<any>} = {...routesNoAuth, ...routesAuth
 const history: {[entry:number]: {route:string, props:string}}= {}
 
 export let RouterContext: React.Context<any> = React.createContext(Login);
+export let PathContext: React.Context<any> = React.createContext("Login");
 export let ViewContext: React.Context<React.FC> = React.createContext(Login);
 export function RouterContextProvider({children}: any){
 
@@ -82,8 +97,8 @@ export function RouterContextProvider({children}: any){
             console.log("se guarda historial");
             setRoute(newRoute);
             setProps(newProps);
-           window.history.pushState({entry: Object.keys(history).length}, "GalleryBox", newRoute);
-           history[Object.keys(history).length]={route: newRoute, props: JSON.stringify(newProps)};
+            window.history.pushState({entry: Object.keys(history).length}, "GalleryBox", newRoute+propsToQuery(newProps));
+            history[Object.keys(history).length]={route: newRoute, props: JSON.stringify(newProps)};
         }
     }
 
@@ -121,9 +136,11 @@ export function RouterContextProvider({children}: any){
 
     return (
             <RouterContext.Provider value={setRouteWithParams}>
-                <ViewContext.Provider value={View}>
-                    {children}
-                </ViewContext.Provider>
+                <PathContext.Provider value={route}>
+                    <ViewContext.Provider value={View}>
+                        {children}
+                    </ViewContext.Provider>
+                </PathContext.Provider>
             </RouterContext.Provider>
         )
 

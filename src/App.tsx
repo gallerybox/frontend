@@ -8,7 +8,7 @@ import {ThematicSpaceRepository} from "./repositories/ThematicSpaceRepository";
 import Hamburger from 'hamburger-react'
 import MainHeader from "./components/MainHeader";
 import Main from "./components/Main";
-import {RouterContext, RouterContextProvider} from "./views/router";
+import {PathContext, RouterContext, RouterContextProvider, ViewContext} from "./views/router";
 import Login from "./components/Login";
 import {TokenContext, UserContext, UserContextProvider} from "./Auth";
 import Content from "./components/Content";
@@ -17,6 +17,8 @@ import blue from '@mui/material/colors/blue';
 import {red} from "@mui/material/colors";
 import content from "./components/Content";
 import mainViewTimeline from "./views/MainViewTimeline";
+import TermsAndConditions from "./views/TermsAndConditions";
+import ForgotPassword from "./views/ForgotPassword";
 
 interface JavascripterProps {
   [key: string]: any;
@@ -25,9 +27,11 @@ interface JavascripterProps {
 const App: React.FC<JavascripterProps>=  () => {
     const [menuIsVisible, setMenuIsVisible] = useState(false);
     const [token,setToken] = useContext(TokenContext);
+    const path = useContext(PathContext);
 
-    const setView = useContext(RouterContext);
-    if (token) {
+    const noMenuViews: Array<string> = ["/login",  "/terms-and-conditions", "/forgot-password"];
+
+    if (!noMenuViews.includes(path)) {
         return (
              <div className="App">
                  <MainHeader

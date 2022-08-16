@@ -37,57 +37,68 @@ function Menu({isVisible}: MenuProps){
     },[]);
 
     return (
-
-        <div className={isVisible ? 'Menu active-color' : 'Menu invisible'} >
-            <div className="menu-column">
-                <div className="full flex-col">
-                    <div className="photo-container clickable" onClick={()=>setView("/user",{userId:user})}>
-                        <div className="profile-photo" style={{backgroundImage: `url(${loggedUser.profileImage?loggedUser.profileImage:profilePhoto})`}}></div>
+        <>
+            <div className={isVisible && token? 'Menu active-color' : 'Menu invisible'} >
+                <div className="menu-column">
+                    <div className="full flex-col">
+                        <div className="photo-container clickable" onClick={()=>setView("/user",{userId:user})}>
+                            <div className="profile-photo" style={{backgroundImage: `url(${loggedUser.profileImage?loggedUser.profileImage:profilePhoto})`}}></div>
+                        </div>
+                        <div className="flex-col-start">
+                            <span className="bold clickable full-margin" onClick={()=>setView("/users",{users:followers})}>{followers?.length}&nbsp;&nbsp;seguidor{followers?.length==1?"":"es"}</span>
+                            <span className="bold clickable full-margin" onClick={()=>setView("/users",{users:followedUsers})}>{followedUsers?.length}&nbsp;&nbsp;seguido{followedUsers?.length==1?"":"s"}</span>
+                        </div>
                     </div>
-                    <div className="flex-col-start">
-                        <span className="bold clickable full-margin" onClick={()=>setView("/users",{users:followers})}>{followers?.length}&nbsp;&nbsp;seguidor{followers?.length==1?"":"es"}</span>
-                        <span className="bold clickable full-margin" onClick={()=>setView("/users",{users:followedUsers})}>{followedUsers?.length}&nbsp;&nbsp;seguido{followedUsers?.length==1?"":"s"}</span>
-                    </div>
-                </div>
-                <div className="item">
-                    <div className="full flex-text-row">
-                        <HomeSharp/>
-                        <span>
-                            &nbsp;Espacios
-                        </span>
-                    </div>
-
                     <div className="item">
-                        <div className="item clickable" onClick={()=>setView("/spaces-owned")}><span>&nbsp;Propios</span></div>
-                        <div className="item clickable" onClick={()=>setView("/spaces-followed")}><span>&nbsp;Colabora</span></div>
-                    </div>
-                </div>
-                <div className="item clickable" onClick={()=>setView("/collections")}>
-                    <div className="full flex-text-row">
-                        <AutoAwesomeMotionSharp/>
-                        <span>&nbsp;Colecciones</span>
-                    </div>
-                </div>
-                <div className="item clickable" onClick={()=>{
-                                                        setToken(false);
-                                                        localStorage.removeItem("token");
+                        <div className="full flex-text-row">
+                            <HomeSharp/>
+                            <span>
+                                &nbsp;Espacios
+                            </span>
+                        </div>
 
-                                                        }}>
-                    <div className="full flex-text-row">
-                        <PowerSettingsNewSharp/>
-                        <span>&nbsp;Cerrar sesión</span>
+                        <div className="item">
+                            <div className="item clickable" onClick={()=>setView("/spaces-owned")}><span>&nbsp;Propios</span></div>
+                            <div className="item clickable" onClick={()=>setView("/spaces-followed")}><span>&nbsp;Colabora</span></div>
+                        </div>
+                    </div>
+                    <div className="item clickable" onClick={()=>setView("/collections")}>
+                        <div className="full flex-text-row">
+                            <AutoAwesomeMotionSharp/>
+                            <span>&nbsp;Colecciones</span>
+                        </div>
+                    </div>
+                    <div className="item clickable" onClick={()=>{
+                                                            setToken(false);
+                                                            localStorage.removeItem("token");
+
+                                                            }}>
+                        <div className="full flex-text-row">
+                            <PowerSettingsNewSharp/>
+                            <span>&nbsp;Cerrar sesión</span>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+            <div className={isVisible && !token? 'Menu active-color' : 'Menu invisible'} >
+                <div className="menu-column">
+                    <div className="item clickable" onClick={()=>{
+                        setView("/login");
+
+                    }}>
+                        <div className="full flex-text-row">
+
+                            <PowerSettingsNewSharp/>
+                            <span>&nbsp;Iniciar sesión</span>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div className="item clickable" onClick={()=>setView("/space-attribute-form")}>
-                <div className="full flex-text-row">
-                    <AutoAwesomeMotionSharp/>
-                    <span>&nbsp;Test form Utri</span>
-                </div>
-            </div>
-
-        </div>
-
+        </>
     );
 }
 

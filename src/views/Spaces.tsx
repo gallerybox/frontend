@@ -25,9 +25,7 @@ const Spaces: React.FC<SpacesProps> = function ({ownSpaces}:SpacesProps){
                     setSpaces(data.followedThematicSpaces!);
                 }
             }
-
             )
-
     },[]);
 
     return (
