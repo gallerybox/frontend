@@ -34,7 +34,6 @@ const routes: {[view: string]: React.FC<any>} = {
 
 const propsToQuery: Function = function (props: {[prop: string]: string|number|boolean}) {
     let query: string="";
-    console.log(props);
     if (Object.keys(props).length>0){
         query = "?";
         Object.keys(props).forEach((prop: string) => {
@@ -55,6 +54,7 @@ const routesNoAuth : {[view: string]: React.FC<any>} = {
     "/login": Login,
     "/terms-and-conditions": TermsAndConditions,
     "/forgot-password": ForgotPassword,
+    "/reset-password": ()=><div>Yeah, por hacer</div>,
     "/not-found": NotFound//()=>(<div style={{color: "black"}}><h1>Error 404, esta página no existe</h1></div>)
 }
 const routesAuth: {[view: string]: React.FC<any>} = {
@@ -67,7 +67,7 @@ const routesAuth: {[view: string]: React.FC<any>} = {
 
 const routes : {[view: string]: React.FC<any>} = {...routesNoAuth, ...routesAuth};
 
-const history: {[entry:number]: {route:string, props:string}}= {}
+let history: {[entry:number]: {route:string, props:string}}= {}
 
 export let RouterContext: React.Context<any> = React.createContext(Login);
 export let PathContext: React.Context<any> = React.createContext("Login");
@@ -82,29 +82,61 @@ export function RouterContextProvider({children}: any){
         urlProps[param] = JSON.parse(value);
     });
 
+
+    if(Object.keys(history).length<=0 && localStorage.getItem("history")){
+        history = JSON.parse(localStorage.getItem("history") as string);
+        // Keeping contained size of history
+        const historyLenght = Object.keys(history).length;
+        const maxNEntries = 10
+        if (historyLenght>maxNEntries){
+            let nDeletes = 0;
+            for (const entry of Object.keys(history).sort(key=> key as unknown as number)){
+                const n_entry = entry as unknown as number;
+                delete history[n_entry];
+                nDeletes +=1;
+                if (nDeletes>= (historyLenght-maxNEntries)){
+                    break;
+                }
+            }
+            /*
+            // Updating index of entries
+            for (const entry of Object.keys(history).sort(key=> key as unknown as number)){
+                const n_entry = entry as unknown as number;
+                history[n_entry-nDeletes]= history[n_entry];
+                delete history[n_entry];
+            }
+            */
+
+            localStorage.setItem("history", JSON.stringify(history));
+        }
+    }
+
     const [props, setProps] = useState<{[prop: string]: any}>(urlProps);
-    //const [routeOld,setRouteOld] = useState<string>("");
-    console.log("Por aqui entra");
+
+
 
     const [token,setToken] = useContext(TokenContext);
     const [route, setRoute] = useState<string>(urlRoute);
 
 
     const setRouteWithParams: Function = (newRoute: string, newProps :{[prop: string]: any}={}) =>{
-        console.log("Ruta en setRouteWithParams");
-        console.log(newRoute);
         if((newRoute+JSON.stringify(newProps)) !== (route+JSON.stringify(props))){
-            console.log("se guarda historial");
             setRoute(newRoute);
             setProps(newProps);
             window.history.pushState({entry: Object.keys(history).length}, "GalleryBox", newRoute+propsToQuery(newProps));
-            history[Object.keys(history).length]={route: newRoute, props: JSON.stringify(newProps)};
+            const entry: number = Object.keys(history).length!=0?Math.max(Object.keys(history).map(key=> key as unknown as number).sort(n=>-n)[0])+1:0;
+            console.log("Entry max");
+            console.log(entry);
+            history[entry]={route: newRoute, props: JSON.stringify(newProps)};
+            localStorage.setItem("history", JSON.stringify(history));
         }
     }
 
     useEffect(() =>{
             window.onpopstate = function(e){
                 if(e.state){
+                    console.log("Browser history")
+                    console.log(e.state.entry);
                     const historyEntry = history[e.state.entry];
                     setRoute(historyEntry.route);
                     setProps(JSON.parse(historyEntry.props));
@@ -113,7 +145,6 @@ export function RouterContextProvider({children}: any){
         },[])
 
     useEffect(()=>{
-            console.log("Token changes");
             if (!token && route in routesAuth) {
                 setRoute("/login")
             }else{
@@ -122,12 +153,14 @@ export function RouterContextProvider({children}: any){
         }
     , [token]);
 
-    if(route=="/"){
-        console.log("la ruta es una barra");
+
+    if(["/", "/login", "/register", "/forgot-password", "/reset-password"].includes(route)){
         if (token){
             setRouteWithParams("/main-view-timeline");
-        }else{
+        }else if (route=="/"){
             setRouteWithParams("/login");
+        }else{
+            setRouteWithParams(route);
         }
     }else if (!(route in routes)){ // 404 Not Found
         setRouteWithParams("/not-found")

@@ -29,7 +29,7 @@ const App: React.FC<JavascripterProps>=  () => {
     const [token,setToken] = useContext(TokenContext);
     const path = useContext(PathContext);
 
-    const noMenuViews: Array<string> = ["/login",  "/terms-and-conditions", "/forgot-password"];
+    const noMenuViews: Array<string> = ["/login",  "/terms-and-conditions", "/forgot-password", "/reset-password", "/register"];
 
     if (!noMenuViews.includes(path)) {
         return (

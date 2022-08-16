@@ -71,7 +71,7 @@ function Menu({isVisible}: MenuProps){
                     <div className="item clickable" onClick={()=>{
                                                             setToken(false);
                                                             localStorage.removeItem("token");
-
+                                                            setView("/login")
                                                             }}>
                         <div className="full flex-text-row">
                             <PowerSettingsNewSharp/>
