@@ -87,7 +87,7 @@ export function RouterContextProvider({children}: any){
         history = JSON.parse(localStorage.getItem("history") as string);
         // Keeping contained size of history
         const historyLenght = Object.keys(history).length;
-        const maxNEntries = 10
+        const maxNEntries = 400;
         if (historyLenght>maxNEntries){
             let nDeletes = 0;
             for (const entry of Object.keys(history).sort(key=> key as unknown as number)){
@@ -137,7 +137,7 @@ export function RouterContextProvider({children}: any){
                 if(e.state){
                     console.log("Browser history")
                     console.log(e.state.entry);
-                    const historyEntry = history[e.state.entry];
+                    const historyEntry = history[e.state.entry as unknown as number];
                     setRoute(historyEntry.route);
                     setProps(JSON.parse(historyEntry.props));
                 }
