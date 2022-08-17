@@ -13,6 +13,11 @@ export interface UserLoginDTO {
     user: UserAuthDTO;
     access_token: string;
 }
+
+export interface PasswordDTO {
+    password: string
+}
+
 export module AuthRepository {
     const url = backend_url
     export async function login(email: string, password: string): Promise<Response<UserLoginDTO>> {
@@ -26,15 +31,11 @@ export module AuthRepository {
                 email: email,
                 password: password
             }),
-
-
         };
         let response: Response<UserLoginDTO>;
         response = await fetch(endpoint, options)
             .then((response) => response.json())
             .then((data) => {
-
-
                 return data;
             });
 
@@ -63,8 +64,52 @@ export module AuthRepository {
         response = await fetch(endpoint, options)
             .then((response) => response.json())
             .then((data) => {
+                return data;
+            });
 
+        return response
+    }
 
+    export async function forgotPassword(email: string) {
+            
+        const endpoint = url + "/auth/forgot-password/"
+        const options = {
+            method: "POST",
+            headers: headers,
+
+            body: JSON.stringify({
+                email: email,
+            }),
+        }
+
+        let response: Response<UserLoginDTO>;
+        response = await fetch(endpoint, options)
+            .then((response) => response.json())
+            .then((data) => {
+                return data;
+            });
+
+        return response
+    }
+    
+    export async function resetPassword(userId: string, token: string, password: string) {
+            
+        const endpoint = url + "/auth/reset-password/"
+        const options = {
+            method: "POST",
+            headers: headers,
+
+            body: JSON.stringify({
+                userId: userId,
+                token: token,
+                password: password,
+            }),
+        }
+
+        let response: Response<PasswordDTO>;
+        response = await fetch(endpoint, options)
+            .then((response) => response.json())
+            .then((data) => {
                 return data;
             });
 

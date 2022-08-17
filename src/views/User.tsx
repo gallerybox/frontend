@@ -47,7 +47,7 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
                 <div className="flex-row full flex-row-space">
                     <div className="flex-text-row">
                         <div className="photo-container2 margin">
-                            <div className="profile-photo" style={{backgroundImage: `url(${user.profileImage?user.profileImage:profilePhoto})`}}></div>
+                            <div className="profile-photo" style={{backgroundImage: `url(${user.profilePhoto?user.profilePhoto:profilePhoto})`}}></div>
                         </div>
                         <div className="flex-col margin">
                             <header className="flex-row full-margin bold big-font">

@@ -33,7 +33,7 @@ function MiniUserCard({user}: MiniUserCardProps){
             <div className="flex-text-row full flex-row-space">
                 <div className="flex-text-row">
                     <div className="photo-container2 margin clickable" onClick={()=>setView("/user",{userId:user._id})}>
-                        <div className="profile-photo" style={{backgroundImage: `url(${user.profileImage?user.profileImage:profilePhoto})`}}></div>
+                        <div className="profile-photo" style={{backgroundImage: `url(${user.profilePhoto?user.profilePhoto:profilePhoto})`}}></div>
                     </div>
                     <div className="flex-col margin">
                         <header className="flex-row full-margin bold big-font">
