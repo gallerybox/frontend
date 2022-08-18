@@ -70,6 +70,23 @@ export module AuthRepository {
         return response
     }
 
+    export async function validateToken(token: string) {
+        const endpoint = url + "/auth/verify-token/" + token
+        const options = {
+            method: "GET",
+            headers: headers
+        }
+
+        let response: Response<UserLoginDTO>;
+        response = await fetch(endpoint, options)
+            .then((response) => response.json())
+            .then((data) => {
+                return data;
+            });
+
+        return response
+    }
+
     export async function forgotPassword(email: string) {
             
         const endpoint = url + "/auth/forgot-password/"
@@ -94,7 +111,7 @@ export module AuthRepository {
     
     export async function resetPassword(userId: string, token: string, password: string) {
             
-        const endpoint = url + "/auth/reset-password/"
+        const endpoint = url + "/auth/reset-password/" + userId + "/" + token;
         const options = {
             method: "POST",
             headers: headers,

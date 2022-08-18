@@ -15,6 +15,7 @@ const ForgotPassword: React.FC = function (){
     const [submitEvent, setSubmitEvent] = useState<React.FormEvent<HTMLFormElement> | null>(null);
     const [email, setEmail] = useState("");
     const [errors, setErrors] = useState<{[error: string]: string}>({});
+    const [ success, setSuccess ] = useState(false);
 
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -27,6 +28,15 @@ const ForgotPassword: React.FC = function (){
         if (submitEvent != null) {
             AuthRepository.forgotPassword(email)
                 .then((data: any) => {
+                    if (data?.statusCode === 400 && data?.message === "INVALID_EMAIL" ) 
+                        setErrors(current => {
+                            current["incorrectEmail"] = "El email introducido no existe.";
+                            const next: {[error: string]: string} = {};
+                            Object.assign(next, current); 
+                            return next
+                        });
+                    else 
+                        setSuccess(true)
                 }
             );
         };
@@ -41,19 +51,24 @@ const ForgotPassword: React.FC = function (){
             </div>
             
             <div className="Login halfable flex-col-center">
-                <p>
+                <p className={success ? "invisible":""}>
                     Por favor, introduzca el email:
                 </p>
-                <form className="flex-col full" onSubmit={e => handleSubmit(e)}>
+                <form className={success ? "invisible":"flex-col full"} onSubmit={e => handleSubmit(e)}>
 
                     <TextField  type="email" id="email" name="email" label="Email"
                                 value={email} 
                                 onChange={(e) => setEmail(e.target.value)} 
                                 margin="normal" variant='standard'/>
+                    <FormError message={errors["incorrectEmail"]}/> 
                     <Button type="submit" variant="contained" color="primary"> Enviar </Button>
                 </form>
-                <Link text="¿Aún no tienes cuenta en GalleryBox? ¡Registrate!" onClickAction={()=>setView("/register")}/>
-                <FormError message={errors["incorrectEmailPassword"]}/>
+
+                <Link className={success ? "invisible":""} text="¿Aún no tienes cuenta en GalleryBox? ¡Registrate!" onClickAction={()=>setView("/register")}/>
+
+                <div className={success ? "":"invisible"}>
+                    Se ha mandado un enviado a su correo. Reviselo para resetear la contraseña.
+                </div>
             </div>
         </div>
 
