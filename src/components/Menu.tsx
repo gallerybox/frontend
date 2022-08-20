@@ -17,13 +17,12 @@ function Menu({isVisible}: MenuProps){
     const [loggedUser, setLoggedUser] = useState<Response<UserDTO>>({});
     const [followers, setFollowers] = useState<Response<Array<UserDTO>>>([]);
     const [followedUsers, setFollowedUsers] = useState<Response<Array<UserDTO>>| undefined>([]);
+
     UserRepository.token.value = token;
     useEffect(() => {
         UserRepository.getUser(user)
             .then(data => {
                     setLoggedUser(data);
-
-
                     setFollowedUsers(data!.followedUsers);
                 }
             )
@@ -42,7 +41,7 @@ function Menu({isVisible}: MenuProps){
                 <div className="menu-column">
                     <div className="full flex-col">
                         <div className="photo-container clickable" onClick={()=>setView("/user",{userId:user})}>
-                            <div className="profile-photo" style={{backgroundImage: `url(${loggedUser.profileImage?loggedUser.profileImage:profilePhoto})`}}></div>
+                            <div className="profile-photo" style={{backgroundImage: `url(${loggedUser.profilePhoto?loggedUser.profilePhoto:profilePhoto})`}}></div>
                         </div>
                         <div className="flex-col-start">
                             <span className="bold clickable full-margin" onClick={()=>setView("/users",{userId:user, followers: true})}>{followers?.length}&nbsp;&nbsp;seguidor{followers?.length==1?"":"es"}</span>

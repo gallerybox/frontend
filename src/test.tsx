@@ -14,7 +14,7 @@ interface JavascripterProps {
 const App: React.FC<JavascripterProps>=  ({subject}) => {
   const [json, setJson] = useState({});
   const [isOpen, setOpen] = useState(false)
-  const [profileImage, setProfileImage] = useState(ft)
+  const [profilePhoto, setProfilePhoto] = useState(ft)
   useEffect(() => {
     ThematicSpaceRepository.test().then(data => {setJson(data)})
   },[]); // Importante poner las dependencias en el array ese a vacío y se actualizará todo el rato, me ha tperato el mongodb

@@ -21,7 +21,7 @@ export interface UserDTO  {
     "collections": Array<CollectionDTO>;
     "nombre"?: string;
     "apellidos"?: string;
-    "profileImage"?: string;
+    "profilePhoto"?: string;
     "bio"?: string;
     "__v": number;
 }
@@ -98,6 +98,36 @@ export module UserRepository {
         let response: Response<Array<UserDTO>>;
 
         response = await fetch(endpoint, options)
+            .then(response => response.json())
+            .then(data => data);
+
+        return response;
+    }
+
+    export async function sendPersonalDataToEmail(userId: string) {
+        const endpoint = backend_url + `/profile/${userId}`;
+        headers["Authorization"] = `Bearer ${token.value}`
+        const options = {
+            method: "GET",
+            headers: headers
+        };
+
+        let response = await fetch(endpoint, options)
+            .then(response => response.json())
+            .then(data => data);
+
+        return response;
+    }
+
+    export async function deleteUser(userId: string) {
+        const endpoint = url + `/${userId}`;
+        headers["Authorization"] = `Bearer ${token.value}`
+        const options = {
+            method: "DELETE",
+            headers: headers
+        };
+
+        let response = await fetch(endpoint, options)
             .then(response => response.json())
             .then(data => data);
 
