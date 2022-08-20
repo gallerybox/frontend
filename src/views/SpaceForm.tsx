@@ -28,11 +28,7 @@ const SpaceForm: React.FC<SpaceFormProps> = function ({spaceId}:SpaceFormProps){
     const [space, setSpace] = useState<Response<ThematicSpaceDTO>>();
     const [rows, setRows] = useState<Array<Array<ReactElement>>>([]);
     const [tableEvent, setTableEvent] = useState(false);
-    const Mehggggg: React.FC = () =>{
-        return (<div>Hola</div>);
-    };
-
-    const [overlayView, setOverlayView] = useState<{component: React.FC}>({component: Mehggggg});//<OverlayContinue continueCallback={()=>alert("añadir atributo")} isInvisible={true}/>);
+    const [overlayView, setOverlayView] = useState<{component: React.FC}>({component: ()=><OverlayContinue  isInvisible={true} continueCallback={()=>0}/>});
 
     UserRepository.token.value = token;
     ThematicSpaceRepository.token.value = token;
@@ -79,13 +75,14 @@ const SpaceForm: React.FC<SpaceFormProps> = function ({spaceId}:SpaceFormProps){
                             row.push(attribute.type.category);
 
                             row.push(<div className="flex-col">
-                                        <Checkbox checked={attribute.showInReducedView} onChange={(e)=>alert(e)}/>
+                                        <Checkbox checked={attribute.showInReducedView} onChange={(e)=>alert(attribute.tag+" check")}/>
                                     </div>);
                                 row.push( (<div className="flex-text-row-center"><EditSharp className="clickable" onClick={()=>alert("Edit")}/> &nbsp;<DeleteSharp  className="clickable" onClick={()=>alert("Delete")}/> </div>));
 
                             return row;
                         }
                     );
+
                     newRows.push(...transformDataToReactElement(newAttributeRows));
                     setRows(newRows);
                 }
@@ -157,7 +154,7 @@ const SpaceForm: React.FC<SpaceFormProps> = function ({spaceId}:SpaceFormProps){
                             <RadioGroup
                                 defaultValue="1"
                                 name="radio-buttons-group"
-                                onChange={()=>alert("Radio button pulsado")}
+                                onChange={(event, value)=>alert(value)}
                             >
                                 <div className="flex-col-start full">
                                     <table>

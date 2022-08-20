@@ -10,7 +10,7 @@ export interface OverlayContinueProps{
 }
 
 const OverlayContinue: React.FC<OverlayContinueProps> = ({continueCallback, isInvisible=false}: OverlayContinueProps)=>{
-    const [invisible, setInvisible] = useState(false)
+    const [invisible, setInvisible] = useState(isInvisible)
 
     return (
 
