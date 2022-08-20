@@ -41,6 +41,7 @@ const Register: React.FC = () => {
     const [formState, dispatch] = useReducer(formReducer, initialFormState);
     const [submitEvent, setSubmitEvent] = useState<React.FormEvent<HTMLFormElement> | null>(null);
     const [errors, setErrors] = useState<{[error: string]: string}>({});
+    const [success, setSuccess] = useState(false);
 
     const handleTextChange = (e: any) => {
         dispatch({
@@ -67,9 +68,9 @@ const Register: React.FC = () => {
                         Object.assign(next, current); // Hay que crear un objeto nuevo para que cambie la referencia del objeto y react detecte el cambio y vuelva a renderizar.
                         return next
                     })
+                } else {
+                    setSuccess(true);
                 }
-                else
-                    setView("/login");
             });
     };
     },[submitEvent]);
@@ -81,7 +82,7 @@ const Register: React.FC = () => {
                 <p className="explicative-text halfable">Organiza tus colecciones y colabora con otros usuarios con nuestro software de gestión.</p>
             </div>
             <div className="Login halfable flex-col-center">
-                <form className="flex-col full" onSubmit={e => handleSubmit(e)}>
+                <form className={success ? "invisible" : "flex-col full"} onSubmit={e => handleSubmit(e)}>
                     <TextField type="text" value={formState.nombre} onChange={e => handleTextChange(e)} 
                                placeholder="nombre" name="nombre"
                                variant="standard" margin="normal"/>
@@ -115,8 +116,12 @@ const Register: React.FC = () => {
                 
                     <FormError message={errors["incorrectRegister"]}/>
                 </form>
-                    <Link text="Consulta los términos y condiciones de GalleryBox" onClickAction={()=>setView("/terms-and-conditions")}/>
-                <Link text="¿Ya tiene cuenta? Inicie sesión" onClickAction={()=>setView("/login")}/>
+                
+                <div className={success ? "":"invisible"}>
+                    ¡Bienvenid@ a nuestra comunidad!. Para comenzar, <Link text="inicie sesión" onClickAction={()=>setView("/login")}/>
+                </div>
+                <Link className={success ? "invisible" : "flex-col full"} text="Consulta los términos y condiciones de GalleryBox" onClickAction={()=>setView("/terms-and-conditions")}/>
+                <Link className={success ? "invisible" : "flex-col full"} text="¿Ya tiene cuenta? Inicie sesión" onClickAction={()=>setView("/login")}/>
             </div>
         </div>
     );

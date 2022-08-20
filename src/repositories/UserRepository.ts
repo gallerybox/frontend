@@ -121,7 +121,6 @@ export module UserRepository {
 
     export async function deleteUser(userId: string) {
         const endpoint = url + `/${userId}`;
-        alert(endpoint)
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "DELETE",

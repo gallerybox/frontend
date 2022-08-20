@@ -63,12 +63,15 @@ const Login: React.FC = function (){
                                variant="standard" margin="normal"/>
                     <TextField placeholder="password" value={password} onChange={(e)=>setPassword(e.target.value)} type="password" name="password"
                                variant="standard" margin="normal"/>
+                    <br/>
                     <Button type="submit" variant="contained" color="primary"> Iniciar sesión </Button>
                     <FormError message={errors["incorrectEmailPassword"]}/>
                 </form>
-
+                <br/>
                 <Link text="¿Olvidaste tu contraseña?" onClickAction={()=>setView("/forgot-password")}/>
                 <Link text="¿Aún no tienes cuenta en GalleryBox? ¡Registrate!" onClickAction={()=>setView("/register")}/>
+                <br/>
+                <Link text="Términos y condiciones" onClickAction={()=>setView("/terms-and-conditions")}/>
             </div>
         </div>
 
