@@ -11,6 +11,7 @@ export interface AttributeDTO {
     "type": TypeDTO;
     "tag": string;
     "showTag": boolean;
+    "showInReducedView": boolean;
     "representationOrder": number;
 }
 export interface TemplateDTO {

@@ -112,19 +112,15 @@ export function RouterContextProvider({children}: any){
     }
 
     const [props, setProps] = useState<{[prop: string]: any}>(urlProps);
-
-
-
     const [token,setToken] = useContext(TokenContext);
     const [route, setRoute] = useState<string>(urlRoute);
-
 
     const setRouteWithParams: Function = (newRoute: string, newProps :{[prop: string]: any}={}) =>{
         if((newRoute+JSON.stringify(newProps)) !== (route+JSON.stringify(props))){
             setRoute(newRoute);
             setProps(newProps);
-            window.history.pushState({entry: Object.keys(history).length}, "GalleryBox", newRoute+propsToQuery(newProps));
             const entry: number = Object.keys(history).length!=0?Math.max(Object.keys(history).map(key=> key as unknown as number).sort(n=>-n)[0])+1:0;
+            window.history.pushState({entry: entry}, "GalleryBox", newRoute+propsToQuery(newProps));
             console.log("Entry max");
             console.log(entry);
             history[entry]={route: newRoute, props: JSON.stringify(newProps)};
@@ -133,7 +129,14 @@ export function RouterContextProvider({children}: any){
     }
 
     useEffect(() =>{
+
+            const entry: number = Object.keys(history).length!=0?Math.max(Object.keys(history).map(key=> key as unknown as number).sort(n=>-n)[0])+1:0;
+            history[entry]={route: route, props: JSON.stringify(props)};
+            localStorage.setItem("history", JSON.stringify(history));
+            window.history.pushState({entry: entry}, "GalleryBox", route+propsToQuery(props));
+            console.log("entro");
             window.onpopstate = function(e){
+                console.log("Broser dddddd");
                 if(e.state){
                     console.log("Browser history")
                     console.log(e.state.entry);
@@ -165,6 +168,7 @@ export function RouterContextProvider({children}: any){
     }else if (!(route in routes)){ // 404 Not Found
         setRouteWithParams("/not-found")
     }
+
     const View: React.FC = ()=>routes[route](props);
 
     return (
