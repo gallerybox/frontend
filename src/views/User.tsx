@@ -1,12 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {TokenContext, UserContext} from "../Auth";
-import {CollectionDTO, UserDTO, UserRepository} from "../repositories/UserRepository";
-import CollectionCard from "../components/reusable/CollectionCard";
-import {ThematicSpaceDTO} from "../repositories/ThematicSpaceRepository";
-import SpaceCard from "../components/reusable/SpaceCard";
+import {UserDTO, UserRepository} from "../repositories/UserRepository";
 import {Response} from "../repositories/ValueObjects";
-import MiniCollectibleCard from "../components/reusable/MiniCollectibleCard";
-import MiniUserCard from "../components/reusable/MiniUserCard";
 import profilePhoto from "../assets/avatar-default.png";
 import {Button} from "@mui/material";
 import Link from "../components/reusable/Link";
@@ -22,6 +17,34 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
     const [token, setToken] = useContext(TokenContext);
     const [loggedUser, setLoggedUser] = useContext(UserContext);
     const [user, setUser] = useState<Response<UserDTO>>({followedUsers:[], ownedThematicSpaces:[]});
+
+    const handleSendPersonalData = (e: any) => {
+        e.preventDefault();
+        UserRepository.sendPersonalDataToEmail(user._id as string)
+            .then(data => {
+                if(data.statusCode === 200){
+                    alert("EMAIL ENVIADO, PERO FALTA EL POPUP BONITO");
+                } else {
+                    alert("ALGO HA IDO MAL");
+                }
+            });
+    }
+
+    const handleDeleteUser = (e: any) => {
+        e.preventDefault();
+        UserRepository.deleteUser(user._id as string)
+            .then(data => {
+                if(data.statusCode === 200){
+                    setToken(false);
+                    localStorage.removeItem("token");
+                    setView("/login")
+                    alert("PERFIL BORRADO, PERO FALTA EL POPUP BONITO");
+                } else {
+                    alert("ALGO HA IDO MAL");
+                }
+            });
+    }
+
     const [followers, setFollowers] = useState<Response<Array<UserDTO>>| undefined>([]);
     UserRepository.token.value = token;
     useEffect(()=>{
@@ -102,7 +125,7 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
                                 <Button  type="submit" variant="contained" color="primary" onClick={()=>alert("Editar perfil")}> Editar información </Button>
                             </div>
                             <div className="margin">
-                                <Button type="submit" variant="contained" color="primary" onClick={()=>alert("Editar perfil")}> Descargar tu información </Button>
+                                <Button type="submit" variant="contained" color="primary" onClick={(e)=>handleSendPersonalData(e)}> Descargar tu información </Button>
                             </div>
                         </div>
                         <div className="flex-col halfable">
@@ -110,7 +133,7 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
                                 <Button type="submit" variant="contained" color="primary" onClick={()=>alert("Editar perfil")}> Compartir perfil </Button>
                             </div>
                             <div className={loggedUser==user._id?"margin":"invisible"}>
-                                <Button type="submit" variant="contained" color="primary" onClick={()=>alert("Editar perfil")}> Eliminar perfil </Button>
+                                <Button type="submit" variant="contained" color="primary" onClick={(e)=>handleDeleteUser(e)}> Eliminar perfil </Button>
                             </div>
                         </div>
                     </div>
