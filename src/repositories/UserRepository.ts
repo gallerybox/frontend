@@ -154,20 +154,48 @@ export module UserRepository {
         return response;
     }
 
-    export async function addAvatar(userId: string, file: File) {
-        const endpoint = url + `/add-avatar/${userId}`;
-        alert(endpoint)
-        headers["Authorization"] = `Bearer ${token.value}`
-        headers["Content-type"] = 'multipart/form-data'
+    // export async function addAvatar(userId: string, file: File) {
+    //     const endpoint = url + `/add-avatar/${userId}`;
+    //     alert(endpoint)
+    //     headers["Authorization"] = `Bearer ${token.value}`
+    //     headers["Content-type"] = 'multipart/form-data'
 
-        let data = new FormData();
-        data.append('file', file);
+    //     let data = new FormData();
+    //     data.append('file', file);
+
+    //     const options = {
+    //         method: "POST",
+    //         headers: headers,
+    //         data: data,
+
+    //     };
+
+    //     let response = await fetch(endpoint, options)
+    //         .then(response => response.json())
+    //         .then(data => data);
+
+    //     return response;
+    // }
+
+    
+    export async function addAvatar(userId: string, file: any) {
+        const endpoint = url + `/add-avatar`;
+
+        headers["Authorization"] = `Bearer ${token.value}`
+        headers["Content-Type"] = "application/json";
+
+        alert("ESTAMOS DENTRO DE ADD-AVATAR")
+        alert("file");
+
+        console.log(file)
 
         const options = {
             method: "POST",
             headers: headers,
-            data: data,
-
+            body: JSON.stringify({
+                userId: userId,
+                file: file  
+            })
         };
 
         let response = await fetch(endpoint, options)
@@ -176,4 +204,5 @@ export module UserRepository {
 
         return response;
     }
+    
 }

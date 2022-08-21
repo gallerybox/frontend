@@ -12,7 +12,6 @@ interface UserProps {
 
 const EditPersonalInformation: React.FC<UserProps> = function ({userId}: UserProps) {
     const [user, setUser] = useState<Response<UserDTO>>({followedUsers:[], ownedThematicSpaces:[]});
-    const [selectedImage, setSelectedImage] = useState< File | null>(null);
 
     userId = "63015c3010f2ca14d7eb4672";
 
@@ -24,31 +23,31 @@ const EditPersonalInformation: React.FC<UserProps> = function ({userId}: UserPro
             return data    
         }
         )
-    },[])
+    },[]);
+
+    const onChangeEvent = (e: any) => {
+        let files = e.target.files;
+        console.warn("data files", files);
+
+        let reader = new FileReader();
+        reader.readAsDataURL(files[0]);
+        reader.onload = (e) => {
+            console.warn("img data", e.target!.result);
+            UserRepository.addAvatar(userId, e.target!.result);
+        }
 
 
+    }
+
+    
     return (
         <div>
-            <h1>Upload and Display Image usign React Hook's</h1>
-            {selectedImage && (
-                <div>
-                <img alt="not fount" width={"250px"} src={URL.createObjectURL(selectedImage)} />
-                <br />
-                <button onClick={()=>setSelectedImage(null)}>Remove</button>
-                </div>
-                )}
-                <br />
-            
-                <br /> 
-                <input
-                type="file"
-                name="myImage"
-                onChange={(event) => { setSelectedImage(event.target.files![0]);//event!.target!.files[0]);
-             }
-            }
-            />
-      </div>
-      );
+        <h1>React js File Upload Tutorial</h1>
+            <form>
+                <input type="file" name="file" onChange={(e) => onChangeEvent(e)}/>
+            </form>
+        </div>
+    );
 }
 
 export default EditPersonalInformation;
