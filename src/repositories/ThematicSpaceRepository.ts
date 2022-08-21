@@ -78,4 +78,24 @@ export module ThematicSpaceRepository {
 
         return response
     }
+
+    export async function upsertSpace(space: ThematicSpaceDTO): Promise<Response<ThematicSpaceDTO>> {
+
+        const endpoint = url + `/thematic-spaces`;
+        headers["Authorization"] = `Bearer ${token.value}`;
+        const options = {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(space),
+
+        };
+        let response: Response<ThematicSpaceDTO>;
+        response = await fetch(endpoint, options)
+            .then((response) => response.json())
+            .then((data) => {
+                return data;
+            });
+
+        return response
+    }
 }

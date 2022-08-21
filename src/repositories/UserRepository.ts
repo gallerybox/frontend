@@ -53,6 +53,25 @@ export module UserRepository {
         return response;
     }
 
+    export async function updateUser(user: UserDTO): Promise<Response<UserDTO>> {
+        const endpoint = url + `/personal-data/${user._id}`;
+        headers["Authorization"] = `Bearer ${token.value}`
+        const options = {
+            method: "PATCH",
+            headers: headers,
+            body: JSON.stringify(user)
+        };
+
+        let response: Response<UserDTO>;
+
+        response = await fetch(endpoint, options)
+            .then(response => response.json())
+            .then(data => data);
+
+
+        return response;
+    }
+
     export async function getUsersByFollowedSpaceId(spaceId: string): Promise<Response<Array<UserDTO>>> {
         const endpoint = url + `/followed-space-id/${spaceId}`;
         headers["Authorization"] = `Bearer ${token.value}`

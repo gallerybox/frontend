@@ -6,12 +6,15 @@ import {ThematicSpaceDTO} from "../repositories/ThematicSpaceRepository";
 import SpaceCard from "../components/reusable/SpaceCard";
 import {Response} from "../repositories/ValueObjects";
 import MiniCollectibleCard from "../components/reusable/MiniCollectibleCard";
+import {Button} from "@mui/material";
+import {RouterContext} from "./router";
 
 interface SpacesProps {
     ownSpaces: boolean
 }
 
 const Spaces: React.FC<SpacesProps> = function ({ownSpaces}:SpacesProps){
+    const setView = useContext(RouterContext);
     const [token, setToken] = useContext(TokenContext);
     const [user, setUser] = useContext(UserContext);
     const [spaces, setSpaces] = useState<Array<ThematicSpaceDTO>>([])
@@ -32,7 +35,18 @@ const Spaces: React.FC<SpacesProps> = function ({ownSpaces}:SpacesProps){
         <div className="Spaces flex-col full">
 
             {spaces.map((space: ThematicSpaceDTO) => <SpaceCard space={space}/> )}
-            <div className="loadContent full flex-col"> Loading... </div>
+
+            <div className={(ownSpaces && spaces.length<3)?"flex-col halfable":"invisible"}>
+                <div className="flex-row flex-row-space full-margin">
+                    <div style={{width: "1px", height: "1px"}}>
+                    </div>
+                    <Button variant="contained" color="primary" onClick={()=>setView("/space-form")}>
+                        Nuevo espacio temático
+                    </Button>
+                </div>
+
+            </div>
+
         </div>
     );
 }
