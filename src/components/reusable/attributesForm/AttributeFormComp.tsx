@@ -1,6 +1,6 @@
 import { Button, Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import AttributeContext from "./store/attributeContext";
-import { useReducer } from "react";
+import {useReducer, useState} from "react";
 import { INITIAL_STATE } from "./store/initialState"
 import { reduceAttribute } from "./store/reduceAttribute";
 import { 
@@ -14,17 +14,26 @@ import {
 import MultimediaEditAttributeComp from "./MultimediaEditAttributeComp";
 import TextEditAttributeComp from "./TextEditAttributeComp";
 import ToogleEditAttributeComp from "./ToogleEditAttributeComp";
-
-const AttributeForm: React.FC = () => {
-    
+import {ThematicSpaceDTO, ThematicSpaceRepository} from "../../../repositories/ThematicSpaceRepository";
+import {Response} from "../../../repositories/ValueObjects";
+import {TokenContext} from "../../../Auth";
+interface AttributeFormProps{
+    spaceId: string;
+}
+const AttributeForm: React.FC<AttributeFormProps> = ({spaceId}:AttributeFormProps) => {
+    console.log("Id que llega al attribute form", spaceId);
+    const [token,setToke] = useContext(TokenContext);
     const [state, dispatch] = useReducer(reduceAttribute, INITIAL_STATE);
-
+    const [space, setSpace] = useState<Response<ThematicSpaceDTO>>({});
     // Bloqueo el comportamiento por defecto del submit (para que lo gestione React)
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();    
         alert(JSON.stringify(state));         
     };
+    ThematicSpaceRepository.token.value = token;
+    useEffect( () = {
 
+        }, [])
     return ( 
         <AttributeContext.Provider value={[state, dispatch]}>
             <div className="Login halfable flex-col-center">

@@ -32,7 +32,7 @@ function MiniCollectibleCard({collectible}: ReducedCollectibleProps){
     return (
         <div className="MiniCollectibleCard flex-col halfable-margin">
             <header className="flex-row full-margin bold big-font">
-                <span className="clickable" onClick={()=>setView("/space",{spaceId:collectible.thematicSpace._id})}>{collectible.thematicSpace.name}</span>
+                <span className={collectible.thematicSpace?"clickable":""} style={collectible.thematicSpace?{}:{textDecoration: "line-through"}} onClick={collectible.thematicSpace?()=>setView("/space",{spaceId:collectible.thematicSpace?._id}):()=>0}>{collectible.thematicSpace?collectible.thematicSpace.name:"Espacio desaparecido"}</span>
             </header>
             <div className="card-body flex-col full-margin clickable">
                 {

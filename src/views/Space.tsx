@@ -60,7 +60,7 @@ const Space: React.FC<SpaceProps> = function ({spaceId}:SpaceProps){
                         <div className="flex-text-row">
                             <span className="bold">{space.name}</span>
                             <div className={owner._id==user?"":"invisible"}>
-                                <Edit className="clickable margin-row" onClick={()=>alert("Editar")}/>
+                                <Edit className="clickable margin-row" onClick={()=>setView("/space-form",{spaceId: space._id})}/>
                                 <Share  className="clickable margin-row" onClick={()=>alert("Compartir")}/>
                             </div>
                         </div>

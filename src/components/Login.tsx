@@ -33,7 +33,7 @@ const Login: React.FC = function (){
                             current["incorrectEmailPassword"] = "Email o contraseña incorrectos.";
                             const next: {[error: string]: string} = {};
                             Object.assign(next, current); // Hay que crear un objeto nuevo para que cambie la referencia del objeto y react detecte el cambio y vuelva a renderizar.
-                            return next
+                            return next;
                         })
                     }else{
                         setToken(data.access_token);
