@@ -26,6 +26,7 @@ export interface UserDTO  {
     "__v": number;
 }
 
+
 export module UserRepository {
     const url = backend_url + "/users"
     export const token: { value: string | boolean | null } = {value: null};
@@ -125,6 +126,29 @@ export module UserRepository {
         const options = {
             method: "DELETE",
             headers: headers
+        };
+
+        let response = await fetch(endpoint, options)
+            .then(response => response.json())
+            .then(data => data);
+
+        return response;
+    }
+
+    export async function addAvatar(userId: string, file: File) {
+        const endpoint = url + `/add-avatar/${userId}`;
+        alert(endpoint)
+        headers["Authorization"] = `Bearer ${token.value}`
+        headers["Content-type"] = 'multipart/form-data'
+
+        let data = new FormData();
+        data.append('file', file);
+
+        const options = {
+            method: "POST",
+            headers: headers,
+            data: data,
+
         };
 
         let response = await fetch(endpoint, options)
