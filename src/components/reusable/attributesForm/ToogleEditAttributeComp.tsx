@@ -18,6 +18,7 @@ const ToogleEditAttributeComp: React.FC = (currentState) => {
                     labelId="demo-select-small"
                     id="demo-select-small"
                     label="Aspecto"
+                    defaultValue="Favorite"
                     >
                     <MenuItem value="Favorite"  onClick={(e) => dispatch( handleToogleIcon("Favorite"))}>Favorito</MenuItem>
                     <MenuItem value="Bookmark"  onClick={(e) => dispatch( handleToogleIcon("Bookmark"))}>Marcador</MenuItem>

@@ -51,6 +51,7 @@ const TextEditAttributeComp: React.FC = () => {
                 labelId="demo-select-small"
                 id="demo-select-small"
                 label="Tamanyo"
+                defaultValue="Mediano"
                 >
                 <MenuItem value="Pequenyo"  onClick={(e) => dispatch( handleTextSize("Pequenyo"))}>Pequeño</MenuItem>
                 <MenuItem value="Mediano"   onClick={(e) => dispatch( handleTextSize("Mediano"))}>Mediano</MenuItem>

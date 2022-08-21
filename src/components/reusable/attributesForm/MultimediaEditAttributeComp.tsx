@@ -16,6 +16,7 @@ const MultimediaEditAttributeComp: React.FC = () => {
                     labelId="demo-select-small"
                     id="demo-select-small"
                     label="Medio"
+                    defaultValue="Photo"
                     >
                     <MenuItem value="Audio"  onClick={(e) => dispatch( handleMultimediaType("Audio"))}>Audio</MenuItem>
                     <MenuItem value="Video"  onClick={(e) => dispatch( handleMultimediaType("Video"))}>Video</MenuItem>
@@ -29,6 +30,7 @@ const MultimediaEditAttributeComp: React.FC = () => {
                     labelId="demo-select-small"
                     id="demo-select-small"
                     label="Tamanyo"
+                    defaultValue="Grande"
                     >
                     <MenuItem value="Pequenyo"  onClick={(e) => dispatch( handleMultimediaSize("Pequenyo"))}>Pequeño</MenuItem>
                     <MenuItem value="Mediano"   onClick={(e) => dispatch( handleMultimediaSize("Mediano"))}>Mediano</MenuItem>
