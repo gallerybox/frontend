@@ -6,43 +6,46 @@ import profilePhoto from "../assets/avatar-default.png";
 import {Button} from "@mui/material";
 import Link from "../components/reusable/Link";
 import {RouterContext} from "./router";
+import OverlayYesNoDeleteUser from "../components/reusable/popups/OverlayYesNoDeleteUser";
+import OverlaySendPersonalInformationUser from "../components/reusable/popups/OverlaySendPersonaInformationUser";
+import OverlayQRCodeProfileUser from "../components/reusable/popups/OverlayQRCodeProfileUser";
 
 interface UserProps {
     userId: string;
 }
-
 
 const User: React.FC<UserProps>= function ({userId}: UserProps){
     const setView = useContext(RouterContext);
     const [token, setToken] = useContext(TokenContext);
     const [loggedUser, setLoggedUser] = useContext(UserContext);
     const [user, setUser] = useState<Response<UserDTO>>({followedUsers:[], ownedThematicSpaces:[]});
-
-    const handleSendPersonalData = (e: any) => {
-        e.preventDefault();
+    // Popups
+    const [overlayDeleteUserView, setOverlayDeleteUserView] = useState<{component: React.FC}>({component: ()=><OverlayYesNoDeleteUser  isInvisible={true} continueCallback={()=>0}/>});
+    const [overlaySendPersonalInformationUserView, setOverlaySendPersonalInformationUserView] = useState<{component: React.FC}>({component: ()=><OverlaySendPersonalInformationUser  isInvisible={true} continueCallback={()=>0}/>});
+    const [overlayQRCodeProfileView, setOverlayQRCodeProfileView] = useState<{component: React.FC}>({component: ()=><OverlayQRCodeProfileUser  isInvisible={true} continueCallback={()=>0}/>});
+    
+    const handleSendPersonalData = () => {
         UserRepository.sendPersonalDataToEmail(user._id as string)
             .then(data => {
-                if(data.statusCode === 200){
-                    alert("EMAIL ENVIADO, PERO FALTA EL POPUP BONITO");
-                } else {
-                    alert("ALGO HA IDO MAL");
+                if(data.statusCode !== 200){
+                    console.error(data)
                 }
             });
     }
 
-    const handleDeleteUser = (e: any) => {
-        e.preventDefault();
+    const handleDeleteUser = () => {
         UserRepository.deleteUser(user._id as string)
             .then(data => {
                 if(data.statusCode === 200){
                     setToken(false);
                     localStorage.removeItem("token");
                     setView("/login")
-                    alert("PERFIL BORRADO, PERO FALTA EL POPUP BONITO");
-                } else {
-                    alert("ALGO HA IDO MAL");
                 }
             });
+    }
+
+    const handleShowQR = () => {
+
     }
 
     const [followers, setFollowers] = useState<Response<Array<UserDTO>>| undefined>([]);
@@ -60,11 +63,17 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
         }
         )
         },[])
-    useEffect(() => {
 
-    },[]);
+    const OverlayDeleteUserView: React.FC = overlayDeleteUserView.component;
+    const OverlaySendPersonalInformationUserView: React.FC = overlaySendPersonalInformationUserView.component;
+    const OverlayQRCodeProfileUserView: React.FC = overlayQRCodeProfileView.component;
+
     return (
         <div className="User flex-col full">
+            <OverlayDeleteUserView/>
+            <OverlaySendPersonalInformationUserView/>
+            <OverlayQRCodeProfileUserView/>
+
             <div className="card flex-col halfable-margin">
 
                 <div className="flex-row full flex-row-space">
@@ -122,18 +131,44 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
                     <div className="flex-row flex-row-space full">
                         <div className={loggedUser==user._id?"flex-col halfable":"invisible"}>
                             <div className="margin">
-                                <Button variant="contained" color="primary" onClick={()=>alert("Editar perfil")}> Editar información </Button>
+                                <Button variant="contained" color="primary" onClick={()=>setView("/edit-personal-information")}> Editar información </Button>
                             </div>
                             <div className="margin">
-                                <Button variant="contained" color="primary" onClick={(e)=>handleSendPersonalData(e)}> Descargar tu información </Button>
+                                <Button variant="contained" color="primary" 
+                                onClick={
+                                    ()=>
+                                    setOverlaySendPersonalInformationUserView({
+                                        component: ()=>
+                                            <OverlaySendPersonalInformationUser 
+                                                continueCallback={()=>handleSendPersonalData()}/>
+                                    })
+                                }> Descargar tu información </Button>
                             </div>
                         </div>
                         <div className="flex-col halfable">
                             <div className="margin">
-                                <Button variant="contained" color="primary" onClick={()=>alert("Editar perfil")}> Compartir perfil </Button>
+                                <Button variant="contained" color="primary" 
+                                onClick={
+                                    ()=>
+                                    setOverlayDeleteUserView({
+                                        component: ()=>
+                                            <OverlayQRCodeProfileUser
+                                                continueCallback={()=>handleShowQR()}/>
+                                    })
+                                }> Compartir perfil </Button>
                             </div>
+    
                             <div className={loggedUser==user._id?"margin":"invisible"}>
-                                <Button variant="contained" color="primary" onClick={(e)=>handleDeleteUser(e)}> Eliminar perfil </Button>
+                                <Button variant="contained" color="primary" 
+                                onClick={
+                                    ()=>
+                                    setOverlayDeleteUserView({
+                                        component: ()=>
+                                            <OverlayYesNoDeleteUser 
+                                                continueCallback={()=>handleDeleteUser()}/>
+                                    })
+                                }>
+                                 Eliminar perfil </Button>
                             </div>
                         </div>
                     </div>
@@ -141,6 +176,7 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
 
             </div>
         </div>
+
 
     );
 }
