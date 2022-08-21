@@ -122,18 +122,18 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
                     <div className="flex-row flex-row-space full">
                         <div className={loggedUser==user._id?"flex-col halfable":"invisible"}>
                             <div className="margin">
-                                <Button  type="submit" variant="contained" color="primary" onClick={()=>alert("Editar perfil")}> Editar información </Button>
+                                <Button variant="contained" color="primary" onClick={()=>alert("Editar perfil")}> Editar información </Button>
                             </div>
                             <div className="margin">
-                                <Button type="submit" variant="contained" color="primary" onClick={(e)=>handleSendPersonalData(e)}> Descargar tu información </Button>
+                                <Button variant="contained" color="primary" onClick={(e)=>handleSendPersonalData(e)}> Descargar tu información </Button>
                             </div>
                         </div>
                         <div className="flex-col halfable">
                             <div className="margin">
-                                <Button type="submit" variant="contained" color="primary" onClick={()=>alert("Editar perfil")}> Compartir perfil </Button>
+                                <Button variant="contained" color="primary" onClick={()=>alert("Editar perfil")}> Compartir perfil </Button>
                             </div>
                             <div className={loggedUser==user._id?"margin":"invisible"}>
-                                <Button type="submit" variant="contained" color="primary" onClick={(e)=>handleDeleteUser(e)}> Eliminar perfil </Button>
+                                <Button variant="contained" color="primary" onClick={(e)=>handleDeleteUser(e)}> Eliminar perfil </Button>
                             </div>
                         </div>
                     </div>
