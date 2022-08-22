@@ -4,7 +4,7 @@ import {backend_url, headers} from "./config";
 export interface TypeDTO {
     "category": string;
     "representation": {[props: string]: any};
-    "_id": string;
+    "_id": string| null;
 }
 
 export interface AttributeDTO {

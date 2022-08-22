@@ -149,7 +149,7 @@ const SpaceForm: React.FC<SpaceFormProps> = function ({spaceId}:SpaceFormProps){
                 const newAttributeRows = space!.template!.attributes!.sort(function (a, b) {
                     return a.representationOrder - b.representationOrder
                 }).map(attribute => {
-
+                        console.log(JSON.stringify(attribute));
                         const row: Array<string | number | ReactElement> = []
                         // Radio to select row
                         const radioButtoValue = {order: attribute.representationOrder, tag: attribute.tag};
@@ -227,13 +227,6 @@ const SpaceForm: React.FC<SpaceFormProps> = function ({spaceId}:SpaceFormProps){
             setSpace(newSpace);
         }
     };
-
-    // DONE: checkBoxFunction + count<=3 disabled the rest
-    // DONE: up + down function
-    // TODO: delete + edit delete
-    // DONE: new attribute + popup advice of lost not save changes.
-    // TODO: transform changes in rows to changes in SpaceDTO, preparation to save
-    // TODO: save rows and spaces inputs
 
 
     const [submitEvent, setSubmitEvent] = useState<React.FormEvent<HTMLFormElement> | null>(null);
@@ -322,7 +315,7 @@ const SpaceForm: React.FC<SpaceFormProps> = function ({spaceId}:SpaceFormProps){
                     </div>
                     <div className="flex-text-row">
 
-                        <div className={space?"margin-row":"invisible"}>
+                        <div className={space && space._id?"margin-row":"invisible"}>
                             <Button type="submit" variant="contained" color="primary"
                                     onClick={()=>setOverlayView({component: ()=><OverlayContinue continueCallback={()=>setView("/space-attribute-form",space?._id?{spaceId: space._id}:{})}/>})}>
                                 Añadir atributo
@@ -330,7 +323,9 @@ const SpaceForm: React.FC<SpaceFormProps> = function ({spaceId}:SpaceFormProps){
                         </div>
                         <div className="margin-row">
                             <Button type="submit" variant="contained" color="primary" onClick={()=>{
+                                console.log("HOla");
                                 if (!name) {
+                                    console.log("no name");
                                     setErrors(current => {
                                         current["mandatoryName"] = "Un espacio debe tener un nombre.";
                                         const next: { [error: string]: string } = {};
@@ -339,6 +334,7 @@ const SpaceForm: React.FC<SpaceFormProps> = function ({spaceId}:SpaceFormProps){
                                     })
                                 }
                                 if(name) {
+                                    console.log("si name");
                                     let spaces = loggedUser?.ownedThematicSpaces;
                                     if (spaces && spaces?.length!>=3 && !space!._id){
                                         setoverlaySpaceLimit({component: ()=><OverlaySpaceLimit/>});
@@ -347,12 +343,15 @@ const SpaceForm: React.FC<SpaceFormProps> = function ({spaceId}:SpaceFormProps){
                                                 if(!loggedUser!.ownedThematicSpaces){
                                                     loggedUser!.ownedThematicSpaces = [];
                                                 }
-                                                loggedUser?.ownedThematicSpaces?.push(space._id! as unknown as ThematicSpaceDTO);
-                                                async function saveOwnership() {
-                                                    await UserRepository.updateUser(loggedUser as UserDTO);
+                                                if (loggedUser!.ownedThematicSpaces!.filter(s => s._id == space._id).length<=0){
+                                                    loggedUser?.ownedThematicSpaces?.push(space._id! as unknown as ThematicSpaceDTO);
+                                                       UserRepository.updateUser(loggedUser as UserDTO).then( data =>
+                                                           setView("/space", {spaceId: space._id})
+                                                       )
+                                                }else {
                                                     setView("/space", {spaceId: space._id});
                                                 }
-                                                saveOwnership();
+
 
                                             }
                                         )
