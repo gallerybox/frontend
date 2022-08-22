@@ -3,7 +3,7 @@ import {Response} from "../repositories/ValueObjects";
 import { UserDTO, UserRepository } from "../repositories/UserRepository";
 import profilePhoto from "../assets/avatar-default.png";
 import { UserContext } from "../Auth";
-import { Button, TextField } from "@mui/material";
+import { Button, TextareaAutosize, TextField } from "@mui/material";
 import { RouterContext } from "./router";
 
 interface UserProps {
@@ -22,6 +22,7 @@ const formReducer = (state: any, action: any) => {
             }
             return newState;
         case "HANDLE-INPUT-TEXT": 
+            console.log(action.payload)
             newState = {
                 ...state,
                 [action.field]: action.payload
@@ -169,12 +170,16 @@ const EditPersonalInformation: React.FC<UserProps> = function ({userId}: UserPro
                                     variant="standard" margin="normal"/>
                             </div>
                         </div>
-                        <div className="flex-row flex-row-space full">
-                            <div className="flex-col-start margin-row full-mobile">
+                        <div className="full.margin">
+                            <div className="flex-col-start margin-row full-mobile full-margin">
                                 <span className="bold">Biografía</span>
-                                <TextField type="text" value={formState.biography} onChange={e => handleTextChange(e)} 
-                                    placeholder="bio" name="biography"
-                                    variant="standard" margin="normal"/>
+                                <TextareaAutosize
+                                    placeholder="Biografía"
+                                    name="biography"
+                                    value={formState.biography} onChange={e => handleTextChange(e)}
+                                    style={{ width: "100%"}}
+                                    minRows={8}
+                                />
                             </div>
                         </div>
                         <div className="flex-row flex-row-space full">
