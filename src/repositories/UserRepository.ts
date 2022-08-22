@@ -23,7 +23,7 @@ export interface UserDTO  {
     "nombre"?: string;
     "apellidos"?: string;
     "profilePhoto"?: string;
-    "bio"?: string;
+    "biography"?: string;
     "__v": number;
 }
 
@@ -154,30 +154,6 @@ export module UserRepository {
 
         return response;
     }
-
-    // export async function addAvatar(userId: string, file: File) {
-    //     const endpoint = url + `/add-avatar/${userId}`;
-    //     alert(endpoint)
-    //     headers["Authorization"] = `Bearer ${token.value}`
-    //     headers["Content-type"] = 'multipart/form-data'
-
-    //     let data = new FormData();
-    //     data.append('file', file);
-
-    //     const options = {
-    //         method: "POST",
-    //         headers: headers,
-    //         data: data,
-
-    //     };
-
-    //     let response = await fetch(endpoint, options)
-    //         .then(response => response.json())
-    //         .then(data => data);
-
-    //     return response;
-    // }
-
     
     export async function addAvatar(userId: string, file: any) {
         const endpoint = url + `/add-avatar`;
@@ -188,14 +164,11 @@ export module UserRepository {
         formData.append('file', file);
         formData.append('fileName', file.name);
 
+        // Meter los configs en el header
         let myHeaders = {
             'authorization': `Bearer ${token.value}`,
             "Access-Control-Allow-Origin": backend_url
         }
-
-        // headers['Content-Type'] = 'multipart/form-data';
-        
-        alert(JSON.stringify(myHeaders));
 
         alert("ESTAMOS DENTRO DE ADD-AVATAR")
         console.log(file)
@@ -205,10 +178,50 @@ export module UserRepository {
             }
         }
 
-        await axios.post(endpoint, formData, config).then(data => {
+        return await axios.post(endpoint, formData, config).then(data => {
             console.log(data); 
             return data;
         })
     }
+
+    export async function deleteAvatar(userId: string) {
+        const endpoint = url + `/delete-avatar/${userId}`;
+
+        let config = {
+            headers: {
+                'authorization': `Bearer ${token.value}`,
+                "Access-Control-Allow-Origin": backend_url
+            }
+        }
+
+        return await axios.delete(endpoint, config).then(data => {
+            console.log(data); 
+            return data;
+        })
+    }
+ 
     
+    export async function updatePersonalData(userId: string, formState?: any) {
+        const endpoint = "http://localhost:3000/users/personal-data/6303388fe78f2dc9e9b88f49";
+        alert(JSON.stringify(formState.nombre))
+        headers["Authorization"] = `Bearer ${token.value}`
+
+        
+
+        const options = {
+            method: "PATCH",
+            headers: headers,
+            body: JSON.stringify(formState)
+        }
+
+        let response: Response<Array<UserDTO>>;
+
+        response = await fetch(endpoint, options)
+            .then(response => response.json())
+            .then(data => data);
+
+        return response;
+    }
+    
+
 }

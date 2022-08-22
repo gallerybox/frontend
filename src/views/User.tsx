@@ -103,7 +103,7 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
                 </div>
                 <div className="flex-row flex-row-space full-margin">
                     <div className="flex-text-row ">
-                        <span>{user.bio}</span>
+                        <span>{user.biography}</span>
                     </div>
 
                 </div>
@@ -131,7 +131,7 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
                     <div className="flex-row flex-row-space full">
                         <div className={loggedUser==user._id?"flex-col halfable":"invisible"}>
                             <div className="margin">
-                                <Button variant="contained" color="primary" onClick={()=>setView("/edit-personal-information")}> Editar información </Button>
+                                <Button variant="contained" color="primary" onClick={()=>setView("/edit-personal-information", {userId:user._id})}> Editar información </Button>
                             </div>
                             <div className="margin">
                                 <Button variant="contained" color="primary" 
