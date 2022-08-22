@@ -18,6 +18,16 @@ function MiniUserCard({user}: MiniUserCardProps){
     const [userId, setUserId] = useContext(UserContext);
     const [loggedUser, setLoggedUser] = useState<Response<UserDTO>>({followedUsers:[]});
     const setView = useContext(RouterContext);
+
+    const onChangeFollowUser = (e: any, userIdToChange: string, isFollowed: boolean) => {
+
+        UserRepository.changeFollowUser(userId, userIdToChange, isFollowed)
+            .then((data)=>{
+                // O se actualiza la página o se actualiza el valor
+                window.location.reload();
+            });
+    }
+
     useEffect(() => {
         UserRepository.getUser(userId)
             .then(data => {
@@ -50,8 +60,16 @@ function MiniUserCard({user}: MiniUserCardProps){
                     </div>
                 </div>
                 <div className="margin">
-                    <Button variant="contained" color="primary" onClick={()=>alert(loggedUser.followedUsers!.some(f => f._id === user._id)?"Dejar de seguir": "Seguir")}>
+                    <Button variant="contained" color="primary" 
+                            onClick={(e)=> {
+                                    loggedUser.followedUsers!.some(f => f._id === user._id)
+                                        ? onChangeFollowUser(e, user._id, true)
+                                        : onChangeFollowUser(e, user._id, false)
+                                    }
+                                }>
+                                                     
                         {loggedUser.followedUsers!.some(f => f._id === user._id)?"Dejar de seguir": "Seguir"}
+
                     </Button>
                 </div>
             </div>

@@ -202,11 +202,9 @@ export module UserRepository {
  
     
     export async function updatePersonalData(userId: string, formState?: any) {
-        const endpoint = "http://localhost:3000/users/personal-data/6303388fe78f2dc9e9b88f49";
+        const endpoint = url + `/personal-data/userId`;
         alert(JSON.stringify(formState.nombre))
         headers["Authorization"] = `Bearer ${token.value}`
-
-        
 
         const options = {
             method: "PATCH",
@@ -223,5 +221,23 @@ export module UserRepository {
         return response;
     }
     
+    export async function changeFollowUser(userId: string, userIdToChange: string, isFollowed: boolean){
+        const endpoint = url + `/change-follow-user/${userId}/${userIdToChange}/${isFollowed}`;
+
+        headers["Authorization"] = `Bearer ${token.value}`
+        const options = {
+            method: "GET",
+            headers: headers
+        };
+
+        let response: Response<UserDTO>;
+
+        response = await fetch(endpoint, options)
+            .then(response => response.json())
+            .then(data => data);
+
+
+        return response;        
+    }
 
 }
