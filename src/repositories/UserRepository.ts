@@ -54,7 +54,7 @@ export module UserRepository {
         return response;
     }
 
-    export async function updateUser(user: UserDTO): Promise<Response<UserDTO>> {
+    export async function updateUser( user: UserDTO): Promise<Response<UserDTO>> {
         const endpoint = url + `/personal-data/${user._id}`;
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {

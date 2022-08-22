@@ -136,7 +136,18 @@ const SpaceForm: React.FC<SpaceFormProps> = function ({spaceId}:SpaceFormProps){
     };
 
     const deleteAttribute: Function = (tag: string, space: ThematicSpaceDTO)=>{
-        const attributes = space!.template.attributes.filter(attribute=>attribute.tag!=tag);
+        const attributeToDelete = space!.template.attributes.filter(attribute=>attribute.tag==tag)[0];
+        const attributes = space!.template!.attributes!.sort(function (a, b) {
+            return a.representationOrder - b.representationOrder
+        }).map(attribute => {
+            if (attribute.representationOrder>attributeToDelete.representationOrder){
+                attribute.representationOrder = attribute.representationOrder-1;
+                return attribute
+            }else {
+                return attribute;
+            }
+        }).filter(attribute=>attribute.tag!=tag);
+
         space!.template.attributes = attributes;
         const newSpace: ThematicSpaceDTO= JSON.parse(JSON.stringify(space));
         setSpace(newSpace);
@@ -149,7 +160,6 @@ const SpaceForm: React.FC<SpaceFormProps> = function ({spaceId}:SpaceFormProps){
                 const newAttributeRows = space!.template!.attributes!.sort(function (a, b) {
                     return a.representationOrder - b.representationOrder
                 }).map(attribute => {
-                        console.log(JSON.stringify(attribute));
                         const row: Array<string | number | ReactElement> = []
                         // Radio to select row
                         const radioButtoValue = {order: attribute.representationOrder, tag: attribute.tag};
@@ -167,7 +177,7 @@ const SpaceForm: React.FC<SpaceFormProps> = function ({spaceId}:SpaceFormProps){
                                       onChange={(event, checked) => updateShowInReducedView(attribute.tag, checked, space)}/>
                         </div>);
                         row.push((<div className="flex-text-row-center"><EditSharp className="clickable"
-                                                                                   onClick={()=>setOverlayView({component: ()=><OverlayContinue continueCallback={()=>alert("añadir atributo")}/>})}/> &nbsp;
+                                                                                   onClick={()=>setOverlayView({component: ()=><OverlayContinue continueCallback={()=>setView("/space-attribute-form",space?._id?{spaceId: space._id, attributeToUpdateTag: attribute.tag}:{})}/>})}/> &nbsp;
                             <DeleteSharp className="clickable" onClick={() => deleteAttribute(attribute.tag, space)}/></div>));
 
                         return row;
@@ -260,12 +270,11 @@ const SpaceForm: React.FC<SpaceFormProps> = function ({spaceId}:SpaceFormProps){
             <div className="card flex-col-start halfable-margin">
                 <div className="halfable-margin">
                     <TextField placeholder="Nombre del espacio" error={errors["mandatoryName"]?true:false}  helperText={errors["mandatoryName"]?errors["mandatoryName"]:""} value={name} onChange={(e) => {
-                        if(e && e.target && e.target.value) {
+                        if(e && e.target) {
                             setName(e.target.value);
 
                             const newSpace: ThematicSpaceDTO = JSON.parse(JSON.stringify(space));
                             newSpace["name"] = e.target.value;
-                            console.log(newSpace);
                             setSpace(newSpace);
                         }
                     }} type="text" name="email"
@@ -323,9 +332,8 @@ const SpaceForm: React.FC<SpaceFormProps> = function ({spaceId}:SpaceFormProps){
                         </div>
                         <div className="margin-row">
                             <Button type="submit" variant="contained" color="primary" onClick={()=>{
-                                console.log("HOla");
+
                                 if (!name) {
-                                    console.log("no name");
                                     setErrors(current => {
                                         current["mandatoryName"] = "Un espacio debe tener un nombre.";
                                         const next: { [error: string]: string } = {};
@@ -334,7 +342,6 @@ const SpaceForm: React.FC<SpaceFormProps> = function ({spaceId}:SpaceFormProps){
                                     })
                                 }
                                 if(name) {
-                                    console.log("si name");
                                     let spaces = loggedUser?.ownedThematicSpaces;
                                     if (spaces && spaces?.length!>=3 && !space!._id){
                                         setoverlaySpaceLimit({component: ()=><OverlaySpaceLimit/>});

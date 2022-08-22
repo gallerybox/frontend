@@ -21,7 +21,8 @@ const formReducer = (state: any, action: any) => {
                 "biography": action.payload.biography
             }
             return newState;
-        case "HANDLE-INPUT-TEXT": 
+        case "HANDLE-INPUT-TEXT":
+            console.log(JSON.stringify(action.payload))
             console.log(action.payload)
             newState = {
                 ...state,
@@ -91,6 +92,7 @@ const EditPersonalInformation: React.FC<UserProps> = function ({userId}: UserPro
                     ...user,
                     profilePhoto: (data as any).data.profilePhoto
                 })
+                window.location.href = window.location.href;
                 // setLoggedUser({
                 //     ...loggedUser,
                 //     profilePhoto: (data as any).data.profilePhoto
@@ -107,6 +109,7 @@ const EditPersonalInformation: React.FC<UserProps> = function ({userId}: UserPro
                     ...user,
                     profilePhoto: undefined
                 });
+                window.location.href = window.location.href;
                 // setLoggedUser({
                 //     ...loggedUser,
                 //     profilePhoto: undefined
@@ -117,10 +120,13 @@ const EditPersonalInformation: React.FC<UserProps> = function ({userId}: UserPro
 
     const onHandleUpdatePersonalData = (e: any) => {
         e.preventDefault();
-        alert(JSON.stringify(formState))
-        UserRepository.updatePersonalData(userId, formState).then(
+        user.nombre = formState.nombre;
+        user.apellidos = formState.apellidos;
+        user.email = formState.email;
+        user.biography = formState.biography;
+
+        UserRepository.updateUser(user as UserDTO).then(
             data => {
-                alert("Entra")
                 setView("/user", {userId:user._id});
             });
     }

@@ -25,13 +25,16 @@ import {TokenContext} from "../../../Auth";
 import {RouterContext} from "../../../views/router";
 import attribute from "../attributes/Attribute";
 import Attribute from "../attributes/Attribute";
+import {HANDLE_INPUT_TEXT} from "./store/actionTypes";
 interface AttributeFormProps{
     spaceId: string;
+    attributeToUpdateTag?: string
 }
-const AttributeForm: React.FC<AttributeFormProps> = ({spaceId}:AttributeFormProps) => {
+const AttributeForm: React.FC<AttributeFormProps> = ({spaceId, attributeToUpdateTag}:AttributeFormProps) => {
     console.log("Id que llega al attribute form", spaceId);
     const [token,setToken] = useContext(TokenContext);
     const setView = useContext(RouterContext);
+
     const [state, dispatch] = useReducer(reduceAttribute, INITIAL_STATE);
     const [space, setSpace] = useState<Response<ThematicSpaceDTO>>({});
     const [attributesLength,setAttributesLength] = useState(0);
@@ -56,7 +59,6 @@ const AttributeForm: React.FC<AttributeFormProps> = ({spaceId}:AttributeFormProp
                 return next;
             })
         }
-
     };
 
     useEffect(() => {
@@ -74,10 +76,16 @@ const AttributeForm: React.FC<AttributeFormProps> = ({spaceId}:AttributeFormProp
     );
     const saveAttribute: Function = (newAttribute: AttributeDTO, space: ThematicSpaceDTO) => {
         if (newAttribute.tag) {
-            let attributes = space!.template!.attributes!.filter(attribute => attribute.tag == newAttribute.tag);
+            let attributes = space!.template!.attributes!.filter(attribute => attribute.tag == newAttribute.tag || attribute.tag == attributeToUpdateTag);
+            console.log("Las tags");
+            console.log(JSON.stringify(space.template), attributeToUpdateTag);
             if (attributes.length > 0) {
                 attributes = space!.template!.attributes!.map(attribute => {
-                    if (attribute.tag == newAttribute.tag) {
+                    if (attribute.tag == newAttribute.tag || attribute.tag == attributeToUpdateTag) {
+                        if (attribute.tag == attributeToUpdateTag){
+                            newAttribute.representationOrder = attribute.representationOrder;
+                            newAttribute.showInReducedView = attribute.showInReducedView;
+                        }
                         return newAttribute;
                     } else {
                         return attribute;
@@ -128,6 +136,15 @@ const AttributeForm: React.FC<AttributeFormProps> = ({spaceId}:AttributeFormProp
                     }else{
                         setSpace(data);
                         setAttributesLength(data.template?.attributes!.length!);
+                        const attributeToEdit = data.template?.attributes.filter(attribute => attribute.tag == attributeToUpdateTag);
+                        if (attributeToEdit) {
+                            INITIAL_STATE.tag = attributeToEdit[0].tag;
+                            INITIAL_STATE.category = attributeToEdit[0].type.category;
+                            INITIAL_STATE.showTag = attributeToEdit[0].showTag;
+                            INITIAL_STATE.representation = attributeToEdit[0].type.representation;
+                            dispatch({type: HANDLE_INPUT_TEXT, payload: INITIAL_STATE});
+                        }
+
                     }
                 });
             } else {
