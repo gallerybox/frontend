@@ -1,9 +1,6 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import {Response} from "../repositories/ValueObjects";
-import profilePhoto from "../assets/avatar-default.png";
 import { UserDTO, UserRepository } from "../repositories/UserRepository";
-import { Button } from "@mui/material";
-import UploadFileIcon from "@mui/icons-material/UploadFile";
 
 interface UserProps {
     userId: string;
@@ -12,9 +9,11 @@ interface UserProps {
 
 const EditPersonalInformation: React.FC<UserProps> = function ({userId}: UserProps) {
     const [user, setUser] = useState<Response<UserDTO>>({followedUsers:[], ownedThematicSpaces:[]});
-
+    const [file, setFile] = useState()
+  
+    
     userId = "63015c3010f2ca14d7eb4672";
-
+    
     // Busca el usuario de base de datos
     useEffect(()=>{
         console.log(userId);
@@ -25,26 +24,26 @@ const EditPersonalInformation: React.FC<UserProps> = function ({userId}: UserPro
         )
     },[]);
 
-    const onChangeEvent = (e: any) => {
-        let files = e.target.files;
-        console.warn("data files", files);
+    const handleChange = (e: any) => {
 
-        let reader = new FileReader();
-        reader.readAsDataURL(files[0]);
-        reader.onload = (e) => {
-            console.warn("img data", e.target!.result);
-            UserRepository.addAvatar(userId, e.target!.result);
-        }
-
-
+        setFile(e.target.files[0])
     }
 
+    const onHandleSubmit = (e: any) => {
+        e.preventDefault();
+        alert("ENTRAAA");
+        UserRepository.addAvatar(userId, file).then(
+
+            data => data
+        );
+    }    
     
     return (
         <div>
         <h1>React js File Upload Tutorial</h1>
-            <form>
-                <input type="file" name="file" onChange={(e) => onChangeEvent(e)}/>
+            <form onSubmit={e => onHandleSubmit(e)}>
+                <input type="file" name="file" onChange={(e) => handleChange(e)}/>
+                <button type="submit">Upload</button>
             </form>
         </div>
     );

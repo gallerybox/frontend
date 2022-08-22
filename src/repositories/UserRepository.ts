@@ -2,6 +2,7 @@ import {ThematicSpaceDTO} from "./ThematicSpaceRepository";
 import {backend_url, headers} from "./config";
 import {Response} from "./ValueObjects";
 import {CollectibleDTO} from "./CollectibleRepository";
+import axios from "axios";
 
 export interface CollectionDTO {
     name: string;
@@ -180,29 +181,34 @@ export module UserRepository {
     
     export async function addAvatar(userId: string, file: any) {
         const endpoint = url + `/add-avatar`;
+       
+        let formData = new FormData();
 
-        headers["Authorization"] = `Bearer ${token.value}`
-        headers["Content-Type"] = "application/json";
+        formData.append('userId', userId);
+        formData.append('file', file);
+        formData.append('fileName', file.name);
+
+        let myHeaders = {
+            'authorization': `Bearer ${token.value}`,
+            "Access-Control-Allow-Origin": backend_url
+        }
+
+        // headers['Content-Type'] = 'multipart/form-data';
+        
+        alert(JSON.stringify(myHeaders));
 
         alert("ESTAMOS DENTRO DE ADD-AVATAR")
-        alert("file");
-
         console.log(file)
+        let config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        }
 
-        const options = {
-            method: "POST",
-            headers: headers,
-            body: JSON.stringify({
-                userId: userId,
-                file: file  
-            })
-        };
-
-        let response = await fetch(endpoint, options)
-            .then(response => response.json())
-            .then(data => data);
-
-        return response;
+        await axios.post(endpoint, formData, config).then(data => {
+            console.log(data); 
+            return data;
+        })
     }
     
 }
