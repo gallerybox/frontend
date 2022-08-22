@@ -20,7 +20,7 @@ function MiniUserCard({user}: MiniUserCardProps){
     const setView = useContext(RouterContext);
 
     const onChangeFollowUser = (e: any, userIdToChange: string, isFollowed: boolean) => {
-
+        isFollowed ? alert("PUES VAS A DEJAR DE SEGUIRLO") : alert("PUES VAS A SEGUIRLO");
         UserRepository.changeFollowUser(userId, userIdToChange, isFollowed)
             .then((data)=>{
                 // O se actualiza la página o se actualiza el valor
@@ -60,7 +60,8 @@ function MiniUserCard({user}: MiniUserCardProps){
                     </div>
                 </div>
                 <div className="margin">
-                    <Button variant="contained" color="primary" 
+                    
+                    <Button className={userId === user._id ? "invisible": "" } variant="contained" color="primary" 
                             onClick={(e)=> {
                                     loggedUser.followedUsers!.some(f => f._id === user._id)
                                         ? onChangeFollowUser(e, user._id, true)
