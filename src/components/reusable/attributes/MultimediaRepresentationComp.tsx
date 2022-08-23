@@ -12,19 +12,19 @@ export const MultimediaRepresentationComp: React.FC<VideoRepresentationCompProps
     switch (representation.multimediaType) {
         case MultimediaType.Photo:
             Representation = ()=><div className="flex-col full-margin">
-                <img src={value}  width="50%" height="auto"/>
+                <img src={value}  width={(representation?.dimensions?.[0]? representation?.dimensions?.[0]: "75") + "%"} height="auto"/>
             </div>
             ;
             break;
         case MultimediaType.Video:
             Representation = ()=><div className="flex-col full-margin">
-                <ReactPlayer url={value} playing={false} controls={true}  width='50%' height='100%'/>
+                <ReactPlayer url={value} playing={false} controls={true}  width={(representation?.dimensions?.[0]? representation?.dimensions?.[0]: "75") + "%"} height='100%'/>
             </div>
             ;
             break;
         default:
             Representation = ()=><div className="flex-col full-margin">
-                                    <ReactPlayer url={value} playing={false} controls={true}  width='50%' height='100%'/>
+                                    <ReactPlayer url={value} playing={false} controls={true}  width={(representation?.dimensions?.[0]? representation?.dimensions?.[0]: "75") + "%"} height='100%'/>
                                 </div>
                             ;
             break;

@@ -33,8 +33,8 @@ export enum MultimediaType {
     Photo = "Photo"
 }
 
-export interface ToogleRepresentation {
-    toogleType: string,
+export interface ToggleRepresentation {
+    ToggleType: string,
     icon: IconSelected,
     colorTrue: string,
     colorFalse: string
@@ -69,8 +69,8 @@ export const INITIAL_STATE_MULTIMEDIA_REPRESENTATION: MultimediaRepresentation =
     "multimediaType": MultimediaType.Audio
 }
 
-export const INITIAL_STATE_TOOGLE_REPRESENTATION: ToogleRepresentation = {
-    "toogleType": "Icon",
+export const INITIAL_STATE_Toggle_REPRESENTATION: ToggleRepresentation = {
+    "ToggleType": "Icon",
     "icon": IconSelected.Favorite,
     "colorTrue": "rgb(144, 105, 172)",
     "colorFalse": "#808080",

@@ -2,16 +2,17 @@ import Favorite from '@mui/icons-material/Favorite';
 import { useContext } from "react";
 import AttributeContext from "./store/attributeContext";
 import { FormControl, FormControlLabel, InputLabel, MenuItem, Select } from '@mui/material';
-import { handleToogleIcon, handleToogleColorFalse, handleToogleColorTrue } from './store/actions';
+import { handleToggleIcon, handleToggleColorFalse, handleToggleColorTrue } from './store/actions';
 import { HexColorPicker } from "react-colorful";
 import { Bookmark, StarRateSharp } from '@mui/icons-material';
 
-const ToogleEditAttributeComp: React.FC = (currentState) => {
+const ToggleEditAttributeComp: React.FC = (currentState) => {
     const [state, dispatch]  = useContext(AttributeContext);
+
 
     return (
         <div>
-            <h2>Configuración del atributo Toogle</h2>
+            <h2>Configuración del atributo Toggle</h2>
             <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
                 <InputLabel id="demo-select-small">Aspecto</InputLabel>
                 <Select
@@ -19,10 +20,11 @@ const ToogleEditAttributeComp: React.FC = (currentState) => {
                     id="demo-select-small"
                     label="Aspecto"
                     defaultValue="Favorite"
+                    value = {state.representation.icon}
                     >
-                    <MenuItem value="Favorite"  onClick={(e) => dispatch( handleToogleIcon("Favorite"))}>Favorito</MenuItem>
-                    <MenuItem value="Bookmark"  onClick={(e) => dispatch( handleToogleIcon("Bookmark"))}>Marcador</MenuItem>
-                    <MenuItem value="Star"      onClick={(e) => dispatch( handleToogleIcon("Star"))}>Estrella</MenuItem>
+                    <MenuItem value="Favorite"  onClick={(e) => dispatch( handleToggleIcon("Favorite"))}>Favorito</MenuItem>
+                    <MenuItem value="Bookmark"  onClick={(e) => dispatch( handleToggleIcon("Bookmark"))}>Marcador</MenuItem>
+                    <MenuItem value="Star"      onClick={(e) => dispatch( handleToggleIcon("Star"))}>Estrella</MenuItem>
                 </Select>
             </FormControl>
 
@@ -45,7 +47,7 @@ const ToogleEditAttributeComp: React.FC = (currentState) => {
                     }
                     />
 
-            <HexColorPicker color={state.representation.colorTrue} onChange={ e => dispatch(handleToogleColorTrue(e)) }/> 
+            <HexColorPicker color={state.representation.colorTrue} onChange={ e => dispatch(handleToggleColorTrue(e)) }/> 
             <div>
                 {state.representation.icon === "Favorite" && <Favorite style={{color: state.representation.colorTrue}} />}
                 {state.representation.icon === "Bookmark" && <Bookmark style={{color: state.representation.colorTrue}} />}
@@ -53,7 +55,7 @@ const ToogleEditAttributeComp: React.FC = (currentState) => {
                 <label>Icono seleccionado</label>
             </div>
 
-            <HexColorPicker color={state.representation.colorFalse} onChange={ e => dispatch(handleToogleColorFalse(e)) }/> 
+            <HexColorPicker color={state.representation.colorFalse} onChange={ e => dispatch(handleToggleColorFalse(e)) }/> 
             <div>
                 {state.representation.icon === "Favorite" && <Favorite style={{color: state.representation.colorFalse}} />}
                 {state.representation.icon === "Bookmark" && <Bookmark style={{color: state.representation.colorFalse}} />}
@@ -65,4 +67,4 @@ const ToogleEditAttributeComp: React.FC = (currentState) => {
     );
 }
 
-export default ToogleEditAttributeComp;
+export default ToggleEditAttributeComp;

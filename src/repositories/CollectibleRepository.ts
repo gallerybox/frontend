@@ -53,7 +53,7 @@ export module CollectibleRepository {
 
         return response;
     }
-    export async function findOne(id: string): Promise<Array<CollectibleDTO>>{
+    export async function findOne(id: string): Promise<CollectibleDTO>{
         const endpoint = url + "id/" + id;
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {
@@ -65,7 +65,7 @@ export module CollectibleRepository {
             }
         };
     
-        let response: Array<CollectibleDTO> = [];
+        let response:  Promise<CollectibleDTO>;
 
         response = await fetch(endpoint, options)
             .then(response => response.json())

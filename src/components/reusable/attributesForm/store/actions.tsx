@@ -3,7 +3,7 @@ import {
     TOGGLE_SHOWTAG, 
     SELECT_TEXT, 
     SELECT_MULTIMEDIA, 
-    SELECT_TOOGLE, 
+    SELECT_Toggle, 
     TEXT_TOGGLE_BOLD,
     TEXT_TOGGLE_ITALICS,
     TEXT_TOGGLE_UNDERLINED,
@@ -11,9 +11,9 @@ import {
     TEXT_SELECTOR_SIZE,
     MULTIMEDIA_SELECTOR_TYPE,
     MULTIMEDIA_SELECTOR_SIZE,
-    TOOGLE_SELECTOR_ICON,
-    TOOGLE_COLOR_PICKER_TRUE,
-    TOOGLE_COLOR_PICKER_FALSE
+    Toggle_SELECTOR_ICON,
+    Toggle_COLOR_PICKER_TRUE,
+    Toggle_COLOR_PICKER_FALSE
 } from "./actionTypes";
 
 // Contiene las acciones definidas como funciones que se enviarán al dispatch (trigger)
@@ -38,9 +38,9 @@ export const handleSelectMultimedia = (event: any) => ({
     category: "Multimedia"
 })
 
-export const handleSelectToogle = (event: any) => ({
-    type: SELECT_TOOGLE,
-    category: "Toogle"
+export const handleSelectToggle = (event: any) => ({
+    type: SELECT_Toggle,
+    category: "Toggle"
 })
 
 export const handleTextBold = (event: any) => ({
@@ -75,17 +75,17 @@ export const handleMultimediaSize = (tamanyo: any) => ({
     payload: tamanyo
 })
 
-export const handleToogleIcon = (icon: any) => ({
-    type: TOOGLE_SELECTOR_ICON,
+export const handleToggleIcon = (icon: any) => ({
+    type: Toggle_SELECTOR_ICON,
     payload: icon
 })
 
-export const handleToogleColorTrue = (color: any) => ({
-    type: TOOGLE_COLOR_PICKER_TRUE,
+export const handleToggleColorTrue = (color: any) => ({
+    type: Toggle_COLOR_PICKER_TRUE,
     payload: color
 })
 
-export const handleToogleColorFalse = (color: any) => ({
-    type: TOOGLE_COLOR_PICKER_FALSE,
+export const handleToggleColorFalse = (color: any) => ({
+    type: Toggle_COLOR_PICKER_FALSE,
     payload: color
 })

@@ -1,9 +1,9 @@
-import { 
-    HANDLE_INPUT_TEXT, 
-    TOGGLE_SHOWTAG, 
-    SELECT_TEXT, 
-    SELECT_MULTIMEDIA, 
-    SELECT_TOOGLE,
+import {
+    HANDLE_INPUT_TEXT,
+    TOGGLE_SHOWTAG,
+    SELECT_TEXT,
+    SELECT_MULTIMEDIA,
+    SELECT_Toggle,
     TEXT_TOGGLE_BOLD,
     TEXT_TOGGLE_ITALICS,
     TEXT_TOGGLE_UNDERLINED,
@@ -11,17 +11,19 @@ import {
     TEXT_SELECTOR_SIZE,
     MULTIMEDIA_SELECTOR_SIZE,
     MULTIMEDIA_SELECTOR_TYPE,
-    TOOGLE_COLOR_PICKER_TRUE,
-    TOOGLE_COLOR_PICKER_FALSE,
-    TOOGLE_SELECTOR_ICON
+    Toggle_COLOR_PICKER_TRUE,
+    Toggle_COLOR_PICKER_FALSE,
+    Toggle_SELECTOR_ICON, RESET_FULL_STATE, TEXT_SELECTOR_FONT
 } from "./actionTypes";
-import { FontSize, INITIAL_STATE_MULTIMEDIA_REPRESENTATION, INITIAL_STATE_TEXT_REPRESENTATION, INITIAL_STATE_TOOGLE_REPRESENTATION, MultimediaType } from "./initialState";
+import { FontSize, INITIAL_STATE_MULTIMEDIA_REPRESENTATION, INITIAL_STATE_TEXT_REPRESENTATION, INITIAL_STATE_Toggle_REPRESENTATION, MultimediaType } from "./initialState";
 
 
 export function reduceAttribute(state: any, action: any) {
     const { type, payload } = action;
 
     switch (type) {
+        case RESET_FULL_STATE:
+            return payload;
         case HANDLE_INPUT_TEXT:
             return { 
                 ...state, 
@@ -44,11 +46,11 @@ export function reduceAttribute(state: any, action: any) {
                 category: "Multimedia",
                 representation: INITIAL_STATE_MULTIMEDIA_REPRESENTATION
             }
-        case SELECT_TOOGLE: 
+        case SELECT_Toggle: 
             return {
                 ...state,
-                category: "Toogle",
-                representation: INITIAL_STATE_TOOGLE_REPRESENTATION
+                category: "Toggle",
+                representation: INITIAL_STATE_Toggle_REPRESENTATION
             }
         case TEXT_TOGGLE_BOLD:
             return {
@@ -104,6 +106,14 @@ export function reduceAttribute(state: any, action: any) {
                     size: size
                 }
             }
+        case TEXT_SELECTOR_FONT:
+            return {
+                ...state,
+                representation: {
+                    ...state.representation,
+                    font: action.payload
+                }
+            }
         case MULTIMEDIA_SELECTOR_TYPE:
             let multimediaType;
 
@@ -131,13 +141,13 @@ export function reduceAttribute(state: any, action: any) {
 
             switch (action.payload) {
                 case "Pequenyo":
-                    dimensions = [300, 500];
+                    dimensions = [50, 100];
                     break;
                 case "Mediano":
-                    dimensions = [500, 800];
+                    dimensions = [75, 100];
                     break;
                 case "Grande":
-                    dimensions = [700, 900];
+                    dimensions = [100, 100];
                     break;
             }
             return {
@@ -147,7 +157,7 @@ export function reduceAttribute(state: any, action: any) {
                     dimensions: dimensions
                 }
             }
-        case TOOGLE_SELECTOR_ICON:
+        case Toggle_SELECTOR_ICON:
             let icon;
             switch (action.payload) {
                 case "Favorite":
@@ -168,7 +178,7 @@ export function reduceAttribute(state: any, action: any) {
                 }
             }
 
-        case TOOGLE_COLOR_PICKER_TRUE:
+        case Toggle_COLOR_PICKER_TRUE:
             return {
                 ...state,
                 representation: {
@@ -176,7 +186,7 @@ export function reduceAttribute(state: any, action: any) {
                     colorTrue: action.payload
                 }
             }
-        case TOOGLE_COLOR_PICKER_FALSE:
+        case Toggle_COLOR_PICKER_FALSE:
             return {
                 ...state,
                 representation: {

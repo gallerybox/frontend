@@ -15,6 +15,7 @@ import SpaceForm from "./SpaceForm";
 import NotFound from "./not-found/NotFound";
 import ResetPassword from "./ResetPassword";
 import EditPersonalInformation from "./EditPersonalInformation";
+import Collectible from "./Collectible";
 
 /*
 const routes: {[view: string]: React.FC<any>} = {
@@ -50,6 +51,7 @@ const propsToQuery: Function = function (props: {[prop: string]: string|number|b
 const routesNoAuth : {[view: string]: React.FC<any>} = {
     "/space": Space,
     "/collections": Collections,
+    "/collectible": Collectible,
     "/users": Users,
     "/user": User,
     "/register": Register,
@@ -58,7 +60,8 @@ const routesNoAuth : {[view: string]: React.FC<any>} = {
     "/forgot-password": ForgotPassword,
     "/reset-password": ResetPassword,
     "/not-found": NotFound,//()=>(<div style={{color: "black"}}><h1>Error 404, esta página no existe</h1></div>)
-    "/edit-personal-information": EditPersonalInformation
+    "/edit-personal-information": EditPersonalInformation,
+
 }   
 const routesAuth: {[view: string]: React.FC<any>} = {
     "/spaces-owned": () => Spaces({ownSpaces:true}),

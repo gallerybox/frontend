@@ -34,7 +34,7 @@ function MiniCollectibleCard({collectible}: ReducedCollectibleProps){
             <header className="flex-row full-margin bold big-font">
                 <span className={collectible.thematicSpace?"clickable":""} style={collectible.thematicSpace?{}:{textDecoration: "line-through"}} onClick={collectible.thematicSpace?()=>setView("/space",{spaceId:collectible.thematicSpace?._id}):()=>0}>{collectible.thematicSpace?collectible.thematicSpace.name:"Espacio desaparecido"}</span>
             </header>
-            <div className="card-body flex-col full-margin clickable">
+            <div className="card-body flex-col full-margin clickable" onClick={()=>setView("/collectible", {collectibleId:collectible._id})}>
                 {
                     tags.sort(tag => collectible.attributes[tag].representationOrder)
                         .map(function (tag) {

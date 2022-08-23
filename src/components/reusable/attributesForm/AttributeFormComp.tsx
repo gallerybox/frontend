@@ -8,12 +8,12 @@ import {
     handleShowTag,
     handleSelectText,
     handleSelectMultimedia,
-    handleSelectToogle
+    handleSelectToggle
 } from "./store/actions";
 
 import MultimediaEditAttributeComp from "./MultimediaEditAttributeComp";
 import TextEditAttributeComp from "./TextEditAttributeComp";
-import ToogleEditAttributeComp from "./ToogleEditAttributeComp";
+import ToggleEditAttributeComp from "./ToggleEditAttributeComp";
 import {
     AttributeDTO,
     ThematicSpaceDTO,
@@ -25,7 +25,7 @@ import {TokenContext} from "../../../Auth";
 import {RouterContext} from "../../../views/router";
 import attribute from "../attributes/Attribute";
 import Attribute from "../attributes/Attribute";
-import {HANDLE_INPUT_TEXT} from "./store/actionTypes";
+import {HANDLE_INPUT_TEXT, RESET_FULL_STATE} from "./store/actionTypes";
 interface AttributeFormProps{
     spaceId: string;
     attributeToUpdateTag?: string
@@ -138,11 +138,12 @@ const AttributeForm: React.FC<AttributeFormProps> = ({spaceId, attributeToUpdate
                         setAttributesLength(data.template?.attributes!.length!);
                         const attributeToEdit = data.template?.attributes.filter(attribute => attribute.tag == attributeToUpdateTag);
                         if (attributeToEdit) {
-                            INITIAL_STATE.tag = attributeToEdit[0].tag;
-                            INITIAL_STATE.category = attributeToEdit[0].type.category;
-                            INITIAL_STATE.showTag = attributeToEdit[0].showTag;
-                            INITIAL_STATE.representation = attributeToEdit[0].type.representation;
-                            dispatch({type: HANDLE_INPUT_TEXT, payload: INITIAL_STATE});
+                            const INITIAL_STATE_COPY = JSON.parse(JSON.stringify(INITIAL_STATE))
+                            INITIAL_STATE_COPY.tag = attributeToEdit[0].tag;
+                            INITIAL_STATE_COPY.category = attributeToEdit[0].type.category;
+                            INITIAL_STATE_COPY.showTag = attributeToEdit[0].showTag;
+                            INITIAL_STATE_COPY.representation = attributeToEdit[0].type.representation;
+                            dispatch({type: RESET_FULL_STATE, payload: INITIAL_STATE_COPY});
                         }
 
                     }
@@ -193,17 +194,18 @@ const AttributeForm: React.FC<AttributeFormProps> = ({spaceId, attributeToUpdate
                                     labelId="demo-select-small"
                                     id="demo-select-small"
                                     label="Age"
+                                    value={state["category"]}
                                     defaultValue="Text"
                                 >
                                     <MenuItem value="Text"       onClick={(e) => dispatch( handleSelectText(e))}>Text</MenuItem>
                                     <MenuItem value="Multimedia" onClick={(e) => dispatch( handleSelectMultimedia(e))}>Multimedia</MenuItem>
-                                    <MenuItem value="Toogle"     onClick={(e) => dispatch( handleSelectToogle(e))}>Toogle</MenuItem>
+                                    <MenuItem value="Toggle"     onClick={(e) => dispatch( handleSelectToggle(e))}>Toggle</MenuItem>
                                 </Select>
                             </FormControl>
                             <div>
                                 {state.category === "Text" && <TextEditAttributeComp />}
                                 {state.category === "Multimedia" && <MultimediaEditAttributeComp/>}
-                                {state.category === "Toogle" && <ToogleEditAttributeComp/>}
+                                {state.category === "Toggle" && <ToggleEditAttributeComp/>}
                             </div>
 
                         </div>

@@ -6,6 +6,11 @@ import AttributeContext from "./store/attributeContext";
 const MultimediaEditAttributeComp: React.FC = () => {
     const [state, dispatch]  = useContext(AttributeContext);
 
+    const reverseMapDimensionsToText: {[width: number]: string} = {
+        50: "Pequenyo",
+        75: "Mediano",
+        100: "Grande"
+    }
     return (
         <div>
             <h2>Configuración del atributo Multimedia</h2>
@@ -17,6 +22,7 @@ const MultimediaEditAttributeComp: React.FC = () => {
                     id="demo-select-small"
                     label="Medio"
                     defaultValue="Photo"
+                    value={state.representation.multimediaType}
                     >
                     <MenuItem value="Audio"  onClick={(e) => dispatch( handleMultimediaType("Audio"))}>Audio</MenuItem>
                     <MenuItem value="Video"  onClick={(e) => dispatch( handleMultimediaType("Video"))}>Video</MenuItem>
@@ -31,6 +37,7 @@ const MultimediaEditAttributeComp: React.FC = () => {
                     id="demo-select-small"
                     label="Tamanyo"
                     defaultValue="Grande"
+                    value = {reverseMapDimensionsToText[state.representation.dimensions[0]]}
                     >
                     <MenuItem value="Pequenyo"  onClick={(e) => dispatch( handleMultimediaSize("Pequenyo"))}>Pequeño</MenuItem>
                     <MenuItem value="Mediano"   onClick={(e) => dispatch( handleMultimediaSize("Mediano"))}>Mediano</MenuItem>
