@@ -16,6 +16,7 @@ import NotFound from "./not-found/NotFound";
 import ResetPassword from "./ResetPassword";
 import EditPersonalInformation from "./EditPersonalInformation";
 import Collectible from "./Collectible";
+import Collection from "./Collection";
 
 /*
 const routes: {[view: string]: React.FC<any>} = {
@@ -50,6 +51,7 @@ const propsToQuery: Function = function (props: {[prop: string]: string|number|b
 
 const routesNoAuth : {[view: string]: React.FC<any>} = {
     "/space": Space,
+    "/collection": Collection,
     "/collections": Collections,
     "/collectible": Collectible,
     "/users": Users,
@@ -96,6 +98,7 @@ export function RouterContextProvider({children}: any){
         const maxNEntries = 400;
         if (historyLenght>maxNEntries){
             let nDeletes = 0;
+            // (key1, key2) =>{ return (key1 as unknown as number) - (key2 as unknown as number)})
             for (const entry of Object.keys(history).sort(key=> key as unknown as number)){
                 const n_entry = entry as unknown as number;
                 delete history[n_entry];

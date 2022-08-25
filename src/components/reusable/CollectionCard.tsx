@@ -1,4 +1,4 @@
-import React, {useState, useEffect, ReactElement} from 'react';
+import React, {useState, useEffect, ReactElement, useContext} from 'react';
 
 import {CollectibleDTO} from "../../repositories/CollectibleRepository";
 import {Card, CardHeader, Avatar, IconButton, CardMedia, CardContent, Typography, Button} from '@mui/material';
@@ -7,16 +7,18 @@ import {DynamicAttribute, DynamicRepresentation, DynamicType} from "../../reposi
 import Attribute from "./attributes/Attribute";
 import Link from "./Link";
 import {CollectionDTO} from "../../repositories/UserRepository";
+import {RouterContext} from "../../views/router";
 interface CollectionCardProps{
     collection: CollectionDTO;
 }
 
 function CollectionCard({collection}: CollectionCardProps){
+    const setView = useContext(RouterContext);
 
     return (
         <div className="CollectionCard flex-col halfable-margin">
             <header className="flex-row flex-row-space full-margin bold big-font">
-                <div className="flex-text-row clickable">
+                <div className="flex-text-row clickable" onClick={()=>setView("/collection", {collectionId: collection._id})}>
                     <span className="bold">{collection.name}</span>
                 </div>
                 <div className="flex-text-row">

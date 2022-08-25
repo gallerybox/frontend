@@ -201,6 +201,7 @@
     background: var(--card-main-color);
     border-radius: var(--border-radius);
     box-shadow: 2px 2px 2px var(--shadow-box-color);
+    color: black;
 }
 
 .card-body {
@@ -372,6 +373,9 @@ th, td {
     border-width: 0px 2px 0px 0px;
 }
 */
+.invisible-mobile{
+    display: none;
+}
 @media all and (max-width: 600px) {
     .full-mobile {
         width: 100%;
@@ -487,5 +491,10 @@ th, td {
         top: 20%;
         left: 25%;
     }
-
+    .invisible-mobile{
+        display: block;
+    }
+    .invisible-desktop{
+        display: none;
+    }
 }

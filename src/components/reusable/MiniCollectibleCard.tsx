@@ -28,7 +28,12 @@ function MiniCollectibleCard({collectible}: ReducedCollectibleProps){
         time_unit = time_unit + "s";
     }
     let time_ago_string: string = Math.round(time_ago_number) + time_unit;
-
+    let tagsToShow: Array<string> =tags.sort(
+        function (tag1, tag2) {return collectible.attributes[tag1].representationOrder - collectible.attributes[tag2].representationOrder}
+    ).filter(tag=>collectible.attributes[tag].showInReducedView);
+    if (tagsToShow.length<=0){
+        tagsToShow = tags.sort(function (tag1, tag2) {return collectible.attributes[tag1].representationOrder - collectible.attributes[tag2].representationOrder}).slice(0, 3);
+    }
     return (
         <div className="MiniCollectibleCard flex-col halfable-margin">
             <header className="flex-row full-margin bold big-font">
@@ -36,7 +41,7 @@ function MiniCollectibleCard({collectible}: ReducedCollectibleProps){
             </header>
             <div className="card-body flex-col full-margin clickable" onClick={()=>setView("/collectible", {collectibleId:collectible._id})}>
                 {
-                    tags.sort(tag => collectible.attributes[tag].representationOrder)
+                    tagsToShow.sort(function (tag1, tag2) {return collectible.attributes[tag1].representationOrder - collectible.attributes[tag2].representationOrder})
                         .map(function (tag) {
                               return ( <Attribute className="full-margin" attribute={ collectible.attributes[tag]} tag={tag}/>);
                         })

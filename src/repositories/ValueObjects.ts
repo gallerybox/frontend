@@ -16,6 +16,7 @@ export type TextRepresentation = {
     font: string;
     italics: boolean;
     bold: boolean;
+    underlined: boolean;
     maxLength: number;
 }
 
@@ -59,6 +60,7 @@ export type DynamicType = {
     value: string,
     representationOrder: number,
     showTag: boolean,
+    showInReducedView: boolean,
     category: Category
 }
 

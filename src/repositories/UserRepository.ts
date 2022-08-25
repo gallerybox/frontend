@@ -5,6 +5,7 @@ import {CollectibleDTO} from "./CollectibleRepository";
 import axios from "axios";
 
 export interface CollectionDTO {
+    _id: string;
     name: string;
     collectibles: Array<CollectibleDTO>;
 }
@@ -239,5 +240,24 @@ export module UserRepository {
 
         return response;        
     }
+
+    export async function getCollectionById(collectionId: string): Promise<Response<CollectionDTO>>{
+        const endpoint = url + `/collection/${collectionId}`;
+
+        headers["Authorization"] = `Bearer ${token.value}`
+        const options = {
+            method: "GET",
+            headers: headers
+        };
+
+        let response: Response<CollectionDTO>;
+
+        response = await fetch(endpoint, options)
+            .then(response => response.json())
+            .then(data => data);
+
+
+        return response;
+    };
 
 }

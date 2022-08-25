@@ -15,8 +15,9 @@ export const TextRepresentationComp: React.FC<TextRepresentationCompProps> =  fu
             {
                 color: representation.color,
                 fontSize: representation.size,
-                fontStyle: representation.italics? "normal":"italic",
-                fontWeight: representation.bold? "normal":"bold",
+                fontStyle: representation.italics? "italic":"normal",
+                fontWeight: representation.bold? "bold":"normal",
+                textDecoration: representation.underlined?"underline":"normal",
                 fontFamily: representation.font
             }
         }>
