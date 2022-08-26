@@ -17,6 +17,7 @@ import ResetPassword from "./ResetPassword";
 import EditPersonalInformation from "./EditPersonalInformation";
 import Collectible from "./Collectible";
 import Collection from "./Collection";
+import CollectibleForm from "./CollectibleForm";
 
 /*
 const routes: {[view: string]: React.FC<any>} = {
@@ -54,6 +55,7 @@ const routesNoAuth : {[view: string]: React.FC<any>} = {
     "/collection": Collection,
     "/collections": Collections,
     "/collectible": Collectible,
+    "/collectible-form": CollectibleForm,
     "/users": Users,
     "/user": User,
     "/register": Register,

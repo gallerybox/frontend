@@ -1,4 +1,4 @@
-import React, {useState, useEffect, ReactElement, useContext} from 'react';
+import React, {useState, useEffect, ReactElement, useContext, useCallback} from 'react';
 
 
 import {Card, CardHeader, Avatar, IconButton, CardMedia, CardContent, Typography } from '@mui/material';
@@ -9,6 +9,7 @@ import Attribute from "../components/reusable/attributes/Attribute";
 import Link from "../components/reusable/Link";
 import {TokenContext} from "../Auth";
 import {DynamicType, Response} from "../repositories/ValueObjects";
+import Input from "../components/reusable/attributes/form/Input";
 
 
 
@@ -20,7 +21,19 @@ const CollectibleForm: React.FC<CollectibleFormProps> = ({collectibleId}: Collec
     const setView = useContext(RouterContext);
     const [token, setToken] = useContext(TokenContext);
     const [collectible, setCollectible] = useState<Response<CollectibleDTO>>({attributes: {}});
-    const [timeAgoString, setTimeAgoString] = useState("2 horas");
+    const [errors, setErrors] = useState<{[error: string]: string}>({});
+    const [values, setValues] = useState<{[tag: string]: any}>({});
+
+
+    function updateValue(tag: string, newValue: any){
+        setValues(current => {
+            current[tag] = newValue;
+            const next: {[tag: string]: any} = {};
+            Object.assign(next, current); // Hay que crear un objeto nuevo para que cambie la referencia del objeto y react detecte el cambio y vuelva a renderizar.
+            return next;
+        })
+    }
+
     CollectibleRepository.token.value = token;
     useEffect( () =>{
         if (collectibleId){
@@ -28,24 +41,14 @@ const CollectibleForm: React.FC<CollectibleFormProps> = ({collectibleId}: Collec
                 console.log(JSON.stringify(data));
                 if (data){
                     setCollectible(data);
-                    let time_ago_number: number = Math.abs(Date.now()-new Date(data.lastModified).getTime()) / 36e5;
-                    let time_unit: string = " hora"
-
-                    if (time_ago_number<1){
-                        time_ago_number = time_ago_number * 60;
-                        time_unit = " minuto"
-                    } else if (time_ago_number>23){
-                        time_ago_number = time_ago_number / 24;
-                        time_unit = " día"
-                    }
-                    if (Math.round(time_ago_number) != 1){
-                        time_unit = time_unit + "s";
-                    }
-                    setTimeAgoString(Math.round(time_ago_number) + time_unit);
+                    const initalValues: {[tag: string]: any} = {};
+                    Object.keys(data.attributes).forEach(tag =>{
+                       initalValues[tag] =  data.attributes[tag].value;
+                    });
+                    setValues(initalValues);
                 }else{
                     setView("/not-found");
                 }
-
 
             })
         }else {
@@ -64,22 +67,14 @@ const CollectibleForm: React.FC<CollectibleFormProps> = ({collectibleId}: Collec
                 </header>
                 <div className="flex-col full-margin">
                     {
-                        Object.keys(collectible?.attributes!).sort((tag1,tag2) => collectible?.attributes![tag1].representationOrder!-collectible?.attributes![tag2].representationOrder!).map(
+                        Object.keys(values!).sort((tag1,tag2) => collectible?.attributes![tag1].representationOrder!-collectible?.attributes![tag2].representationOrder!).map(
                             tag => {
-                                return ( <Attribute className="full-margin" attribute={ collectible?.attributes?.[tag] as DynamicType} tag={tag}/>);
+                                return ( <Input className="full-margin" attribute={ collectible?.attributes?.[tag] as DynamicType} tag={tag} value={values[tag]} updateValue={updateValue} />);
                             }
                         )
 
                     }
                 </div>
-                <footer className="flex-row flex-row-space full-margin">
-                    <div className="flex-text-row">
-                        <span className="bold">Por:&nbsp;</span><Link text={collectible?.user?.nickname!} onClickAction={()=>setView("/user", {userId: collectible?.user?._id})}/>
-                    </div>
-                    <div className="flex-text-row">
-                        <span>Hace&nbsp;</span><span>{timeAgoString}</span>
-                    </div>
-                </footer>
             </div>
 
 

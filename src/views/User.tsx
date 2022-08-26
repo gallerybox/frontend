@@ -18,6 +18,7 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
     const setView = useContext(RouterContext);
     const [token, setToken] = useContext(TokenContext);
     const [loggedUser, setLoggedUser] = useContext(UserContext);
+    const [loggedUserDTO, setLoggedUserDTO] = useState<Response<UserDTO>>({followedUsers:[]})
     const [user, setUser] = useState<Response<UserDTO>>({followedUsers:[], ownedThematicSpaces:[]});
     // Popups
     const [overlayDeleteUserView, setOverlayDeleteUserView] = useState<{component: React.FC}>({component: ()=><OverlayYesNoDeleteUser  isInvisible={true} continueCallback={()=>0}/>});
@@ -48,6 +49,15 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
 
     }
 
+    const onChangeFollowUser = (e: any, userIdToChange: string, isFollowed: boolean) => {
+        isFollowed ? alert("PUES VAS A DEJAR DE SEGUIRLO") : alert("PUES VAS A SEGUIRLO");
+        UserRepository.changeFollowUser(loggedUser, userIdToChange, isFollowed)
+            .then((data)=>{
+                // O se actualiza la página o se actualiza el valor
+                window.location.reload();
+            });
+    }
+
     const [followers, setFollowers] = useState<Response<Array<UserDTO>>| undefined>([]);
     UserRepository.token.value = token;
     useEffect(()=>{
@@ -61,7 +71,12 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
                     }
                 )
         }
-        )
+        );
+        UserRepository.getUser(loggedUser).then(data=>{
+                setLoggedUserDTO(data);
+            }
+        );
+
         },[])
 
     const OverlayDeleteUserView: React.FC = overlayDeleteUserView.component;
@@ -129,11 +144,11 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
                 </div>
 
                     <div className="flex-row flex-row-space full">
-                        <div className={loggedUser==user._id?"flex-col halfable":"invisible"}>
-                            <div className="margin">
+                        <div className="flex-col halfable">
+                            <div className={loggedUser==user._id?"margin":"invisible"}>
                                 <Button variant="contained" color="primary" onClick={()=>setView("/edit-personal-information", {userId:user._id})}> Editar información </Button>
                             </div>
-                            <div className="margin">
+                            <div className={loggedUser==user._id?"margin":"invisible"}>
                                 <Button variant="contained" color="primary" 
                                 onClick={
                                     ()=>
@@ -143,6 +158,19 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
                                                 continueCallback={()=>handleSendPersonalData()}/>
                                     })
                                 }> Descargar tu información </Button>
+                            </div>
+                            <div className={loggedUser!=user._id?"margin":"invisible"}>
+                                <Button variant="contained" color="primary"
+                                        onClick={(e)=> {
+                                            loggedUserDTO.followedUsers?.some((f: UserDTO) => f._id === user._id)
+                                                ? onChangeFollowUser(e, (user as UserDTO)._id, true)
+                                                : onChangeFollowUser(e, (user as UserDTO)._id, false)
+                                        }
+                                        }>
+
+                                    {loggedUserDTO.followedUsers!.some((f: UserDTO) => f._id === user._id)?"Dejar de seguir": "Seguir"}
+
+                                </Button>
                             </div>
                         </div>
                         <div className="flex-col halfable">
@@ -157,7 +185,8 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
                                     })
                                 }> Compartir perfil </Button>
                             </div>
-    
+
+
                             <div className={loggedUser==user._id?"margin":"invisible"}>
                                 <Button variant="contained" color="primary" 
                                 onClick={
