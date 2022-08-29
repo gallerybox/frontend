@@ -38,7 +38,7 @@ function CollectionCard({collection}: CollectionCardProps){
                     }
                 </div>
                 <div className="flex-text-row">
-                    <Button variant="contained" color="primary" onClick={()=>alert("Editar")}> Editar </Button>
+                    <Button variant="contained" color="primary" onClick={()=>setView("/collection-edit", {collectionId: collection._id})}> Editar </Button>
                 </div>
             </footer>
         </div>

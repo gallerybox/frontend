@@ -4,24 +4,26 @@ import {
     Button,
     TextField
 } from '@mui/material';
-import {MoreVert} from '@mui/icons-material'
+import {Edit, MoreVert, Share} from '@mui/icons-material'
 import Link from "../components/reusable/Link";
 import {RouterContext} from "./router";
 import {TokenContext, UserContext} from "../Auth";
 import {Response} from "../repositories/ValueObjects";
 import {ThematicSpaceDTO, ThematicSpaceRepository} from "../repositories/ThematicSpaceRepository";
 import {CollectionDTO, UserDTO, UserRepository} from "../repositories/UserRepository";
-
-interface CollectionCreateProps{
-    spaceId: string;
+import MiniCollectibleCard from "../components/reusable/MiniCollectibleCard";
+import {KeyboardArrowDown, KeyboardArrowUp, EditSharp, DeleteSharp} from '@mui/icons-material';
+import {CollectibleDTO} from "../repositories/CollectibleRepository";
+interface CollectionEditProps{
+    collectionId: string;
 }
 
-function CollectionCreate({spaceId}: CollectionCreateProps){
+function CollectionEdit({collectionId}: CollectionEditProps){
     const setView = useContext(RouterContext);
     const [token, setToken] = useContext(TokenContext);
     const [loggedUserId, setLoggedUserID] = useContext(UserContext);
 
-    const [space, setSpaces] = useState<Response<ThematicSpaceDTO>>();
+    const [collectionDB, setCollectionDB] = useState<Response<CollectionDTO>>();
     const [owner, setOwner] = useState<Response<UserDTO>>({nickname: "loading"});
 
 
@@ -34,17 +36,19 @@ function CollectionCreate({spaceId}: CollectionCreateProps){
     ThematicSpaceRepository.token.value = token;
 
     useEffect(()=>{
-        if(spaceId && loggedUserId){
+        if(collectionId && loggedUserId){
             UserRepository.getUser(loggedUserId).then(user => {
                 if (user._id){
-                    ThematicSpaceRepository.getSpaceById(spaceId).then(space =>{
-                        if(space._id){
+                    UserRepository.getCollectionById(collectionId).then(data => {
+                        if(data._id){
                             setOwner(user as UserDTO);
-                            setSpaces(space as ThematicSpaceDTO);
-                            const existCollection = user!.collections!.some(collection => (collection.thematicSpace as ThematicSpaceDTO)._id === spaceId);
-                            if (existCollection)
-                                setView("/not-found");
+                            setCollectionDB(data);
+                            const existCollection = user!.collections!.some(collection => collection._id as unknown as string == data._id);
 
+                            if (!existCollection)
+                                setView("/not-found");
+                            else
+                                setCollectionName(data!.name as string);
                         }else{
                             setView("/not-found");
                         }
@@ -64,50 +68,86 @@ function CollectionCreate({spaceId}: CollectionCreateProps){
         e.preventDefault();
         setSubmitEvent(e);
 
-        const newCollection: CollectionDTO = {
-            collectibles: [],
-            thematicSpace: space?._id as unknown as ThematicSpaceDTO,
-            name: collectionName as string,
-        }
-        const existCollection = owner!.collections!.some(collection => collection.thematicSpace as unknown as string === spaceId);
-        console.log(JSON.stringify(owner));
-        if (!existCollection){
-            owner.collections?.push(newCollection);
-            setOwner(owner);
-        }
-
-        UserRepository.updateUser(owner as UserDTO).then(data =>{
-            const collectionSaved: CollectionDTO | undefined = data.collections?.find(collection => collection.thematicSpace as unknown as string=== spaceId);
-            if (collectionSaved){
-                setView("/collection",{collectionId:collectionSaved._id});
-            }
-        });
-
-
     };
 
+    useEffect(()=>{
+        if (submitEvent){
 
+            const collections = owner!.collections!.map(collection =>{
+                if(collection._id as unknown as string === collectionDB?._id){
+                    collection.name = collectionName as string;
+                    if(collectionDB && collectionDB.collectibles)
+                        collection.collectibles = collectionDB.collectibles;
+                }
+                return collection;
+            } );
+
+            owner.collections = collections;
+
+            UserRepository.updateUser(owner as UserDTO).then(data =>{
+                const collectionSaved: CollectionDTO | undefined = data.collections?.find(collection => collection._id as unknown as string== collectionDB?._id);
+                if (collectionSaved){
+                    setView("/collection",{collectionId:collectionSaved._id});
+                }
+            });
+        };
+    }, [submitEvent, owner, collectionDB]);
+
+
+    const deleteCollectible: Function = (collectibleId: string)=>{
+        console.log("delete", collectibleId)
+        const collectiblesOwner: CollectibleDTO[]  = owner.collections?.find(c => c._id==collectionDB?._id)!.collectibles.filter((c2)=> c2._id!=collectibleId)!;
+
+        console.log(JSON.stringify(collectiblesOwner));
+        const collectionsOwner = owner!.collections!.map(collection =>{
+            if(collection._id as unknown as string === collectionDB?._id){
+                collection.collectibles = collectiblesOwner ;
+            }
+            return collection;
+        } );
+
+        owner.collections = collectionsOwner;
+        const updatedOwner: UserDTO= JSON.parse(JSON.stringify(owner));
+
+
+        console.log(JSON.stringify(collectiblesOwner));
+        const collectibles = collectionDB?.collectibles!.filter((c2)=> c2._id!=collectibleId);
+
+        collectionDB!.collectibles = collectibles;
+        const updatedCollection: UserDTO= JSON.parse(JSON.stringify(collectionDB));
+
+
+        setCollectionDB(updatedCollection);
+        setOwner(updatedOwner);
+    };
 
     return (
-        <div className="CollectionCreate flex-col full">
-            <form className="flex-col halfable-margin" onSubmit={(e)=>handleSubmit(e)} style={{background: "white", color: "black"}}>
+        <div className="CollectionEdit flex-col full">
+            <form className=" card flex-col halfable-margin" onSubmit={(e)=>handleSubmit(e)}>
                 <header className="flex-row flex-row-space full-margin bold big-font">
 
                     <div className="flex-text-row">
+                        <div className="flex-text-row clickable margin" onClick={()=>alert("delete collection")}>
+                            <DeleteSharp/>
+                        </div>
+
                         <TextField placeholder="Nombre de la colección" value={collectionName} onChange={(e) => setCollectionName(e.target.value)} type="text" name="email"
                                    variant="standard" margin="normal"/>
+
                     </div>
-                    <div style={{width: "1px", height: "1px"}}></div>
+                    <div className="flex-text-row">
+                        <span className="bold">{collectionDB?.collectibles?collectionDB?.collectibles?.length: 0} coleccionables</span>
+                    </div>
                 </header>
 
                 <footer className="flex-row flex-row-space full-margin">
                     <div className="flex-text-row ">
                         <span className="bold">Espacio:&nbsp;</span>
-                        { space && space._id &&
-                            <Link text={space?.name as string}
-                                  onClickAction={() => setView("/space", {spaceId: space?._id})}/>
+                        { collectionDB?.thematicSpace && collectionDB?.thematicSpace._id &&
+                            <Link text={collectionDB?.thematicSpace?.name as string}
+                                  onClickAction={() => setView("/space", {spaceId: collectionDB?.thematicSpace?._id})}/>
                         }
-                        { (!space || !space._id) &&
+                        { (!collectionDB?.thematicSpace || !collectionDB?.thematicSpace._id) &&
                             <span style={{textDecoration: "line-through"}} >"Espacio desaparecido"</span>
                         }
                     </div>
@@ -116,9 +156,29 @@ function CollectionCreate({spaceId}: CollectionCreateProps){
                     </div>
                 </footer>
             </form>
+
+            {collectionDB && collectionDB.collectibles &&
+
+                collectionDB.collectibles.map((collectible) =>{
+                    return (
+                        <div className="flex-col full">
+
+                            <div className="card flex-text-row halfable-margin" style={{height: "0px", justifyContent: "space-between"}}>
+                                <div style={{width: "0.5px",height: "0.5px"}}></div>
+                                <div className="floating-button clickable" onClick={()=>deleteCollectible(collectible._id)}>
+                                    <DeleteSharp/>
+                                </div>
+                            </div>
+                            <MiniCollectibleCard collectible={collectible}/>
+
+                        </div>
+
+                    )
+                })
+            }
         </div>
 
     );
 }
 
-export default CollectionCreate;
+export default CollectionEdit;

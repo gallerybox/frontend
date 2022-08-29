@@ -19,6 +19,7 @@ import Collectible from "./Collectible";
 import Collection from "./Collection";
 import CollectibleForm from "./CollectibleForm";
 import CollectionCreate from "./CollectionCreate";
+import CollectionEdit from "./CollectionEdit";
 
 /*
 const routes: {[view: string]: React.FC<any>} = {
@@ -70,6 +71,7 @@ const routesAuth: {[view: string]: React.FC<any>} = {
     "/spaces-owned": () => Spaces({ownSpaces:true}),
     "/space-form": SpaceForm,
     "/collection-create": CollectionCreate,
+    "/collection-edit": CollectionEdit,
     "/collectible-form": CollectibleForm,
     "/spaces-followed": () => Spaces({ownSpaces:false}),
     "/main-view-timeline": MainViewTimeline,

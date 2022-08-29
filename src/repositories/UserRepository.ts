@@ -76,6 +76,26 @@ export module UserRepository {
 
         return response;
     }
+    export async function updateUserCollection( user: UserDTO): Promise<Response<UserDTO>> {
+        const endpoint = url + "/prueba";
+        headers["Authorization"] = `Bearer ${token.value}`
+        const options = {
+            method: "POST",
+            mode: 'cors' as RequestMode,
+            headers: headers,
+            body: JSON.stringify(user)
+        };
+
+        let response: Response<UserDTO>;
+
+        response = await fetch(endpoint, options)
+            .then(response => response.json())
+            .then(data => data);
+
+
+        return response;
+    }
+
 
     export async function getUsersByFollowedSpaceId(spaceId: string): Promise<Response<Array<UserDTO>>> {
         const endpoint = url + `/followed-space-id/${spaceId}`;

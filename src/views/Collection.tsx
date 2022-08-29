@@ -12,7 +12,7 @@ import {CollectibleDTO} from "../repositories/CollectibleRepository";
 import Link from "../components/reusable/Link";
 import {Button, Box, LinearProgress} from "@mui/material";
 import Attribute from "../components/reusable/attributes/Attribute";
-import {ArrowBackIosNewSharp, ArrowForwardIosSharp} from '@mui/icons-material';
+import {ArrowBackIosNewSharp, ArrowForwardIosSharp, Share} from '@mui/icons-material';
 
 
 interface CollectionProps{
@@ -114,10 +114,12 @@ const Collection: React.FC<CollectionProps> = function ({collectionId}: Collecti
     return (
         <div className="Collection flex-col full" >
             <div className="card flex-col halfable-margin" >
-
                     <header className="flex-row flex-row-space full-margin bold big-font">
-                        <div className="flex-text-row clickable">
+                        <div className="flex-text-row">
                             <span className="bold">{collection?.name}</span>
+                            <div>
+                                <Share  className="clickable margin-row" onClick={()=>alert("Compartir")}/>
+                            </div>
                         </div>
                         <div className="flex-text-row">
                             <span className="bold">{collection?.collectibles?.length} coleccionables</span>

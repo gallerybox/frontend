@@ -383,6 +383,9 @@ th, td {
     .invisible-mobile{
         display: none!important;
     }
+    .floating-button{
+        transform: translate(-0.5rem,2.5rem)
+    }
 }
 @media all and (max-width: 950px) {
     .invisible-mobile{
@@ -438,6 +441,10 @@ th, td {
     .overlay-content{
         top: 20%;
         left: 0%;
+    }
+
+    .floating-button{
+        transform: translate(-0.5rem, 4.5rem)
     }
 
 }
@@ -505,5 +512,9 @@ th, td {
     }
     .invisible-desktop{
         display: none;
+    }
+
+    .floating-button{
+        transform: translate(-0.5rem, 4.5rem)
     }
 }
