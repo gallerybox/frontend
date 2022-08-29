@@ -90,7 +90,7 @@ const Collection: React.FC<CollectionProps> = function ({collectionId}: Collecti
         if (index!=0 && collection!.collectibles){
             console.log(index);
             setCollectibleIndex(index-1);
-            setCollectible(collection!.collectibles?.[index-1]);
+            getCollectible(collection as CollectionDTO,index-1);
             setPercentaje(((index)/collection!.collectibles.length) * 100)
         }
     }
@@ -106,14 +106,14 @@ const Collection: React.FC<CollectionProps> = function ({collectionId}: Collecti
     function up(index: number){
         if (collection!.collectibles && index!=(collection!.collectibles.length-1)){
             setCollectibleIndex(index+1);
-            setCollectible(collection!.collectibles?.[index+1]);
+            getCollectible(collection as CollectionDTO,index+1);
             setPercentaje(((index+2)/collection!.collectibles.length) * 100)
         }
     }
 
     return (
         <div className="Collection flex-col full" >
-            <div className="card flex-col halfable-margin" style={{flexGrow:5}}>
+            <div className="card flex-col halfable-margin" >
 
                     <header className="flex-row flex-row-space full-margin bold big-font">
                         <div className="flex-text-row clickable">
@@ -128,9 +128,9 @@ const Collection: React.FC<CollectionProps> = function ({collectionId}: Collecti
                         <div className="flex-text-row ">
                             <span className="bold">Espacio:&nbsp;</span>
                             {
-                                collectible &&
-                                collectible?.thematicSpace?.name?
-                                    <Link text={collectible?.thematicSpace?.name? collectible?.thematicSpace.name: ""} onClickAction={()=>alert(collectible?.thematicSpace?.name)}/>
+                                collection &&
+                                collection?.thematicSpace?.name?
+                                    <Link text={collection?.thematicSpace?.name? collection?.thematicSpace.name: ""} onClickAction={()=>alert(collection?.thematicSpace?.name)}/>
                                     : <span style={{textDecoration: "line-through"}}>Espacio desaparecido</span>
                             }
 
@@ -142,6 +142,7 @@ const Collection: React.FC<CollectionProps> = function ({collectionId}: Collecti
 
 
             </div>
+            {collectible && collectible._id && <>
             <div  onClick={()=>memoDown()} className="clickable invisible-mobile"  style={{color: "black", height: "50px", width: "50px", borderRadius: "50%", zIndex: 2, position: "absolute", left:  "calc(25% - 25px)", top: "calc(50% - 25px)", display: "flex", justifyContent: "center", alignItems: "center"}}>
                     <div>
                     <ArrowBackIosNewSharp/>
@@ -172,7 +173,7 @@ const Collection: React.FC<CollectionProps> = function ({collectionId}: Collecti
             {collectible && collectible.attributes &&
                 <>
 
-                <div className="flex-row halfable-margin" style={{background:"white", color: "black" ,position: "relative"}}>
+                <div className="flex-row halfable-margin" style={{background:"white", color: "black" ,position: "relative",flexGrow:5}}>
                     <div className="flex-col full-margin">
                         {
                             Object.keys(collectible?.attributes!).sort((tag1,tag2) => collectible?.attributes![tag1].representationOrder!-collectible?.attributes![tag2].representationOrder!).map(
@@ -206,6 +207,8 @@ const Collection: React.FC<CollectionProps> = function ({collectionId}: Collecti
 
                     </Box>
                 </div>
+                </>
+            }
 
 
                 </>

@@ -18,6 +18,7 @@ import EditPersonalInformation from "./EditPersonalInformation";
 import Collectible from "./Collectible";
 import Collection from "./Collection";
 import CollectibleForm from "./CollectibleForm";
+import CollectionCreate from "./CollectionCreate";
 
 /*
 const routes: {[view: string]: React.FC<any>} = {
@@ -55,7 +56,6 @@ const routesNoAuth : {[view: string]: React.FC<any>} = {
     "/collection": Collection,
     "/collections": Collections,
     "/collectible": Collectible,
-    "/collectible-form": CollectibleForm,
     "/users": Users,
     "/user": User,
     "/register": Register,
@@ -64,15 +64,17 @@ const routesNoAuth : {[view: string]: React.FC<any>} = {
     "/forgot-password": ForgotPassword,
     "/reset-password": ResetPassword,
     "/not-found": NotFound,//()=>(<div style={{color: "black"}}><h1>Error 404, esta página no existe</h1></div>)
-    "/edit-personal-information": EditPersonalInformation,
+}
 
-}   
 const routesAuth: {[view: string]: React.FC<any>} = {
     "/spaces-owned": () => Spaces({ownSpaces:true}),
     "/space-form": SpaceForm,
+    "/collection-create": CollectionCreate,
+    "/collectible-form": CollectibleForm,
     "/spaces-followed": () => Spaces({ownSpaces:false}),
     "/main-view-timeline": MainViewTimeline,
     "/space-attribute-form": AttributeForm,
+    "/edit-personal-information": EditPersonalInformation,
 }
 
 const routes : {[view: string]: React.FC<any>} = {...routesNoAuth, ...routesAuth};
@@ -84,9 +86,19 @@ export let PathContext: React.Context<any> = React.createContext("Login");
 export let ViewContext: React.Context<React.FC> = React.createContext(Login);
 export function RouterContextProvider({children}: any){
 
-    const urlRoute = window.location.pathname;
+    let urlRoute = window.location.pathname;
+    let urlParams = window.location.search;
 
-    const params = new URLSearchParams(window.location.search);
+    if(window.location.hash){
+        urlRoute = window.location.hash.substring(1);
+        const splited = urlRoute.split("?");
+        if (splited.length>=2){
+            urlRoute = splited[0];
+            urlParams = splited[1];
+        }
+    }
+
+    const params = new URLSearchParams(urlParams);
     const urlProps: {[param: string]: string|number|boolean} = {};
     params.forEach((value, param) => {
         urlProps[param] = JSON.parse(value);

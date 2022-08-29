@@ -373,14 +373,23 @@ th, td {
     border-width: 0px 2px 0px 0px;
 }
 */
-.invisible-mobile{
-    display: none;
-}
+
+
+
 @media all and (max-width: 600px) {
     .full-mobile {
         width: 100%;
     }
+    .invisible-mobile{
+        display: none!important;
+    }
 }
+@media all and (max-width: 950px) {
+    .invisible-mobile{
+        display: none!important;
+    }
+}
+
 /* Tablet menu */
 @media all and (min-width: 600px) {
     .MainHeader {

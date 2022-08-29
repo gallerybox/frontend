@@ -14,15 +14,20 @@ interface ReducedCollectibleProps{
 function MiniCollectibleCard({collectible}: ReducedCollectibleProps){
     const setView = useContext(RouterContext);
     const tags: Array<string> = Object.keys(collectible.attributes);
-    let time_ago_number: number = Math.abs(Date.now()-new Date(collectible.lastModified).getTime()) / 36e5;
+    console.log("dtaeeee")
+    console.log(new Date());
+    console.log(collectible.lastModified);
+    console.log(new Date(collectible.lastModified));
+    console.log("eeendddd date");
+    let time_ago_number: number = Math.abs((new Date().getTime())-(new Date(collectible.lastModified).getTime())) / 36e5;
     let time_unit: string = " hora"
 
     if (time_ago_number<1){
         time_ago_number = time_ago_number * 60;
-        let time_unit: string = " minuto"
+        time_unit = " minuto"
     } else if (time_ago_number>23){
         time_ago_number = time_ago_number / 24;
-        let time_unit: string = " día"
+        time_unit = " día"
     }
     if (Math.round(time_ago_number) != 1){
         time_unit = time_unit + "s";

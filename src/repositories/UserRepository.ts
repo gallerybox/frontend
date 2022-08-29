@@ -5,8 +5,9 @@ import {CollectibleDTO} from "./CollectibleRepository";
 import axios from "axios";
 
 export interface CollectionDTO {
-    _id: string;
+    _id?: string;
     name: string;
+    thematicSpace: ThematicSpaceDTO,
     collectibles: Array<CollectibleDTO>;
 }
 
@@ -42,6 +43,7 @@ export module UserRepository {
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "GET",
+            mode: 'cors' as RequestMode,
             headers: headers
         };
 
@@ -60,6 +62,7 @@ export module UserRepository {
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "PATCH",
+            mode: 'cors' as RequestMode,
             headers: headers,
             body: JSON.stringify(user)
         };
@@ -79,6 +82,7 @@ export module UserRepository {
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "GET",
+            mode: 'cors' as RequestMode,
             headers: headers
         };
 
@@ -96,6 +100,7 @@ export module UserRepository {
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "GET",
+            mode: 'cors' as RequestMode,
             headers: headers
         };
 
@@ -110,10 +115,11 @@ export module UserRepository {
 
 
     export async function getUsersByFollowedUserId(userId: string): Promise<Response<Array<UserDTO>>> {
-        const endpoint = url + `/followed-user/${userId}`;
+        const endpoint = url + `/followed-user/${userId}/`;
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "GET",
+            mode: 'cors' as RequestMode,
             headers: headers
         };
 
@@ -131,6 +137,7 @@ export module UserRepository {
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "GET",
+            mode: 'cors' as RequestMode,
             headers: headers
         };
 
@@ -146,6 +153,7 @@ export module UserRepository {
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "DELETE",
+            mode: 'cors' as RequestMode,
             headers: headers
         };
 
@@ -209,6 +217,7 @@ export module UserRepository {
 
         const options = {
             method: "PATCH",
+            mode: 'cors' as RequestMode,
             headers: headers,
             body: JSON.stringify(formState)
         }
@@ -228,6 +237,7 @@ export module UserRepository {
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "GET",
+            mode: 'cors' as RequestMode,
             headers: headers
         };
 
@@ -247,6 +257,7 @@ export module UserRepository {
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "GET",
+            mode: 'cors' as RequestMode,
             headers: headers
         };
 

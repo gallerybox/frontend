@@ -35,6 +35,7 @@ export module ThematicSpaceRepository {
         headers["Authorization"] = `Bearer ${token.value}`;
         const options = {
             method: "GET",
+            mode: 'cors' as RequestMode,
             headers: headers,
             /*
             body: JSON.stringify({
@@ -60,6 +61,7 @@ export module ThematicSpaceRepository {
         headers["Authorization"] = `Bearer ${token.value}`;
         const options = {
             method: "GET",
+            mode: 'cors' as RequestMode,
             headers: headers,
             /*
             body: JSON.stringify({
@@ -85,6 +87,7 @@ export module ThematicSpaceRepository {
         headers["Authorization"] = `Bearer ${token.value}`;
         const options = {
             method: "POST",
+            mode: 'cors' as RequestMode,
             headers: headers,
             body: JSON.stringify(space),
 

@@ -26,7 +26,7 @@ export module AuthRepository {
         const options = {
             method: "POST",
             headers: headers,
-
+            mode: 'cors' as RequestMode,
             body: JSON.stringify({
                 email: email,
                 password: password
@@ -49,7 +49,7 @@ export module AuthRepository {
         const options = {
             method: "POST",
             headers: headers,
-
+            mode: 'cors' as RequestMode,
             body: JSON.stringify({
                 nombre: nombre,
                 apellidos: apellidos,
@@ -74,6 +74,7 @@ export module AuthRepository {
         const endpoint = url + "/auth/verify-token/" + token
         const options = {
             method: "GET",
+            mode: 'cors' as RequestMode,
             headers: headers
         }
 
@@ -92,6 +93,7 @@ export module AuthRepository {
         const endpoint = url + "/auth/forgot-password/"
         const options = {
             method: "POST",
+            mode: 'cors' as RequestMode,
             headers: headers,
 
             body: JSON.stringify({
@@ -115,7 +117,7 @@ export module AuthRepository {
         const options = {
             method: "POST",
             headers: headers,
-
+            mode: 'cors' as RequestMode,
             body: JSON.stringify({
                 userId: userId,
                 token: token,

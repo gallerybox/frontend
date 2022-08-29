@@ -29,7 +29,13 @@ function CollectionCard({collection}: CollectionCardProps){
             <footer className="flex-row flex-row-space full-margin">
                 <div className="flex-text-row ">
                     <span className="bold">Espacio:&nbsp;</span>
-                    <Link text={collection.collectibles[0].thematicSpace.name} onClickAction={()=>alert(collection.collectibles[0].thematicSpace.name)}/>
+                    { collection.thematicSpace && collection.thematicSpace._id &&
+                        <Link text={collection.thematicSpace?.name as string}
+                              onClickAction={() => setView("/space", {spaceId: collection.thematicSpace?._id})}/>
+                    }
+                    { (!collection.thematicSpace || !collection.thematicSpace._id) &&
+                        <span style={{textDecoration: "line-through"}} >"Espacio desaparecido"</span>
+                    }
                 </div>
                 <div className="flex-text-row">
                     <Button variant="contained" color="primary" onClick={()=>alert("Editar")}> Editar </Button>

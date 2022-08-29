@@ -9,7 +9,10 @@ export interface VideoRepresentationCompProps{
 
 export const MultimediaRepresentationComp: React.FC<VideoRepresentationCompProps> =  function ({value, representation}: VideoRepresentationCompProps){
     let Representation: React.FC;
+    value = value+"?" + new Date().getTime();
+    console.log(value);
     switch (representation.multimediaType) {
+
         case MultimediaType.Photo:
             Representation = ()=><div className="flex-col full-margin">
                 <img src={value}  width={(representation?.dimensions?.[0]? representation?.dimensions?.[0]: "75") + "%"} height="auto"/>

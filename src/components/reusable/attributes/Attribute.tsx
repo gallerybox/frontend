@@ -22,7 +22,8 @@ function Attribute({tag, attribute, className=""}: AttributeProps){
             break;
         case Category.Text:
             Representation = TextRepresentationComp;
-            way_to_show_tag = attribute.value.length>100? "flex-col":"flex-text-row";
+
+            way_to_show_tag = attribute.value && attribute.value.length>100? "flex-col":"flex-text-row";
             break;
         case Category.Toggle:
             Representation = ToggleRepresentationComp;

@@ -84,7 +84,10 @@ const Space: React.FC<SpaceProps> = function ({spaceId}:SpaceProps){
                 <div className="flex-row flex-row-space full-margin">
                     <div className="flex-text-row" style={{width: "1px"}}></div>
                     <div className="flex-row">
-                        <Button type="submit" variant="contained" color="primary" onClick={()=>alert(colaborators.some?.(c => c._id === user)||owner._id==user?"Nueva colección": "Participar")}>
+                        <Button type="submit" variant="contained" color="primary" onClick={()=>{
+                            alert(colaborators.some?.(c => c._id === user)||owner._id==user?"Nueva colección": "Participar")
+                            setView("/collection-create", {spaceId: space._id});
+                        }}>
                             {colaborators.some?.(c => c._id === user)||owner._id===user?"Nueva colección": "Participar"} </Button>
                     </div>
                 </div>
