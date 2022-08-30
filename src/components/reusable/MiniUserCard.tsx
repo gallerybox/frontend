@@ -20,7 +20,6 @@ function MiniUserCard({user}: MiniUserCardProps){
     const setView = useContext(RouterContext);
 
     const onChangeFollowUser = (e: any, userIdToChange: string, isFollowed: boolean) => {
-        isFollowed ? alert("PUES VAS A DEJAR DE SEGUIRLO") : alert("PUES VAS A SEGUIRLO");
         UserRepository.changeFollowUser(userId, userIdToChange, isFollowed)
             .then((data)=>{
                 // O se actualiza la página o se actualiza el valor

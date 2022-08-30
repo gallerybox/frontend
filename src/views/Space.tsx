@@ -11,6 +11,7 @@ import {Edit, Share} from '@mui/icons-material';
 import Link from "../components/reusable/Link";
 import {Button} from "@mui/material";
 import {RouterContext} from "./router";
+import OverlayQRCode from "../components/reusable/popups/OverlayQRCode";
 
 interface SpaceProps {
     spaceId: string;
@@ -24,6 +25,8 @@ const Space: React.FC<SpaceProps> = function ({spaceId}:SpaceProps){
     const [colaborators, setColaborators] = useState<Response<Array<UserDTO>>>([]);
     const [collectibles, setCollectibles] = useState<Array<CollectibleDTO>>([]);
     const [owner, setOwner] = useState<Response<UserDTO>>({nickname: "loading"});
+    const [overlayQRCodeView, setOverlayQRCodeView] = useState<{component: React.FC}>({component: ()=><OverlayQRCode  isInvisible={true} continueCallback={()=>0}/>});
+
     ThematicSpaceRepository.token.value = token;
     useEffect(() => {
         ThematicSpaceRepository.getSpaceById(spaceId).then(
@@ -51,9 +54,15 @@ const Space: React.FC<SpaceProps> = function ({spaceId}:SpaceProps){
 
     },[]);
 
+    const handleShowQR = () => {
 
+    }
+
+
+    const OverlayQRCodeView: React.FC = overlayQRCodeView.component;
     return (
         <div className="Space flex-col full">
+            <OverlayQRCodeView/>
             <div className="SpaceCard flex-col halfable-margin">
                 <header className="flex-row flex-col full bold big-font full-margin">
                     <div className="flex-row flex-row-space full-margin">
@@ -61,7 +70,14 @@ const Space: React.FC<SpaceProps> = function ({spaceId}:SpaceProps){
                             <span className="bold">{space.name}</span>
                             <div className={owner._id==user?"":"invisible"}>
                                 <Edit className="clickable margin-row" onClick={()=>setView("/space-form",{spaceId: space._id})}/>
-                                <Share  className="clickable margin-row" onClick={()=>alert("Compartir")}/>
+                                <Share  className="clickable margin-row"  onClick={
+                                    ()=>
+                                    setOverlayQRCodeView({
+                                        component: ()=>
+                                            <OverlayQRCode
+                                                continueCallback={()=>handleShowQR()}/>
+                                    })
+                                }/>
                             </div>
                         </div>
                         <span className="flex-text-row bold clickable">{collectibles.length} coleccionables</span>
@@ -69,7 +85,7 @@ const Space: React.FC<SpaceProps> = function ({spaceId}:SpaceProps){
                     <div className="flex-text-row flex-row-space full-margin">
                         <div className="flex-text-row">
                             <span className="bold">De:&nbsp;</span>
-                            <Link text={owner.nickname!} onClickAction={()=>alert(owner.nickname)}/>
+                            <Link text={owner.nickname!} onClickAction={()=>setView("/user", {userId: owner._id})}/>
                         </div>
                         <span className="bold clickable" onClick={()=>setView("/users",{spaceId:spaceId})}>{colaborators.length} colaboradores</span>
                     </div>

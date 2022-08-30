@@ -1,11 +1,7 @@
 import React, {useState, useEffect, useContext, useCallback} from 'react';
-import ReducedCollectible from "../components/reusable/ReducedCollectible";
-import {ThematicSpaceRepository} from "../repositories/ThematicSpaceRepository";
 import {TokenContext, UserContext} from "../Auth";
 
-import MiniCollectibleCard from "../components/reusable/MiniCollectibleCard";
 import {CollectionDTO, UserRepository} from "../repositories/UserRepository";
-import CollectionCard from "../components/reusable/CollectionCard";
 import {DynamicType, Response} from "../repositories/ValueObjects";
 import {RouterContext} from "./router";
 import {CollectibleDTO} from "../repositories/CollectibleRepository";
@@ -13,7 +9,7 @@ import Link from "../components/reusable/Link";
 import {Button, Box, LinearProgress} from "@mui/material";
 import Attribute from "../components/reusable/attributes/Attribute";
 import {ArrowBackIosNewSharp, ArrowForwardIosSharp, Share} from '@mui/icons-material';
-
+import OverlayQRCode from "../components/reusable/popups/OverlayQRCode";
 
 interface CollectionProps{
     collectionId: string;
@@ -27,6 +23,8 @@ const Collection: React.FC<CollectionProps> = function ({collectionId}: Collecti
     const [percentaje, setPercentaje] = useState<number>();
     const [collectible, setCollectible] = useState<Response<CollectibleDTO>>({attributes: {}});
     const [timeAgoString, setTimeAgoString] = useState("2 horas");
+    const [overlayQRCodeView, setOverlayQRCodeView] = useState<{component: React.FC}>({component: ()=><OverlayQRCode  isInvisible={true} continueCallback={()=>0}/>});
+
     UserRepository.token.value = token;
     useEffect(() => {
         if (collectionId) {
@@ -111,14 +109,28 @@ const Collection: React.FC<CollectionProps> = function ({collectionId}: Collecti
         }
     }
 
+
+    const handleShowQR = () => {
+
+    }
+
+    const OverlayQRCodeView: React.FC = overlayQRCodeView.component;
     return (
         <div className="Collection flex-col full" >
+            <OverlayQRCodeView/>
             <div className="card flex-col halfable-margin" >
                     <header className="flex-row flex-row-space full-margin bold big-font">
                         <div className="flex-text-row">
                             <span className="bold">{collection?.name}</span>
                             <div>
-                                <Share  className="clickable margin-row" onClick={()=>alert("Compartir")}/>
+                                <Share  className="clickable margin-row"  onClick={
+                                    ()=>
+                                    setOverlayQRCodeView({
+                                        component: ()=>
+                                            <OverlayQRCode
+                                                continueCallback={()=>handleShowQR()}/>
+                                    })
+                                }/>
                             </div>
                         </div>
                         <div className="flex-text-row">

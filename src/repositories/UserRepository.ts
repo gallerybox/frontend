@@ -199,7 +199,6 @@ export module UserRepository {
             "Access-Control-Allow-Origin": backend_url
         }
 
-        alert("ESTAMOS DENTRO DE ADD-AVATAR")
         console.log(file)
         let config = {
             headers: {
@@ -232,7 +231,6 @@ export module UserRepository {
     
     export async function updatePersonalData(userId: string, formState?: any) {
         const endpoint = url + `/personal-data/userId`;
-        alert(JSON.stringify(formState.nombre))
         headers["Authorization"] = `Bearer ${token.value}`
 
         const options = {
