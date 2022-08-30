@@ -144,7 +144,7 @@ const Collection: React.FC<CollectionProps> = function ({collectionId}: Collecti
                             {
                                 collection &&
                                 collection?.thematicSpace?.name?
-                                    <Link text={collection?.thematicSpace?.name? collection?.thematicSpace.name: ""} onClickAction={()=>alert(collection?.thematicSpace?.name)}/>
+                                    <Link text={collection?.thematicSpace?.name? collection?.thematicSpace.name: ""} onClickAction={()=>setView("/collection", {spaceId: collection?.thematicSpace?._id})}/>
                                     : <span style={{textDecoration: "line-through"}}>Espacio desaparecido</span>
                             }
 

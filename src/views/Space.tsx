@@ -102,6 +102,7 @@ const Space: React.FC<SpaceProps> = function ({spaceId}:SpaceProps){
                     <div className="flex-row">
                         <Button type="submit" variant="contained" color="primary" onClick={()=>{
                             alert(colaborators.some?.(c => c._id === user)||owner._id==user?"Nueva colección": "Participar")
+                            // TODO: si el usuario logueado... participa y tiene alguna coleccion creada...
                             setView("/collection-create", {spaceId: space._id});
                         }}>
                             {colaborators.some?.(c => c._id === user)||owner._id===user?"Nueva colección": "Participar"} </Button>
