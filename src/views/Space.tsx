@@ -26,9 +26,13 @@ const Space: React.FC<SpaceProps> = function ({spaceId}:SpaceProps){
     const [collectibles, setCollectibles] = useState<Array<CollectibleDTO>>([]);
     const [owner, setOwner] = useState<Response<UserDTO>>({nickname: "loading"});
     const [overlayQRCodeView, setOverlayQRCodeView] = useState<{component: React.FC}>({component: ()=><OverlayQRCode  isInvisible={true} continueCallback={()=>0}/>});
+    
+    const [loggedUser, setLoggedUser] = useState<Response<UserDTO>>({});
 
     ThematicSpaceRepository.token.value = token;
+
     useEffect(() => {
+
         ThematicSpaceRepository.getSpaceById(spaceId).then(
             data=> {
                 console.log(data);
@@ -47,8 +51,14 @@ const Space: React.FC<SpaceProps> = function ({spaceId}:SpaceProps){
                         if (data){
                             setColaborators(data);
                         }
-
                     })
+                    if (user) {
+                        UserRepository.getUser(user)
+                            .then(data => {
+                                    setLoggedUser(data);
+                                }
+                        )
+                    }
             }
         )
 
@@ -100,12 +110,25 @@ const Space: React.FC<SpaceProps> = function ({spaceId}:SpaceProps){
                 <div className="flex-row flex-row-space full-margin">
                     <div className="flex-text-row" style={{width: "1px"}}></div>
                     <div className="flex-row">
+                        { loggedUser && loggedUser._id && !loggedUser.collections?.some(c => c.thematicSpace._id==space._id) &&
                         <Button type="submit" variant="contained" color="primary" onClick={()=>{
                             alert(colaborators.some?.(c => c._id === user)||owner._id==user?"Nueva colección": "Participar")
-                            // TODO: si el usuario logueado... participa y tiene alguna coleccion creada...
-                            setView("/collection-create", {spaceId: space._id});
+                            if(colaborators.some?.(c => c._id === user)||owner._id==user){
+                                setView("/collection-create", {spaceId: space._id});
+                            }else{
+                                
+                            }
+                            
                         }}>
                             {colaborators.some?.(c => c._id === user)||owner._id===user?"Nueva colección": "Participar"} </Button>
+                        }
+                        { loggedUser && loggedUser._id && loggedUser.collections?.some(c => c.thematicSpace._id==space._id) &&
+                        <Button type="submit" variant="contained" color="primary" onClick={()=>{
+                            
+                            setView("/collectible-form",{spaceId: space._id});
+                            
+                        }}> Nuevo coleccionable </Button>
+                        }
                     </div>
                 </div>
 
