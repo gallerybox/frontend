@@ -84,7 +84,7 @@ function CollectionEdit({collectionId}: CollectionEditProps){
 
             owner.collections = collections;
 
-            UserRepository.updateUser(owner as UserDTO).then(data =>{
+            UserRepository.updateUserCollection(owner as UserDTO).then(data =>{
                 const collectionSaved: CollectionDTO | undefined = data.collections?.find(collection => collection._id as unknown as string== collectionDB?._id);
                 if (collectionSaved){
                     setView("/collection",{collectionId:collectionSaved._id});

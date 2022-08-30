@@ -77,7 +77,7 @@ export module UserRepository {
         return response;
     }
     export async function updateUserCollection( user: UserDTO): Promise<Response<UserDTO>> {
-        const endpoint = url + "/prueba";
+        const endpoint = backend_url + "/profile/update-user-collectible";
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "POST",
