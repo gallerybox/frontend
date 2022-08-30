@@ -1,15 +1,14 @@
 import React, {useState} from 'react';
 import {Button, Link} from "@mui/material";
-import ReactDOM from 'react-dom';
 import {QRCodeSVG} from 'qrcode.react';
 
-export interface OverlayQRCodeProfileProps{
+export interface OverlayQRCodeProps{
     continueCallback: Function;
     isInvisible?: boolean;
 
 }
 
-const OverlayQRCodeProfileUser: React.FC<OverlayQRCodeProfileProps> = ({continueCallback, isInvisible=false}: OverlayQRCodeProfileProps)=>{
+const OverlayQRCode: React.FC<OverlayQRCodeProps> = ({continueCallback, isInvisible=false}: OverlayQRCodeProps)=>{
     const [invisible, setInvisible] = useState(isInvisible)
 
 
@@ -42,4 +41,4 @@ const OverlayQRCodeProfileUser: React.FC<OverlayQRCodeProfileProps> = ({continue
     );
 }
 
-export default OverlayQRCodeProfileUser;
+export default OverlayQRCode;

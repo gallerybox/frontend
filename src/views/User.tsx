@@ -8,7 +8,7 @@ import Link from "../components/reusable/Link";
 import {RouterContext} from "./router";
 import OverlayYesNoDeleteUser from "../components/reusable/popups/OverlayYesNoDeleteUser";
 import OverlaySendPersonalInformationUser from "../components/reusable/popups/OverlaySendPersonaInformationUser";
-import OverlayQRCodeProfileUser from "../components/reusable/popups/OverlayQRCodeProfileUser";
+import OverlayQRCode from "../components/reusable/popups/OverlayQRCode";
 
 interface UserProps {
     userId: string;
@@ -23,7 +23,7 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
     // Popups
     const [overlayDeleteUserView, setOverlayDeleteUserView] = useState<{component: React.FC}>({component: ()=><OverlayYesNoDeleteUser  isInvisible={true} continueCallback={()=>0}/>});
     const [overlaySendPersonalInformationUserView, setOverlaySendPersonalInformationUserView] = useState<{component: React.FC}>({component: ()=><OverlaySendPersonalInformationUser  isInvisible={true} continueCallback={()=>0}/>});
-    const [overlayQRCodeProfileView, setOverlayQRCodeProfileView] = useState<{component: React.FC}>({component: ()=><OverlayQRCodeProfileUser  isInvisible={true} continueCallback={()=>0}/>});
+    const [overlayQRCodeView, setOverlayQRCodeView] = useState<{component: React.FC}>({component: ()=><OverlayQRCode  isInvisible={true} continueCallback={()=>0}/>});
     
     const handleSendPersonalData = () => {
         UserRepository.sendPersonalDataToEmail(user._id as string)
@@ -50,7 +50,6 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
     }
 
     const onChangeFollowUser = (e: any, userIdToChange: string, isFollowed: boolean) => {
-        isFollowed ? alert("PUES VAS A DEJAR DE SEGUIRLO") : alert("PUES VAS A SEGUIRLO");
         UserRepository.changeFollowUser(loggedUser, userIdToChange, isFollowed)
             .then((data)=>{
                 // O se actualiza la página o se actualiza el valor
@@ -81,13 +80,13 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
 
     const OverlayDeleteUserView: React.FC = overlayDeleteUserView.component;
     const OverlaySendPersonalInformationUserView: React.FC = overlaySendPersonalInformationUserView.component;
-    const OverlayQRCodeProfileUserView: React.FC = overlayQRCodeProfileView.component;
+    const OverlayQRCodeView: React.FC = overlayQRCodeView.component;
 
     return (
         <div className="User flex-col full">
             <OverlayDeleteUserView/>
             <OverlaySendPersonalInformationUserView/>
-            <OverlayQRCodeProfileUserView/>
+            <OverlayQRCodeView/>
 
             <div className="card flex-col halfable-margin">
 
@@ -127,18 +126,18 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
                         <div className="flex-col-start margin-row full-mobile">
                             <span className="bold margin">Espacios propios</span>
                             {user.ownedThematicSpaces?.map(space=>
-                                <Link className="margin" text={space.name} onClickAction={()=>alert(space.name)}/>)}
+                                <Link className="margin" text={space.name} onClickAction={()=>setView("/space", {spaceId:space._id})}/>)}
 
                         </div>
                         <div className="flex-col-start margin-row full-mobile">
                             <span className="bold margin">Colaboraciones</span>
-                            <Link className="margin"  text="Ver espacios" onClickAction={()=>alert("Ver espacios")}/>
+                            <Link className="margin"  text="Ver espacios" onClickAction={()=>setView("/spaces-followed")}/>
                         </div>
                     </div>
                     <div className="flex-row flex-row-space full">
                         <div className="flex-col-start margin-row full-mobile">
                             <span className="bold margin">Colecciones</span>
-                            <Link className="margin"  text="Ver colecciones" onClickAction={()=>alert("Ver colecciones")}/>
+                            <Link className="margin"  text="Ver colecciones" onClickAction={()=>setView("/collections")}/>
                         </div>
                     </div>
                 </div>
@@ -180,7 +179,7 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
                                     ()=>
                                     setOverlayDeleteUserView({
                                         component: ()=>
-                                            <OverlayQRCodeProfileUser
+                                            <OverlayQRCode
                                                 continueCallback={()=>handleShowQR()}/>
                                     })
                                 }> Compartir perfil </Button>

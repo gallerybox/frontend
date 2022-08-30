@@ -45,7 +45,6 @@ const AttributeForm: React.FC<AttributeFormProps> = ({spaceId, attributeToUpdate
     const [errors, setErrors] = useState<{[error: string]: string}>({});
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>, nAttrubutes: number) => {
         e.preventDefault();
-        alert(JSON.stringify(state));
         if(state.tag){
             console.log("El json");
             console.log(JSON.stringify(dynamicTypeToAttributeMapper(state, nAttrubutes)));
