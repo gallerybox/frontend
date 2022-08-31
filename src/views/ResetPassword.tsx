@@ -47,7 +47,7 @@ const ResetPassword: React.FC<ResetProps> = function ({resetToken}: ResetProps){
                     password
                 ).then((data: any) => {
                     data.statusCode === (400) 
-                        ? alert("El token no es valido")
+                        ? console.log("El token no es valido")
                         : setSuccess(true)
                 });
             } else {

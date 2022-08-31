@@ -101,4 +101,24 @@ export module ThematicSpaceRepository {
 
         return response
     }
+
+    export async function followSpace(userId: string, thematicSpaceId: string) {
+        const endpoint = url + `/thematic-spaces/follow-space/${userId}/${thematicSpaceId}`;
+
+        headers["Authorization"] = `Bearer ${token.value}`
+        const options = {
+            method: "GET",
+            mode: 'cors' as RequestMode,
+            headers: headers
+        };
+
+        let response: Response<ThematicSpaceDTO>;
+
+        response = await fetch(endpoint, options)
+            .then(response => response.json())
+            .then(data => data);
+
+
+        return response;   
+    }
 }

@@ -120,11 +120,11 @@ const Space: React.FC<SpaceProps> = function ({spaceId}:SpaceProps){
                     <div className="flex-row">
                         { loggedUser && loggedUser._id && !loggedUser.collections?.some(c => c.thematicSpace._id==space._id) &&
                         <Button type="submit" variant="contained" color="primary" onClick={()=>{
-                            alert(colaborators.some?.(c => c._id === user)||owner._id==user?"Nueva colección": "Participar")
                             if(colaborators.some?.(c => c._id === user)||owner._id==user){
                                 setView("/collection-create", {spaceId: space._id});
                             }else{
-                                
+                                ThematicSpaceRepository.followSpace(loggedUser._id as string, space._id as string)
+                                window.location.reload();
                             }
                             
                         }}>
