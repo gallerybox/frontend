@@ -2,7 +2,7 @@ import { ChangeEvent, useContext, useEffect, useReducer, useRef, useState } from
 import {Response} from "../repositories/ValueObjects";
 import { UserDTO, UserRepository } from "../repositories/UserRepository";
 import profilePhoto from "../assets/avatar-default.png";
-import { UserContext } from "../Auth";
+import {TokenContext, UserContext} from "../Auth";
 import { Button, TextareaAutosize, TextField } from "@mui/material";
 import { RouterContext } from "./router";
 
@@ -43,11 +43,12 @@ const initialForm2State = {
 
 const EditPersonalInformation: React.FC<UserProps> = function ({userId}: UserProps) {
     const [user, setUser] = useState<Response<UserDTO>>({followedUsers:[], ownedThematicSpaces:[]});
+    const [token, setToken] = useContext(TokenContext);
     const [formState, dispatch] = useReducer(formReducer, initialForm2State);
     const [loggedUser, setLoggedUser] = useContext(UserContext);
     const setView = useContext(RouterContext);
     const [file, setFile] = useState()
-    
+    UserRepository.token.value = token;
     // Busca el usuario de base de datos
     useEffect(()=>{
         console.log(userId);

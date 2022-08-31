@@ -219,7 +219,7 @@ export module UserRepository {
 
         let config = {
             headers: {
-                'authorization': `Bearer ${token.value}`,
+                'Authorization': `Bearer ${token.value}`,
                 "Access-Control-Allow-Origin": backend_url,
                 "origin": "https://gallerybox.github.io",
                 "ngrok-skip-browser-warning": "*"

@@ -134,7 +134,7 @@ export module CollectibleRepository {
         let config = {
             headers: {
                 'content-type': 'multipart/form-data',
-                'authorization': `Bearer ${token.value}`,
+                'Authorization': `Bearer ${token.value}`,
                 "origin": "https://gallerybox.github.io",
                 "ngrok-skip-browser-warning": "*"
             }
