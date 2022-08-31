@@ -62,11 +62,7 @@ export module CollectibleRepository {
         const options = {
             method: "GET",
             mode: 'cors' as RequestMode,
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json;charset=UTF-8",
-                "Authorization": `Bearer ${token.value}`
-            }
+            headers: headers
         };
     
         let response:  Promise<CollectibleDTO>;
@@ -86,10 +82,7 @@ export module CollectibleRepository {
         const options = {
             method: "GET",
             mode: 'cors' as RequestMode,
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json;charset=UTF-8",
-            }
+            headers: headers
         };
 
         let response: Array<CollectibleDTO> = [];
@@ -108,10 +101,7 @@ export module CollectibleRepository {
         const options = {
             method: "DELETE",
             mode: 'cors' as RequestMode,
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json;charset=UTF-8",
-            }
+            headers: headers
         };
 
         let response = await fetch(endpoint, options)
@@ -145,6 +135,8 @@ export module CollectibleRepository {
             headers: {
                 'content-type': 'multipart/form-data',
                 'authorization': `Bearer ${token.value}`,
+                "origin": "https://gallerybox.github.io",
+                "ngrok-skip-browser-warning": "*"
             }
         }
 

@@ -31,12 +31,15 @@ const Collections: React.FC = function ({userId, spaceId}:CollectionsProp){
             }
 
         }else if(userId){
-            if(user){
                 UserRepository.getUser(userId)
-                    .then(data => {setCollections(data.collections)})
-            }else{
-                setView("/not-found");
-            }
+                    .then(data => {
+                        if (!data._id){
+                            setView("/not-found");
+                        }else{
+                            setCollections(data.collections);
+                        }
+
+                    });
         }else if(spaceId){
             UserRepository.getUserByOwnedSpaceId(spaceId)
                 .then(data => {

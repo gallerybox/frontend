@@ -158,7 +158,7 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
                                     })
                                 }> Descargar tu información </Button>
                             </div>
-                            <div className={loggedUser!=user._id?"margin":"invisible"}>
+                            <div className={loggedUser && loggedUser!=user._id?"margin":"invisible"}>
                                 <Button variant="contained" color="primary"
                                         onClick={(e)=> {
                                             loggedUserDTO.followedUsers?.some((f: UserDTO) => f._id === user._id)
@@ -167,7 +167,8 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
                                         }
                                         }>
 
-                                    {loggedUserDTO.followedUsers!.some((f: UserDTO) => f._id === user._id)?"Dejar de seguir": "Seguir"}
+                                    {loggedUserDTO && loggedUserDTO.followedUsers &&
+                                        loggedUserDTO.followedUsers!.some((f: UserDTO) => f._id === user._id)?"Dejar de seguir": "Seguir"}
 
                                 </Button>
                             </div>

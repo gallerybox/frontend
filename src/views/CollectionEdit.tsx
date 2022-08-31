@@ -15,6 +15,9 @@ import MiniCollectibleCard from "../components/reusable/MiniCollectibleCard";
 import {KeyboardArrowDown, KeyboardArrowUp, EditSharp, DeleteSharp} from '@mui/icons-material';
 import {CollectibleDTO} from "../repositories/CollectibleRepository";
 import MiniCollectibleCard2 from "../components/reusable/MiniCollectibleCard2";
+import OverlaySpaceLimit from "../components/reusable/OverlaySpacesLimit";
+import OverlayYesNoDeleteCollection from "../components/reusable/popups/OverlayYesNoDeleteCollection";
+import OverlayContinue from "../components/reusable/OverlayContinue";
 interface CollectionEditProps{
     collectionId: string;
 }
@@ -31,7 +34,10 @@ function CollectionEdit({collectionId}: CollectionEditProps){
     const [collectionName, setCollectionName] = useState<string | null>(null);
 
     const [submitEvent, setSubmitEvent] = useState<React.FormEvent<HTMLFormElement> | null>(null);
+    const [deleteEvent, setDeleteEvent] = useState(false);
     const [errors, setErrors] = useState<{[error: string]: string}>({});
+
+    const [overlayDelte, setOverlayDelete] = useState<{component: React.FC}>({component: ()=><OverlayYesNoDeleteCollection  continueCallback={()=>0} isInvisible={true} />});
 
     UserRepository.token.value = token;
     ThematicSpaceRepository.token.value = token;
@@ -122,13 +128,40 @@ function CollectionEdit({collectionId}: CollectionEditProps){
         setOwner(updatedOwner);
     };
 
+    useEffect(()=>{
+            if(deleteEvent){
+                const collections = owner!.collections!.map(collection =>{
+                    if(collection._id as unknown as string === collectionDB?._id){
+                        collection.name = collectionName as string;
+                        if(collectionDB && collectionDB.collectibles)
+                            collection.collectibles = [];
+                    }
+                    return collection;
+                } );
+
+                owner.collections = collections;
+                UserRepository.updateUserCollection(owner as UserDTO).then(data =>{
+                    const toKeep = data.collections?.filter(collection => collection._id as unknown as string!= collectionDB?._id);
+                    data.collections = toKeep
+                    UserRepository.updateUserCollection(data as UserDTO).then(data =>{
+                            setView("/collections");
+
+                        });
+                });
+            }
+        },[deleteEvent])
+
+
+
+    const OverlayContinue: React.FC = overlayDelte.component;
     return (
         <div className="CollectionEdit flex-col full">
+            <OverlayContinue/>
             <form className=" card flex-col halfable-margin" onSubmit={(e)=>handleSubmit(e)}>
                 <header className="flex-row flex-row-space full-margin bold big-font">
 
                     <div className="flex-text-row">
-                        <div className="flex-text-row clickable margin" onClick={()=>alert("delete collection")}>
+                        <div className="flex-text-row clickable margin"  onClick={()=>setOverlayDelete({component: ()=><OverlayYesNoDeleteCollection continueCallback={()=>setDeleteEvent(true)}/>})}>
                             <DeleteSharp/>
                         </div>
 

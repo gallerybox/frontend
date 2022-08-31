@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext, useCallback} from 'react';
 import menuIcon from "../assets/bars-solid.svg"
 import profilePhoto from "../assets/ft.jpg";
 import {RouterContext} from "../views/router";
+import {UserContext} from "../Auth";
 interface MainHeaderProps {
     buttonActive: boolean;
     onActivate: React.MouseEventHandler<any>;
@@ -9,6 +10,7 @@ interface MainHeaderProps {
 
 function MainHeader({buttonActive, onActivate}: MainHeaderProps){
     let setView = useContext(RouterContext);
+    const [userId, setUserId] = useContext(UserContext);
     return (
         <header className="MainHeader">
             <div className="Menu">
@@ -16,7 +18,7 @@ function MainHeader({buttonActive, onActivate}: MainHeaderProps){
                         <div className="icon" style={{backgroundImage: `url(${menuIcon})`}}></div>
                 </div>
             </div>
-            <span className="gallery-box clickable" onClick={()=>setView("/main-view-timeline")}>GalleryBox</span>
+            <span className="gallery-box clickable" onClick={userId?()=>setView("/main-view-timeline"):()=>setView("/login")}>GalleryBox</span>
         </header>
     );
 

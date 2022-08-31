@@ -60,7 +60,7 @@ function MiniUserCard({user}: MiniUserCardProps){
                 </div>
                 <div className="margin">
                     
-                    <Button className={userId === user._id ? "invisible": "" } variant="contained" color="primary" 
+                    <Button className={!userId || userId === user._id ? "invisible": "" } variant="contained" color="primary"
                             onClick={(e)=> {
                                     loggedUser.followedUsers!.some(f => f._id === user._id)
                                         ? onChangeFollowUser(e, user._id, true)
@@ -68,7 +68,8 @@ function MiniUserCard({user}: MiniUserCardProps){
                                     }
                                 }>
                                                      
-                        {loggedUser.followedUsers!.some(f => f._id === user._id)?"Dejar de seguir": "Seguir"}
+                        {loggedUser && loggedUser.followedUsers &&
+                            loggedUser.followedUsers!.some(f => f._id === user._id)?"Dejar de seguir": "Seguir"}
 
                     </Button>
                 </div>

@@ -149,9 +149,13 @@ const Collection: React.FC<CollectionProps> = function ({collectionId}: Collecti
                             }
 
                         </div>
-                        <div className="flex-text-row">
-                            <Button variant="contained" color="primary" onClick={()=>setView("/collectible-form", {spaceId: collection?.thematicSpace?._id})}> Nuevo coleccionable </Button>
-                        </div>
+                        {token &&
+                            <div className="flex-text-row">
+                                <Button variant="contained" color="primary"
+                                        onClick={() => setView("/collectible-form", {spaceId: collection?.thematicSpace?._id})}> Nuevo
+                                    coleccionable </Button>
+                            </div>
+                        }
                     </footer>
 
 

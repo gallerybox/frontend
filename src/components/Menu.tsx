@@ -70,6 +70,7 @@ function Menu({isVisible}: MenuProps){
                     <div className="item clickable" onClick={()=>{
                                                             setToken(false);
                                                             localStorage.removeItem("token");
+                                                            localStorage.removeItem("userId");
                                                             setView("/login")
                                                             }}>
                         <div className="full flex-text-row">
