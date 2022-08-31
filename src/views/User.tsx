@@ -63,7 +63,6 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
         console.log(userId);
         UserRepository.getUser(userId).then(data=>{
             setUser(data);
-            console.log(data);
             UserRepository.getUsersByFollowedUserId(data._id!)
                 .then(data => {
                         setFollowers(data);

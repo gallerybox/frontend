@@ -227,7 +227,6 @@ export module UserRepository {
         }
 
         return await axios.delete(endpoint, config).then(data => {
-            console.log(data); 
             return data;
         })
     }

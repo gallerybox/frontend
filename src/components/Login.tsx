@@ -27,7 +27,6 @@ const Login: React.FC = function (){
     useEffect(() => {
         if (submitEvent != null) {
             AuthRepository.login(email, password).then(data =>{
-                    // Aquí habría que poner algún mecanismo de control... más escalable, lo del dicc no está mal, pero alguna funciocita o algo, y validators con lista de valores, etc, antes de enviar el form y eso.
                     if (!data.access_token){
                         setErrors(current => {
                             current["incorrectEmailPassword"] = "Email o contraseña incorrectos.";
@@ -54,11 +53,6 @@ const Login: React.FC = function (){
             </div>
             <div className="Login halfable flex-col-center">
                 <form className="flex-col full" onSubmit={e => handleSubmit(e)}>
-                    {/*
-                        <input placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} type="text"
-                               name="email"/>
-                        <input placeholder="password" value={password} onChange={(e)=>setPassword(e.target.value)} type="password" name="password" />
-                    */}
                     <TextField placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} type="text" name="email"
                                variant="standard" margin="normal"/>
                     <TextField placeholder="password" value={password} onChange={(e)=>setPassword(e.target.value)} type="password" name="password"

@@ -54,7 +54,6 @@ const EditPersonalInformation: React.FC<UserProps> = function ({userId}: UserPro
         console.log(userId);
         UserRepository.getUser(userId).then(data => {
             setUser(data);
-            console.log(data);
             dispatch({
                 type: "INITIAL-DATA-LOAD",
                 payload: data

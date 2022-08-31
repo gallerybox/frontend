@@ -141,7 +141,7 @@ export module CollectibleRepository {
         }
 
         return await axios.post(endpoint, formData, config).then(data => {
-            console.log(data);
+
             return data;
         })
 
