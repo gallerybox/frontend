@@ -57,6 +57,7 @@ const routesNoAuth : {[view: string]: React.FC<any>} = {
     "/collection": Collection,
     "/collections": Collections,
     "/collectible": Collectible,
+    "/spaces": Spaces,
     "/users": Users,
     "/user": User,
     "/register": Register,

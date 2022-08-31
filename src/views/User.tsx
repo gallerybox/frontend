@@ -131,13 +131,13 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
                         </div>
                         <div className="flex-col-start margin-row full-mobile">
                             <span className="bold margin">Colaboraciones</span>
-                            <Link className="margin"  text="Ver espacios" onClickAction={()=>setView("/spaces-followed")}/>
+                            <Link className="margin"  text="Ver espacios" onClickAction={()=>setView("/spaces",{userId: user._id})}/>
                         </div>
                     </div>
                     <div className="flex-row flex-row-space full">
                         <div className="flex-col-start margin-row full-mobile">
                             <span className="bold margin">Colecciones</span>
-                            <Link className="margin"  text="Ver colecciones" onClickAction={()=>setView("/collections")}/>
+                            <Link className="margin"  text="Ver colecciones" onClickAction={()=>setView("/collections", {userId: user._id })}/>
                         </div>
                     </div>
                 </div>

@@ -18,6 +18,7 @@ function SpaceCard({space}: SpaceCardProps){
     const [token, setToken] = useContext(TokenContext);
     const setView = useContext(RouterContext);
     const [users, setUsers] = useState<Response<Array<UserDTO>>>([]);
+    const [collections, setCollections] = useState<Array<CollectionDTO>>([]);
     const [collectibles, setCollectibles] = useState<Response<Array<CollectibleDTO>>>([]);
     const [owner, setOwner] = useState<Response<UserDTO>>({nickname: "loading"});
     UserRepository.token.value = token;
@@ -42,7 +43,18 @@ function SpaceCard({space}: SpaceCardProps){
                 .then(data => {
 
                     setOwner(data);
+                    UserRepository.getUsersByFollowedSpaceId(space._id)
+                        .then(data2 => {
+                            if (data2){
+                                const users = (data2 as Array<UserDTO>)
+                                users.push(data as UserDTO);
+                                const collections = users.filter(u=>u.collections && u.collections.length>0).map(u=>u.collections).flat().filter(c=> c.thematicSpace._id == space._id);
+                                setCollections(collections);
+
+                            }
+                        })
                 })
+
         }
         ,[])
 
@@ -52,7 +64,7 @@ function SpaceCard({space}: SpaceCardProps){
             <header className="flex-row flex-col full bold big-font full-margin">
                 <div className="flex-text-row flex-row-space full-margin">
                     <span className="bold clickable" onClick={()=>setView("/space", {spaceId:space._id})}>{space.name}</span>
-                    <span className="bold clickable">{collectibles.length} coleccionables</span>
+                    <span className="flex-text-row bold clickable" onClick={()=>setView("/collections",{spaceId:space._id})}>{collections?collections?.length:0} colecciones</span>
                 </div>
                 <div className="flex-text-row flex-row-space full-margin">
                     <div className="flex-text-row">

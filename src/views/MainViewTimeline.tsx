@@ -18,7 +18,7 @@ const MainViewTimeline: React.FC  = function (){
 
         <div className="MainViewTimeline flex-col full">
             {collectibles.map((collectible) => <MiniCollectibleCard collectible={collectible}/> )}
-            <div className="loadContent full flex-col"> Loading... </div>
+            <div style={{width:"1rem", height: "1rem"}}></div>
         </div>
 
     );

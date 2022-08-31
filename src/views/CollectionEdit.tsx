@@ -14,6 +14,7 @@ import {CollectionDTO, UserDTO, UserRepository} from "../repositories/UserReposi
 import MiniCollectibleCard from "../components/reusable/MiniCollectibleCard";
 import {KeyboardArrowDown, KeyboardArrowUp, EditSharp, DeleteSharp} from '@mui/icons-material';
 import {CollectibleDTO} from "../repositories/CollectibleRepository";
+import MiniCollectibleCard2 from "../components/reusable/MiniCollectibleCard2";
 interface CollectionEditProps{
     collectionId: string;
 }
@@ -169,7 +170,7 @@ function CollectionEdit({collectionId}: CollectionEditProps){
                                     <DeleteSharp/>
                                 </div>
                             </div>
-                            <MiniCollectibleCard collectible={collectible}/>
+                            <MiniCollectibleCard2 collectible={collectible}/>
 
                         </div>
 

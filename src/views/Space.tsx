@@ -12,6 +12,7 @@ import Link from "../components/reusable/Link";
 import {Button} from "@mui/material";
 import {RouterContext} from "./router";
 import OverlayQRCode from "../components/reusable/popups/OverlayQRCode";
+import MiniCollectibleCard2 from "../components/reusable/MiniCollectibleCard2";
 
 interface SpaceProps {
     spaceId: string;
@@ -23,6 +24,7 @@ const Space: React.FC<SpaceProps> = function ({spaceId}:SpaceProps){
     const [user, setUser] = useContext(UserContext);
     const [space, setSpace] = useState<Response<ThematicSpaceDTO>>({})
     const [colaborators, setColaborators] = useState<Response<Array<UserDTO>>>([]);
+    const [collections, setCollections] = useState<Array<CollectionDTO>>([]);
     const [collectibles, setCollectibles] = useState<Array<CollectibleDTO>>([]);
     const [owner, setOwner] = useState<Response<UserDTO>>({nickname: "loading"});
     const [overlayQRCodeView, setOverlayQRCodeView] = useState<{component: React.FC}>({component: ()=><OverlayQRCode  isInvisible={true} continueCallback={()=>0}/>});
@@ -34,24 +36,30 @@ const Space: React.FC<SpaceProps> = function ({spaceId}:SpaceProps){
     useEffect(() => {
 
         ThematicSpaceRepository.getSpaceById(spaceId).then(
-            data=> {
-                console.log(data);
-                setSpace(data);
-                CollectibleRepository.getSpaceTimeline(data._id!)
+            s=> {
+                console.log(s);
+                setSpace(s);
+                CollectibleRepository.getSpaceTimeline(s._id!)
                     .then(data => {
                         setCollectibles(data);
                     })
-                UserRepository.getUserByOwnedSpaceId(data._id!)
+                UserRepository.getUserByOwnedSpaceId(s._id!)
                     .then(data => {
 
                         setOwner(data);
+                        UserRepository.getUsersByFollowedSpaceId(s._id!)
+                            .then(data2 => {
+                                if (data2){
+                                    setColaborators(data2);
+                                    const users = (data2 as Array<UserDTO>)
+                                    users.push(data as UserDTO);
+                                    const collections = users.filter(u=>u.collections && u.collections.length>0).map(u=>u.collections).flat().filter(c=> c.thematicSpace._id == spaceId);
+                                    setCollections(collections);
+
+                                }
+                            })
                     })
-                UserRepository.getUsersByFollowedSpaceId(data._id!)
-                    .then(data => {
-                        if (data){
-                            setColaborators(data);
-                        }
-                    })
+
                     if (user) {
                         UserRepository.getUser(user)
                             .then(data => {
@@ -78,8 +86,8 @@ const Space: React.FC<SpaceProps> = function ({spaceId}:SpaceProps){
                     <div className="flex-row flex-row-space full-margin">
                         <div className="flex-text-row">
                             <span className="bold">{space.name}</span>
-                            <div className={owner._id==user?"":"invisible"}>
-                                <Edit className="clickable margin-row" onClick={()=>setView("/space-form",{spaceId: space._id})}/>
+                            <div>
+                                <Edit className={owner._id==user?"clickable margin-row":"invisible"} onClick={()=>setView("/space-form",{spaceId: space._id})}/>
                                 <Share  className="clickable margin-row"  onClick={
                                     ()=>
                                     setOverlayQRCodeView({
@@ -90,7 +98,7 @@ const Space: React.FC<SpaceProps> = function ({spaceId}:SpaceProps){
                                 }/>
                             </div>
                         </div>
-                        <span className="flex-text-row bold clickable">{collectibles.length} coleccionables</span>
+                        <span className="flex-text-row bold clickable" onClick={()=>setView("/collections",{spaceId:space._id})}>{collections?collections?.length:0} colecciones</span>
                     </div>
                     <div className="flex-text-row flex-row-space full-margin">
                         <div className="flex-text-row">
@@ -133,8 +141,8 @@ const Space: React.FC<SpaceProps> = function ({spaceId}:SpaceProps){
                 </div>
 
             </div>
-            {collectibles.map((collectible) => <MiniCollectibleCard collectible={collectible}/> )}
-            <div className="loadContent full flex-col"> Loading... </div>
+            {collectibles.map((collectible) => <MiniCollectibleCard2 collectible={collectible}/> )}
+            <div style={{width:"1rem", height: "1rem"}}></div>
         </div>
 
     );

@@ -42,7 +42,7 @@ const Users: React.FC<UsersProps> = function ({userId, followers, spaceId}:Users
     return (
         <div className="Spaces flex-col full">
             {users.map(user =><MiniUserCard user={user as UserDTO}/> )}
-            <div className="loadContent full flex-col"> Loading... </div>
+            <div style={{width:"1rem", height: "1rem"}}></div>
         </div>
     );
 }

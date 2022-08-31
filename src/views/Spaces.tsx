@@ -11,24 +11,34 @@ import {RouterContext} from "./router";
 
 interface SpacesProps {
     ownSpaces: boolean
+    userId?: string
 }
 
-const Spaces: React.FC<SpacesProps> = function ({ownSpaces}:SpacesProps){
+const Spaces: React.FC<SpacesProps> = function ({ownSpaces, userId}:SpacesProps){
     const setView = useContext(RouterContext);
     const [token, setToken] = useContext(TokenContext);
     const [user, setUser] = useContext(UserContext);
     const [spaces, setSpaces] = useState<Array<ThematicSpaceDTO>>([])
     UserRepository.token.value = token;
     useEffect(() => {
-        UserRepository.getUser(user)
-            .then(data => {
-                if (ownSpaces){
-                    setSpaces(data.ownedThematicSpaces!);
-                }else{
-                    setSpaces(data.followedThematicSpaces!);
-                }
-            }
-            )
+        if (!userId){
+            UserRepository.getUser(user)
+                .then(data => {
+                        if (ownSpaces){
+                            setSpaces(data.ownedThematicSpaces!);
+                        }else{
+                            setSpaces(data.followedThematicSpaces!);
+                        }
+                    }
+                )
+        }else{
+            UserRepository.getUser(userId)
+                .then(data => {
+                        setSpaces(data.followedThematicSpaces!);
+                    }
+                )
+        }
+
     },[]);
 
     return (
