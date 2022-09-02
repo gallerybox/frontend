@@ -1,5 +1,5 @@
 import {JsonType, Response} from "./ValueObjects";
-import {backend_url, headers} from "./config";
+import {backend_url, headers, responseMiddleware} from "./config";
 
 export interface TypeDTO {
     "category": string;
@@ -47,7 +47,7 @@ export module ThematicSpaceRepository {
         };
         let response: ThematicSpaceDTO;
         response = await fetch(endpoint, options)
-            .then((response) => response.json())
+            .then((response) => responseMiddleware(response).json())
             .then((data) => {
 
                 return data;
@@ -73,7 +73,7 @@ export module ThematicSpaceRepository {
         };
         let response: Response<ThematicSpaceDTO>;
         response = await fetch(endpoint, options)
-            .then((response) => response.json())
+            .then((response) => responseMiddleware(response).json())
             .then((data) => {
                 return data;
             });
@@ -94,7 +94,7 @@ export module ThematicSpaceRepository {
         };
         let response: Response<ThematicSpaceDTO>;
         response = await fetch(endpoint, options)
-            .then((response) => response.json())
+            .then((response) =>responseMiddleware(response).json())
             .then((data) => {
                 return data;
             });
@@ -115,7 +115,7 @@ export module ThematicSpaceRepository {
         let response: Response<ThematicSpaceDTO>;
 
         response = await fetch(endpoint, options)
-            .then(response => response.json())
+            .then(response => responseMiddleware(response).json())
             .then(data => data);
 
 

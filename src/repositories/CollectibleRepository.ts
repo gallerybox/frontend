@@ -1,5 +1,5 @@
 import { DynamicAttribute, JsonType } from "./ValueObjects";
-import {backend_url, headers} from "./config";
+import {backend_url, headers, responseMiddleware} from "./config";
 import {ThematicSpaceDTO} from "./ThematicSpaceRepository";
 import {UserDTO} from "./UserRepository";
 import axios from "axios";
@@ -31,7 +31,7 @@ export module CollectibleRepository {
         let response: Array<CollectibleDTO> = [];
 
         response = await fetch(endpoint, options)
-            .then(response => response.json())
+            .then(response => responseMiddleware(response).json())
             .then(data => data);
 
 
@@ -50,7 +50,7 @@ export module CollectibleRepository {
         let response: Array<CollectibleDTO> = [];
 
         response = await fetch(endpoint, options)
-            .then(response => response.json())
+            .then(response => responseMiddleware(response).json())
             .then(data => data);
 
 
@@ -68,7 +68,7 @@ export module CollectibleRepository {
         let response:  Promise<CollectibleDTO>;
 
         response = await fetch(endpoint, options)
-            .then(response => response.json())
+            .then(response => responseMiddleware(response).json())
             .then(data => data);
 
         
@@ -88,7 +88,7 @@ export module CollectibleRepository {
         let response: Array<CollectibleDTO> = [];
         
         response = await fetch(endpoint, options)
-            .then(response => response.json())
+            .then(response => responseMiddleware(response).json())
             .then(data => data);
 
         return response
@@ -105,7 +105,7 @@ export module CollectibleRepository {
         };
 
         let response = await fetch(endpoint, options)
-            .then(response => response.json())
+            .then(response => responseMiddleware(response).json())
             .then(data => data);
         
         return response;
@@ -135,15 +135,13 @@ export module CollectibleRepository {
             headers: {
                 'content-type': 'multipart/form-data',
                 'Authorization': `Bearer ${token.value}`,
-                "origin": "https://gallerybox.github.io",
+                //"origin": "http://localhost:4000",
                 "ngrok-skip-browser-warning": "*"
-            }
+            },
+            validateStatus: () => true
         }
 
-        return await axios.post(endpoint, formData, config).then(data => {
-
-            return data;
-        })
+        return await axios.post(endpoint, formData, config).then(data => responseMiddleware(data))
 
     }
 

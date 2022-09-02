@@ -1,5 +1,5 @@
 import {ThematicSpaceDTO} from "./ThematicSpaceRepository";
-import {backend_url, headers} from "./config";
+import {backend_url, headers, responseMiddleware} from "./config";
 import {Response} from "./ValueObjects";
 import {CollectibleDTO} from "./CollectibleRepository";
 import axios from "axios";
@@ -50,7 +50,7 @@ export module UserRepository {
         let response: Response<UserDTO>;
 
         response = await fetch(endpoint, options)
-            .then(response => response.json())
+            .then(response => responseMiddleware(response).json())
             .then(data => data);
 
 
@@ -70,7 +70,7 @@ export module UserRepository {
         let response: Response<UserDTO>;
 
         response = await fetch(endpoint, options)
-            .then(response => response.json())
+            .then(response => responseMiddleware(response).json())
             .then(data => data);
 
 
@@ -89,7 +89,7 @@ export module UserRepository {
         let response: Response<UserDTO>;
 
         response = await fetch(endpoint, options)
-            .then(response => response.json())
+            .then(response => responseMiddleware(response).json())
             .then(data => data);
 
 
@@ -109,7 +109,7 @@ export module UserRepository {
         let response: Response<Array<UserDTO>>;
 
         response = await fetch(endpoint, options)
-            .then(response => response.json())
+            .then(response => responseMiddleware(response).json())
             .then(data => data);
 
         return response;
@@ -127,7 +127,7 @@ export module UserRepository {
         let response: Response<UserDTO>;
 
         response = await fetch(endpoint, options)
-            .then(response => response.json())
+            .then(response => responseMiddleware(response).json())
             .then(data => data);
 
         return response;
@@ -146,7 +146,7 @@ export module UserRepository {
         let response: Response<Array<UserDTO>>;
 
         response = await fetch(endpoint, options)
-            .then(response => response.json())
+            .then(response => responseMiddleware(response).json())
             .then(data => data);
 
         return response;
@@ -162,7 +162,7 @@ export module UserRepository {
         };
 
         let response = await fetch(endpoint, options)
-            .then(response => response.json())
+            .then(response => responseMiddleware(response).json())
             .then(data => data);
 
         return response;
@@ -178,7 +178,7 @@ export module UserRepository {
         };
 
         let response = await fetch(endpoint, options)
-            .then(response => response.json())
+            .then(response => responseMiddleware(response).json())
             .then(data => data);
 
         return response;
@@ -193,25 +193,17 @@ export module UserRepository {
         formData.append('file', file);
         formData.append('fileName', file.name);
 
-        // Meter los configs en el header
-        let myHeaders = {
-            'authorization': `Bearer ${token.value}`,
-            "Access-Control-Allow-Origin": backend_url
-        }
-
-        console.log(file)
         let config = {
             headers: {
+                'Authorization': `Bearer ${token.value}`,
                 'content-type': 'multipart/form-data',
-                "origin": "https://gallerybox.github.io",
+                //"origin": "http://localhost:4000",
                 "ngrok-skip-browser-warning": "*"
-            }
-        }
+            },
+            validateStatus: () => true
+        };
 
-        return await axios.post(endpoint, formData, config).then(data => {
-            console.log(data); 
-            return data;
-        })
+        return await axios.post(endpoint, formData, config).then(data => responseMiddleware(data)).catch(e=>console.log(e));
     }
 
     export async function deleteAvatar(userId: string) {
@@ -221,14 +213,12 @@ export module UserRepository {
             headers: {
                 'Authorization': `Bearer ${token.value}`,
                 "Access-Control-Allow-Origin": backend_url,
-                "origin": "https://gallerybox.github.io",
+                //"origin": "http://localhost:4000",
                 "ngrok-skip-browser-warning": "*"
-            }
+            },
+            validateStatus: () => true
         }
-
-        return await axios.delete(endpoint, config).then(data => {
-            return data;
-        })
+        return await axios.delete(endpoint, config).then(data => responseMiddleware(data))
     }
  
     
@@ -246,7 +236,7 @@ export module UserRepository {
         let response: Response<Array<UserDTO>>;
 
         response = await fetch(endpoint, options)
-            .then(response => response.json())
+            .then(response => responseMiddleware(response).json())
             .then(data => data);
 
         return response;
@@ -265,7 +255,7 @@ export module UserRepository {
         let response: Response<UserDTO>;
 
         response = await fetch(endpoint, options)
-            .then(response => response.json())
+            .then(response => responseMiddleware(response).json())
             .then(data => data);
 
 
@@ -285,7 +275,7 @@ export module UserRepository {
         let response: Response<CollectionDTO>;
 
         response = await fetch(endpoint, options)
-            .then(response => response.json())
+            .then(response => responseMiddleware(response).json())
             .then(data => data);
 
 

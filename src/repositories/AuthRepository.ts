@@ -71,17 +71,19 @@ export module AuthRepository {
     }
 
     export async function validateToken(token: string) {
-        const endpoint = url + "/auth/verify-token/" + token
+        const endpoint = url + "/auth/verify-token"
         const options = {
             method: "GET",
             mode: 'cors' as RequestMode,
-            headers: headers
+            headers: headers,
+            body: JSON.stringify({token: token})
         }
 
         let response: Response<UserLoginDTO>;
         response = await fetch(endpoint, options)
-            .then((response) => response.json())
-            .then((data) => {
+            .then((response) =>
+                response.json()
+            ).then((data) => {
                 return data;
             });
 
