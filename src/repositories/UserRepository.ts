@@ -34,10 +34,6 @@ export module UserRepository {
     const url = backend_url + "/users"
     export const token: { value: string | boolean | null } = {value: null};
 
-    export async function createCollection() {
-        // TODO
-    }
-
     export async function getUser(userId: string): Promise<Response<UserDTO>> {
         const endpoint = url + `/id/${userId}`;
         headers["Authorization"] = `Bearer ${token.value}`
@@ -219,27 +215,6 @@ export module UserRepository {
             validateStatus: () => true
         }
         return await axios.delete(endpoint, config).then(data => responseMiddleware(data))
-    }
- 
-    
-    export async function updatePersonalData(userId: string, formState?: any) {
-        const endpoint = url + `/personal-data/userId`;
-        headers["Authorization"] = `Bearer ${token.value}`
-
-        const options = {
-            method: "PATCH",
-            mode: 'cors' as RequestMode,
-            headers: headers,
-            body: JSON.stringify(formState)
-        }
-
-        let response: Response<Array<UserDTO>>;
-
-        response = await fetch(endpoint, options)
-            .then(response => responseMiddleware(response).json())
-            .then(data => data);
-
-        return response;
     }
     
     export async function changeFollowUser(userId: string, userIdToChange: string, isFollowed: boolean){
