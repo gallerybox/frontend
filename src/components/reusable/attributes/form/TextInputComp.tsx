@@ -11,9 +11,11 @@ export interface TextInputCompProps{
     representation: DynamicRepresentation;
     //setter?: React.Dispatch<React.SetStateAction<{[p: string]: any}>>;
     updateValue: Function;
+    errorsByTag: {[error: string]: {[error: string]: string}};
+
 }
 
-export const TextInputComp: React.FC<TextInputCompProps> =  function ({tag, value,representation, updateValue}: TextInputCompProps){
+export const TextInputComp: React.FC<TextInputCompProps> =  function ({tag, value,representation, updateValue, errorsByTag}: TextInputCompProps){
 
     return (
         <TextareaAutosize
@@ -21,13 +23,14 @@ export const TextInputComp: React.FC<TextInputCompProps> =  function ({tag, valu
             value={value}
             onChange={(e) => {
                 if(e && e.target) {
-                    updateValue(tag, e.target.value);
+                   updateValue(tag, e.target.value);
                 }
             }}
             name={tag}
             id={tag}
             minRows={2}
             style={{ width: "80%"}}
+            maxLength={2000}
         />
 
 

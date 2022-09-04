@@ -53,7 +53,7 @@ const Login: React.FC = function (){
             </div>
             <div className="Login halfable flex-col-center">
                 <form className="flex-col full" onSubmit={e => handleSubmit(e)}>
-                    <TextField placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} type="text" name="email"
+                    <TextField placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} type="email" name="email"
                                variant="standard" margin="normal"/>
                     <TextField placeholder="password" value={password} onChange={(e)=>setPassword(e.target.value)} type="password" name="password"
                                variant="standard" margin="normal"/>

@@ -78,25 +78,33 @@ function CollectionEdit({collectionId}: CollectionEditProps){
     };
 
     useEffect(()=>{
-        if (submitEvent){
+        if (submitEvent) {
+            if (!collectionName || collectionName.trim().length === 0) {
+                setErrors(current => {
+                    current["mandatoryName"] = "Una colección debe tener un nombre.";
+                    const next: { [error: string]: string } = {};
+                    Object.assign(next, current); // Hay que crear un objeto nuevo para que cambie la referencia del objeto y react detecte el cambio y vuelva a renderizar.
+                    return next;
+                })
+            } else{
+                const collections = owner!.collections!.map(collection => {
+                    if (collection._id as unknown as string === collectionDB?._id) {
+                        collection.name = collectionName as string;
+                        if (collectionDB && collectionDB.collectibles)
+                            collection.collectibles = collectionDB.collectibles;
+                    }
+                    return collection;
+                });
 
-            const collections = owner!.collections!.map(collection =>{
-                if(collection._id as unknown as string === collectionDB?._id){
-                    collection.name = collectionName as string;
-                    if(collectionDB && collectionDB.collectibles)
-                        collection.collectibles = collectionDB.collectibles;
-                }
-                return collection;
-            } );
+                owner.collections = collections;
 
-            owner.collections = collections;
-
-            UserRepository.updateUserCollection(owner as UserDTO).then(data =>{
-                const collectionSaved: CollectionDTO | undefined = data.collections?.find(collection => collection._id as unknown as string== collectionDB?._id);
-                if (collectionSaved){
-                    setView("/collection",{collectionId:collectionSaved._id});
-                }
-            });
+                UserRepository.updateUserCollection(owner as UserDTO).then(data => {
+                    const collectionSaved: CollectionDTO | undefined = data.collections?.find(collection => collection._id as unknown as string == collectionDB?._id);
+                    if (collectionSaved) {
+                        setView("/collection", {collectionId: collectionSaved._id});
+                    }
+                });
+            };
         };
     }, [submitEvent, owner, collectionDB]);
 
@@ -129,6 +137,7 @@ function CollectionEdit({collectionId}: CollectionEditProps){
     };
 
     useEffect(()=>{
+
             if(deleteEvent){
                 const collections = owner!.collections!.map(collection =>{
                     if(collection._id as unknown as string === collectionDB?._id){
@@ -165,8 +174,11 @@ function CollectionEdit({collectionId}: CollectionEditProps){
                             <DeleteSharp/>
                         </div>
 
-                        <TextField placeholder="Nombre de la colección" value={collectionName} onChange={(e) => setCollectionName(e.target.value)} type="text" name="email"
-                                   variant="standard" margin="normal"/>
+                        <TextField placeholder="Nombre de la colección" value={collectionName} onChange={(e) => setCollectionName(e.target.value)} type="text" name="name"
+                                   error={errors["mandatoryName"]?true:false}  helperText={errors["mandatoryName"]?errors["mandatoryName"]:""}
+                                   variant="standard" margin="normal"
+                                   inputProps={{ maxLength: 100 }}
+                        />
 
                     </div>
                     <div className="flex-text-row">

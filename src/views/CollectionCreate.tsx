@@ -65,32 +65,38 @@ function CollectionCreate({spaceId}: CollectionCreateProps){
         e.preventDefault();
         setSubmitEvent(e);
 
-
-
-
     };
 
     useEffect(()=>{
             if (submitEvent){
-                const newCollection: CollectionDTO = {
-                    collectibles: [],
-                    thematicSpace: space?._id as unknown as ThematicSpaceDTO,
-                    name: collectionName as string,
-                }
-                const existCollection = owner!.collections!.some(collection => collection.thematicSpace as unknown as string === spaceId);
-                owner.collections?.forEach(c => console.log(JSON.stringify(c)));
-                //console.log(JSON.stringify(owner));
-                if (!existCollection){
-                    owner.collections?.push(newCollection);
-                    setOwner(owner);
-                }
-
-                UserRepository.updateUser(owner as UserDTO).then(data =>{
-                    const collectionSaved: CollectionDTO | undefined = data.collections?.find(collection => collection.thematicSpace as unknown as string== spaceId);
-                    if (collectionSaved){
-                        setView("/collection",{collectionId:collectionSaved._id});
+                if (!collectionName || collectionName.trim().length === 0){
+                    setErrors(current => {
+                        current["mandatoryName"] = "Una colección debe tener un nombre.";
+                        const next: { [error: string]: string } = {};
+                        Object.assign(next, current); // Hay que crear un objeto nuevo para que cambie la referencia del objeto y react detecte el cambio y vuelva a renderizar.
+                        return next;
+                    })
+                }else{
+                    const newCollection: CollectionDTO = {
+                        collectibles: [],
+                        thematicSpace: space?._id as unknown as ThematicSpaceDTO,
+                        name: collectionName as string,
                     }
-                });
+                    const existCollection = owner!.collections!.some(collection => collection.thematicSpace as unknown as string === spaceId);
+                    owner.collections?.forEach(c => console.log(JSON.stringify(c)));
+                    //console.log(JSON.stringify(owner));
+                    if (!existCollection){
+                        owner.collections?.push(newCollection);
+                        setOwner(owner);
+                    }
+
+                    UserRepository.updateUser(owner as UserDTO).then(data =>{
+                        const collectionSaved: CollectionDTO | undefined = data.collections?.find(collection => collection.thematicSpace as unknown as string== spaceId);
+                        if (collectionSaved){
+                            setView("/collection",{collectionId:collectionSaved._id});
+                        }
+                    });
+                }
             };
         }, [submitEvent, owner]);
 
@@ -104,8 +110,11 @@ function CollectionCreate({spaceId}: CollectionCreateProps){
                  <header className="flex-row flex-row-space full-margin bold big-font">
 
                      <div className="flex-text-row">
-                         <TextField placeholder="Nombre de la colección" value={collectionName} onChange={(e) => setCollectionName(e.target.value)} type="text" name="email"
-                                    variant="standard" margin="normal"/>
+                         <TextField placeholder="Nombre de la colección" value={collectionName} onChange={(e) => setCollectionName(e.target.value)} type="text" name="nombre"
+                                    error={errors["mandatoryName"]?true:false}  helperText={errors["mandatoryName"]?errors["mandatoryName"]:""}
+                                    variant="standard" margin="normal"
+                                    inputProps={{ maxLength: 100 }}
+                         />
                      </div>
                      <div style={{width: "1px", height: "1px"}}></div>
                  </header>

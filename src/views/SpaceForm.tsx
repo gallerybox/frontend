@@ -272,13 +272,14 @@ const SpaceForm: React.FC<SpaceFormProps> = function ({spaceId}:SpaceFormProps){
                     <TextField placeholder="Nombre del espacio" error={errors["mandatoryName"]?true:false}  helperText={errors["mandatoryName"]?errors["mandatoryName"]:""} value={name} onChange={(e) => {
                         if(e && e.target) {
                             setName(e.target.value);
-
                             const newSpace: ThematicSpaceDTO = JSON.parse(JSON.stringify(space));
                             newSpace["name"] = e.target.value;
                             setSpace(newSpace);
                         }
                     }} type="text" name="email"
-                               variant="standard" margin="normal"/>
+                               variant="standard" margin="normal"
+                               inputProps={{ maxLength: 100 }}
+                    />
                 </div>
                 <div className="full-margin">
                     <TextareaAutosize
@@ -294,6 +295,7 @@ const SpaceForm: React.FC<SpaceFormProps> = function ({spaceId}:SpaceFormProps){
                     }} name="description"
                         minRows={3}
                         style={{ width: "80%"}}
+                        maxLength={500}
                     />
                 </div>
 
@@ -332,8 +334,7 @@ const SpaceForm: React.FC<SpaceFormProps> = function ({spaceId}:SpaceFormProps){
                         </div>
                         <div className="margin-row">
                             <Button type="submit" variant="contained" color="primary" onClick={()=>{
-
-                                if (!name) {
+                                if (!name || name.trim().length === 0) {
                                     setErrors(current => {
                                         current["mandatoryName"] = "Un espacio debe tener un nombre.";
                                         const next: { [error: string]: string } = {};
@@ -341,7 +342,7 @@ const SpaceForm: React.FC<SpaceFormProps> = function ({spaceId}:SpaceFormProps){
                                         return next;
                                     })
                                 }
-                                if(name) {
+                                if(name && name.trim().length !== 0) {
                                     let spaces = loggedUser?.ownedThematicSpaces;
                                     if (spaces && spaces?.length!>=3 && !space!._id){
                                         setoverlaySpaceLimit({component: ()=><OverlaySpaceLimit/>});

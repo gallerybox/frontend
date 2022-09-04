@@ -20,6 +20,7 @@ const Collections: React.FC = function ({userId, spaceId}:CollectionsProp){
     const [token, setToken] = useContext(TokenContext);
     const [user, setUser] = useContext(UserContext);
     const [collections, setCollections] = useState<Array<CollectionDTO>| undefined>([])
+
     UserRepository.token.value = token;
     useEffect(() => {
         if (!userId && !spaceId){

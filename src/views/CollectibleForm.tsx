@@ -1,16 +1,9 @@
 import React, {useState, useEffect, ReactElement, useContext, useCallback, useRef, LegacyRef} from 'react';
-
-
-import {Card, CardHeader, Avatar, IconButton, CardMedia, CardContent, Typography, Button} from '@mui/material';
-import {MoreVert} from '@mui/icons-material'
+import {Button} from '@mui/material';
 import {CollectibleDTO, CollectibleRepository} from "../repositories/CollectibleRepository";
 import {RouterContext} from "./router";
-import Attribute from "../components/reusable/attributes/Attribute";
-import Link from "../components/reusable/Link";
 import {TokenContext, UserContext} from "../Auth";
 import {DynamicType, Response} from "../repositories/ValueObjects";
-
-import AttributeForm from "../components/reusable/attributesForm/AttributeFormComp";
 import DynamicAttributeForm from "../components/reusable/attributes/form/DynamicAttributeForm";
 import {AttributeDTO, ThematicSpaceDTO, ThematicSpaceRepository} from "../repositories/ThematicSpaceRepository";
 
@@ -27,7 +20,7 @@ const CollectibleForm: React.FC<CollectibleFormProps> = ({collectibleId=undefine
     const [token, setToken] = useContext(TokenContext);
     const [collectible, setCollectible] = useState<Response<CollectibleDTO>>({attributes: {}});
     const [space, setSpace] = useState<Response<ThematicSpaceDTO>>()
-    const [errors, setErrors] = useState<{[error: string]: string}>({});
+    const [errorsByTag, setErrorsByTag] = useState<{[error: string]: {[error: string]: string}}>({});
     const [values, setValues] = useState<{[tag: string]: any}>({});
     const [spaceAttributes, setSpacesAttributes]= useState<{[tag: string]: AttributeDTO}>({});
     const [submitEvent,setSubmitEvent] = useState(false);
@@ -152,7 +145,9 @@ const CollectibleForm: React.FC<CollectibleFormProps> = ({collectibleId=undefine
                                                                    representationOrder={attri.representationOrder}
                                                                    showTag={attri.showTag}
                                                                    tag={tag} value={values[tag]}
-                                                                   updateValue={updateValue} />);
+                                                                   updateValue={updateValue}
+                                                                   errorsByTag={errorsByTag}
+                                                                />);
                                 }
                             )
 
@@ -167,7 +162,9 @@ const CollectibleForm: React.FC<CollectibleFormProps> = ({collectibleId=undefine
                                                                    representationOrder={spaceAttributes[tag].representationOrder}
                                                                    showTag={spaceAttributes[tag].showTag}
                                                                    tag={tag} value={values[tag]}
-                                                                   updateValue={updateValue} />);
+                                                                   updateValue={updateValue}
+                                                                   errorsByTag={errorsByTag}
+                                                                    />);
                                 }
                             )
 

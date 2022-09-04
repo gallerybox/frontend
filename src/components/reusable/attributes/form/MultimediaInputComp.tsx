@@ -8,9 +8,11 @@ export interface MultimediaInputCompProps{
     value: any;
     representation: DynamicRepresentation;
     updateValue: Function;
+    errorsByTag: {[error: string]: {[error: string]: string}};
+
 }
 
-export const MultimediaInputComp: React.FC<MultimediaInputCompProps> =  function ({tag, value, representation, updateValue}: MultimediaInputCompProps){
+export const MultimediaInputComp: React.FC<MultimediaInputCompProps> =  function ({tag, value, representation, updateValue, errorsByTag}: MultimediaInputCompProps){
     const [temporalValue, setTemporalValue] = useState<string>();
     let Representation: React.FC | undefined = undefined;
 
@@ -18,7 +20,7 @@ export const MultimediaInputComp: React.FC<MultimediaInputCompProps> =  function
     if (temporalValue){
         srcUrl = temporalValue;
     }
-
+    let accept = "image/*";
     if (srcUrl){
         switch (representation.multimediaType) {
             case MultimediaType.Photo:
@@ -26,18 +28,21 @@ export const MultimediaInputComp: React.FC<MultimediaInputCompProps> =  function
                     <img src={srcUrl}  width={(representation?.dimensions?.[0]? representation?.dimensions?.[0]: "75") + "%"} height="auto"/>
                 </div>
                 ;
+                accept = "image/*";
                 break;
             case MultimediaType.Video:
                 Representation = ()=><div className="flex-col full-margin">
                     <ReactPlayer url={srcUrl} playing={false} controls={true}  width={(representation?.dimensions?.[0]? representation?.dimensions?.[0]: "75") + "%"} height='100%'/>
                 </div>
                 ;
+                accept = "video/*";
                 break;
-            default:
-                Representation = ()=><div className="flex-col full-margin">
+            case MultimediaType.Audio:
+                Representation = ()=><div className="flex-col full-margin" style={{height:"20px"}}>
                     <ReactPlayer url={srcUrl} playing={false} controls={true}  width={(representation?.dimensions?.[0]? representation?.dimensions?.[0]: "75") + "%"} height='100%'/>
                 </div>
                 ;
+                accept = "audio/*";
                 break;
         }
     }
@@ -60,6 +65,7 @@ export const MultimediaInputComp: React.FC<MultimediaInputCompProps> =  function
                                };
                            }
                        }}
+                       accept={accept}
                        id={tag}
                 />
 

@@ -20,7 +20,7 @@ export module CollectibleRepository {
 
     export async function getTimeline(userId: string): Promise<Array<CollectibleDTO>> {
 
-        const endpoint = backend_url.url + "/collectible/" + "/timeline/loggedUserId/" + userId;
+        const endpoint = backend_url.url + "/collectible" + "/timeline/loggedUserId/" + userId;
 
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {

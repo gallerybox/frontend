@@ -1,5 +1,5 @@
 import {Response} from "./ValueObjects";
-import {backend_sheet_url, backend_url, headers} from "./config";
+import {backend_url, headers} from "./config";
 
 export interface UserAuthDTO {
     "_id": string,

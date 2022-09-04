@@ -60,20 +60,28 @@ const User: React.FC<UserProps>= function ({userId}: UserProps){
     const [followers, setFollowers] = useState<Response<Array<UserDTO>>| undefined>([]);
     UserRepository.token.value = token;
     useEffect(()=>{
-        console.log(userId);
-        UserRepository.getUser(userId).then(data=>{
-            setUser(data);
-            UserRepository.getUsersByFollowedUserId(data._id!)
-                .then(data => {
-                        setFollowers(data);
+        if(userId) {
+            UserRepository.getUser(userId).then(data => {
+                    if(data._id){
+                        setUser(data);
+                        UserRepository.getUsersByFollowedUserId(data._id!)
+                            .then(data => {
+                                    setFollowers(data);
+                                }
+                            );
+                        UserRepository.getUser(loggedUser).then(data => {
+                                setLoggedUserDTO(data);
+                            }
+                        );
+                    }else{
+                        setView("/not-found");
                     }
-                )
+                }
+            );
+
+        }else{
+            setView("/not-found")
         }
-        );
-        UserRepository.getUser(loggedUser).then(data=>{
-                setLoggedUserDTO(data);
-            }
-        );
 
         },[])
 

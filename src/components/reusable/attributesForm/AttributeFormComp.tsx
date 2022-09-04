@@ -167,6 +167,7 @@ const AttributeForm: React.FC<AttributeFormProps> = ({spaceId, attributeToUpdate
                                             margin="normal"
                                             error={errors["mandatoryTag"]?true:false}
                                             helperText={errors["mandatoryTag"]?errors["mandatoryTag"]:""}
+                                            inputProps={{ maxLength: 20 }}
                                 />
                             </div>
                             <div className ="flex-row full">

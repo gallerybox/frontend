@@ -26,19 +26,28 @@ const ForgotPassword: React.FC = function (){
     // Submit
     useEffect(() => {
         if (submitEvent != null) {
-            AuthRepository.forgotPassword(email)
-                .then((data: any) => {
-                    if (data?.statusCode === 400 && data?.message === "INVALID_EMAIL" ) 
-                        setErrors(current => {
-                            current["incorrectEmail"] = "El email introducido no existe.";
-                            const next: {[error: string]: string} = {};
-                            Object.assign(next, current); 
-                            return next
-                        });
-                    else 
-                        setSuccess(true)
-                }
-            );
+            if(!email || email.trim().length === 0){
+                setErrors(current => {
+                    current["mandatoryName"] = "Escribe un email";
+                    const next: { [error: string]: string } = {};
+                    Object.assign(next, current); // Hay que crear un objeto nuevo para que cambie la referencia del objeto y react detecte el cambio y vuelva a renderizar.
+                    return next;
+                })
+            }else{
+                AuthRepository.forgotPassword(email)
+                    .then((data: any) => {
+                            if (data?.statusCode === 400 && data?.message === "INVALID_EMAIL" )
+                                setErrors(current => {
+                                    current["incorrectEmail"] = "El email introducido no existe.";
+                                    const next: {[error: string]: string} = {};
+                                    Object.assign(next, current);
+                                    return next
+                                });
+                            else
+                                setSuccess(true)
+                        }
+                    );
+            }
         };
 
     },[submitEvent]);
@@ -57,6 +66,7 @@ const ForgotPassword: React.FC = function (){
                 <form className={success ? "invisible":"flex-col full"} onSubmit={e => handleSubmit(e)}>
 
                     <TextField  type="email" id="email" name="email" label="Email"
+                                error={errors["mandatoryName"]?true:false}  helperText={errors["mandatoryName"]?errors["mandatoryName"]:""}
                                 value={email} 
                                 onChange={(e) => setEmail(e.target.value)} 
                                 margin="normal" variant='standard'/>

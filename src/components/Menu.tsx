@@ -20,20 +20,20 @@ function Menu({isVisible}: MenuProps){
 
     UserRepository.token.value = token;
     useEffect(() => {
-        UserRepository.getUser(user)
-            .then(data => {
-                    setLoggedUser(data);
-                    setFollowedUsers(data!.followedUsers);
-                }
-            )
-    },[]);
-    useEffect(() => {
-        UserRepository.getUsersByFollowedUserId(user)
-            .then(data => {
-                    setFollowers(data);
-                }
-            )
-    },[]);
+        if (user) {
+            UserRepository.getUser(user)
+                .then(data => {
+                        setLoggedUser(data);
+                        setFollowedUsers(data!.followedUsers);
+                        UserRepository.getUsersByFollowedUserId(user)
+                            .then(data => {
+                                    setFollowers(data);
+                                }
+                            )
+                    }
+                )
+        }
+    },[user]);
 
     return (
         <>
@@ -61,7 +61,7 @@ function Menu({isVisible}: MenuProps){
                             <div className="item clickable" onClick={()=>setView("/spaces-followed")}><span>&nbsp;Colabora</span></div>
                         </div>
                     </div>
-                    <div className="item clickable" onClick={()=>setView("/collections")}>
+                    <div className="item clickable" onClick={()=>setView("/collections",{userId: user})}>
                         <div className="full flex-text-row">
                             <AutoAwesomeMotionSharp/>
                             <span>&nbsp;Colecciones</span>

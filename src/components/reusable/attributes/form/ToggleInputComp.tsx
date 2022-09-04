@@ -10,9 +10,10 @@ export interface ToggleInputCompProps{
     value: any;
     representation: DynamicRepresentation
     updateValue: Function;
+    errorsByTag: {[error: string]: {[error: string]: string}};
 }
 
-export const ToggleInputComp: React.FC<ToggleInputCompProps> =  function ({tag, value, representation, updateValue}: ToggleInputCompProps){
+export const ToggleInputComp: React.FC<ToggleInputCompProps> =  function ({tag, value, representation, updateValue, errorsByTag}: ToggleInputCompProps){
     const [temporalValue, setTemporalValue] = useState<boolean>(value);
 
     const textToIcon: {[iconName:string]: React.FC} = {

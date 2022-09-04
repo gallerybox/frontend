@@ -29,10 +29,10 @@ const App: React.FC<JavascripterProps>=  () => {
     const [menuIsVisible, setMenuIsVisible] = useState(false);
     const [token,setToken] = useContext(TokenContext);
     const path = useContext(PathContext);
-    const [configLoaded, setConfigLoaded] = useState(false);
+    const [configLoaded, setConfigLoaded] = useState(true);
 
     const noMenuViews: Array<string> = ["/login",  "/terms-and-conditions", "/forgot-password", "/reset-password", "/register"];
-
+/*
     useEffect(()=>{
         fetch(front_config_csv, {
             method: "GET",
@@ -44,6 +44,8 @@ const App: React.FC<JavascripterProps>=  () => {
                 setConfigLoaded(true);
             } );
     },[])
+    */
+
     if (!noMenuViews.includes(path)) {
         return (
             <>
@@ -65,9 +67,13 @@ const App: React.FC<JavascripterProps>=  () => {
         );
     } else {
         return(
-                  <div className="App">
-                      <Content/>
-                  </div>
+            <>
+                {configLoaded &&
+                <div className="App">
+                    <Content/>
+                </div>
+                }
+            </>
         )
     }
 }

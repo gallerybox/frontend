@@ -4,17 +4,7 @@ const options = {
     method: "GET",
 };
 
-export let backend_url = {url: "http://localhost:3000", update: false};
-export const backend_sheet_url = fetch(front_config_csv, {
-    method: "GET",
-})
-    .then(response => response.text())
-    .then(data =>{
-        backend_url.url=data;
-        backend_url.update=true;
-    } );
-
-
+export const backend_url = {url: "http://localhost:3000", update: false};
 
 export const headers: {[header: string]: string} =  {
     Accept: "application/json",

@@ -146,7 +146,7 @@ const EditPersonalInformation: React.FC<UserProps> = function ({userId}: UserPro
                             <br/>
                             <form onSubmit={e => onHandleAddAvatarSubmit(e)}>
                                 <Button type="submit" variant="contained" color="primary"> Actualizar foto </Button>
-                                <input type="file" name="file" onChange={(e) => handleChangeAddAvatar(e)}/>
+                                <input type="file" name="file" accept="image/*" onChange={(e) => handleChangeAddAvatar(e)}/>
                             </form>
                         </div>
                     </div>
@@ -159,13 +159,19 @@ const EditPersonalInformation: React.FC<UserProps> = function ({userId}: UserPro
                                 <span className="bold">Nombre</span>
                                 <TextField type="text" value={formState.nombre} onChange={e => handleTextChange(e)} 
                                 placeholder="nombre" name="nombre"
-                                variant="standard" margin="normal"/>
+                                variant="standard" margin="normal"
+                                inputProps={{ maxLength: 100 }}
+                                />
+
                             </div>
                             <div className="flex-col-start margin-row full-mobile">
                                 <span className="bold">Apellidos</span>
                                 <TextField type="text" value={formState.apellidos} onChange={e => handleTextChange(e)} 
                                     placeholder="apellidos" name="apellidos"
-                                    variant="standard" margin="normal"/>
+                                    variant="standard" margin="normal"
+                                    inputProps={{ maxLength: 100 }}
+                                />
+
                             </div>
                         </div>
                         <div className="flex-row flex-row-space full">
@@ -173,7 +179,10 @@ const EditPersonalInformation: React.FC<UserProps> = function ({userId}: UserPro
                                 <span className="bold">Email</span>
                                 <TextField type="text" value={formState.email} onChange={e => handleTextChange(e)} 
                                     placeholder="email" name="email"
-                                    variant="standard" margin="normal"/>
+                                    variant="standard" margin="normal"
+                                    inputProps={{ maxLength: 100 }}
+                                />
+
                             </div>
                         </div>
                         <div className="full.margin">
@@ -185,6 +194,7 @@ const EditPersonalInformation: React.FC<UserProps> = function ({userId}: UserPro
                                     value={formState.biography} onChange={e => handleTextChange(e)}
                                     style={{ width: "100%"}}
                                     minRows={8}
+                                    maxLength={500}
                                 />
                             </div>
                         </div>

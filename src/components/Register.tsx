@@ -95,7 +95,7 @@ const Register: React.FC = () => {
                     <TextField type="text" value={formState.email} onChange={e => handleTextChange(e)} 
                                placeholder="email" name="email"
                                variant="standard" margin="normal"/>
-                    <TextField type="text" value={formState.password} onChange={e => handleTextChange(e)} 
+                    <TextField type="password" value={formState.password} onChange={e => handleTextChange(e)}
                                placeholder="password" name="password"
                                variant="standard" margin="normal"/>
                     <FormControlLabel
