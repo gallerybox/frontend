@@ -1,5 +1,20 @@
 
-export const backend_url = "http://localhost:3000"
+export const front_config_csv = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRvGHHouR6ySPMJwbywD4hKVvgbDC-GkT4NuepIQ78D8J36va11bpVzw1gmMlaHQYy3mUe0ALW2RyBY/pub?gid=0&single=true&output=csv";
+const options = {
+    method: "GET",
+};
+
+export let backend_url = {url: "http://localhost:3000", update: false};
+export const backend_sheet_url = fetch(front_config_csv, {
+    method: "GET",
+})
+    .then(response => response.text())
+    .then(data =>{
+        backend_url.url=data;
+        backend_url.update=true;
+    } );
+
+
 
 export const headers: {[header: string]: string} =  {
     Accept: "application/json",

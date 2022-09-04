@@ -448,13 +448,12 @@ th, td {
     }
 
 }
-
 /* Desktop menu */ @media all and (min-width: 950px) {
     .MainHeader {
         height: 8rem;
     }
     .Menu {
-        width: 15%;
+        width: 20%;
     }
     @keyframes slide {
         0%   {width: 0%;}
@@ -516,5 +515,11 @@ th, td {
 
     .floating-button{
         transform: translate(-0.5rem, 4.5rem)
+    }
+}
+
+/* Desktop menu */ @media all and (min-width: 1490px) {
+    .Menu {
+        width: 15%;
     }
 }

@@ -53,7 +53,7 @@ function MiniUserCard({user}: MiniUserCardProps){
 
                         <footer className="flex-row full-margin">
                             <div className="flex-text-row">
-                                <span>{user.nombre}&nbsp;{user.apellidos}</span>
+                                <span>{user.nombre}&nbsp; {user.apellidos}</span>
                             </div>
                         </footer>
                     </div>

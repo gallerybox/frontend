@@ -19,6 +19,7 @@ import content from "./components/Content";
 import mainViewTimeline from "./views/MainViewTimeline";
 import TermsAndConditions from "./views/TermsAndConditions";
 import ForgotPassword from "./views/ForgotPassword";
+import {backend_url, front_config_csv} from "./repositories/config";
 
 interface JavascripterProps {
   [key: string]: any;
@@ -28,25 +29,39 @@ const App: React.FC<JavascripterProps>=  () => {
     const [menuIsVisible, setMenuIsVisible] = useState(false);
     const [token,setToken] = useContext(TokenContext);
     const path = useContext(PathContext);
+    const [configLoaded, setConfigLoaded] = useState(false);
 
     const noMenuViews: Array<string> = ["/login",  "/terms-and-conditions", "/forgot-password", "/reset-password", "/register"];
 
+    useEffect(()=>{
+        fetch(front_config_csv, {
+            method: "GET",
+        })
+            .then(response => response.text())
+            .then(data =>{
+                backend_url.url=data;
+                backend_url.update=true;
+                setConfigLoaded(true);
+            } );
+    },[])
     if (!noMenuViews.includes(path)) {
         return (
-             <div className="App">
-                 <MainHeader
-                     {...{
-                         buttonActive: menuIsVisible,
-                         onActivate: () => {
-                             setMenuIsVisible(current => !current)
-                         }
-                     }
-                     }
-                 />
-                 <Main menuIsVisible={menuIsVisible}/>
-             </div>
-
-
+            <>
+                {configLoaded &&
+                    <div className="App">
+                        <MainHeader
+                            {...{
+                                buttonActive: menuIsVisible,
+                                onActivate: () => {
+                                    setMenuIsVisible(current => !current)
+                                }
+                            }
+                            }
+                        />
+                        <Main menuIsVisible={menuIsVisible}/>
+                    </div>
+                }
+            </>
         );
     } else {
         return(

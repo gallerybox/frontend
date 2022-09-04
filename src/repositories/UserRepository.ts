@@ -31,7 +31,7 @@ export interface UserDTO  {
 
 
 export module UserRepository {
-    const url = backend_url + "/users"
+    //const url =  backend_url.url + "/users"
     export const token: { value: string | boolean | null } = {value: null};
 
     export async function createCollection() {
@@ -39,7 +39,7 @@ export module UserRepository {
     }
 
     export async function getUser(userId: string): Promise<Response<UserDTO>> {
-        const endpoint = url + `/id/${userId}`;
+        const endpoint = backend_url.url+ "/users" + `/id/${userId}`;
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "GET",
@@ -58,7 +58,7 @@ export module UserRepository {
     }
 
     export async function updateUser( user: UserDTO): Promise<Response<UserDTO>> {
-        const endpoint = url + `/personal-data/${user._id}`;
+        const endpoint = backend_url.url + "/users"+ `/personal-data/${user._id}`;
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "PATCH",
@@ -77,7 +77,7 @@ export module UserRepository {
         return response;
     }
     export async function updateUserCollection( user: UserDTO): Promise<Response<UserDTO>> {
-        const endpoint = backend_url + "/profile/update-user-collectible";
+        const endpoint = backend_url.url + "/users"+ "/profile/update-user-collectible";
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "POST",
@@ -98,7 +98,7 @@ export module UserRepository {
 
 
     export async function getUsersByFollowedSpaceId(spaceId: string): Promise<Response<Array<UserDTO>>> {
-        const endpoint = url + `/followed-space-id/${spaceId}`;
+        const endpoint = backend_url.url + "/users"+ `/followed-space-id/${spaceId}`;
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "GET",
@@ -116,7 +116,7 @@ export module UserRepository {
     }
 
     export async function getUserByOwnedSpaceId(spaceId: string): Promise<Response<UserDTO>> {
-        const endpoint = url + `/owned-space-id/${spaceId}`;
+        const endpoint = backend_url.url + "/users"+ `/owned-space-id/${spaceId}`;
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "GET",
@@ -135,7 +135,7 @@ export module UserRepository {
 
 
     export async function getUsersByFollowedUserId(userId: string): Promise<Response<Array<UserDTO>>> {
-        const endpoint = url + `/followed-user/${userId}/`;
+        const endpoint = backend_url.url + "/users"+ `/followed-user/${userId}/`;
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "GET",
@@ -153,7 +153,7 @@ export module UserRepository {
     }
 
     export async function sendPersonalDataToEmail(userId: string) {
-        const endpoint = backend_url + `/profile/${userId}`;
+        const endpoint = backend_url.url+ "/users" + `/profile/${userId}`;
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "GET",
@@ -169,7 +169,7 @@ export module UserRepository {
     }
 
     export async function deleteUser(userId: string) {
-        const endpoint = url + `/${userId}`;
+        const endpoint = backend_url.url+ "/users" + `/${userId}`;
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "DELETE",
@@ -185,7 +185,7 @@ export module UserRepository {
     }
     
     export async function addAvatar(userId: string, file: any) {
-        const endpoint = url + `/add-avatar`;
+        const endpoint = backend_url.url + "/users"+ `/add-avatar`;
        
         let formData = new FormData();
 
@@ -207,12 +207,12 @@ export module UserRepository {
     }
 
     export async function deleteAvatar(userId: string) {
-        const endpoint = url + `/delete-avatar/${userId}`;
+        const endpoint = backend_url.url + "/users"+ `/delete-avatar/${userId}`;
 
         let config = {
             headers: {
                 'Authorization': `Bearer ${token.value}`,
-                "Access-Control-Allow-Origin": backend_url,
+                "Access-Control-Allow-Origin":  backend_url.url,
                 //"origin": "http://localhost:4000",
                 "ngrok-skip-browser-warning": "*"
             },
@@ -223,7 +223,7 @@ export module UserRepository {
  
     
     export async function updatePersonalData(userId: string, formState?: any) {
-        const endpoint = url + `/personal-data/userId`;
+        const endpoint = backend_url.url + "/users"+ `/personal-data/userId`;
         headers["Authorization"] = `Bearer ${token.value}`
 
         const options = {
@@ -243,7 +243,7 @@ export module UserRepository {
     }
     
     export async function changeFollowUser(userId: string, userIdToChange: string, isFollowed: boolean){
-        const endpoint = url + `/change-follow-user/${userId}/${userIdToChange}/${isFollowed}`;
+        const endpoint = backend_url.url + "/users"+ `/change-follow-user/${userId}/${userIdToChange}/${isFollowed}`;
 
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {
@@ -263,7 +263,7 @@ export module UserRepository {
     }
 
     export async function getCollectionById(collectionId: string): Promise<Response<CollectionDTO>>{
-        const endpoint = url + `/collection/${collectionId}`;
+        const endpoint = backend_url.url + "/users"+ `/collection/${collectionId}`;
 
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {

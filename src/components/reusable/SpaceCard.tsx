@@ -25,7 +25,7 @@ function SpaceCard({space}: SpaceCardProps){
     useEffect( () => {
             UserRepository.getUsersByFollowedSpaceId(space._id)
                 .then(data => {
-
+                    (data as UserDTO[]).push(owner as UserDTO);
                     setUsers(data);
                 })
         }

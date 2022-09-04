@@ -88,54 +88,58 @@ export let RouterContext: React.Context<any> = React.createContext(Login);
 export let PathContext: React.Context<any> = React.createContext("Login");
 export let ViewContext: React.Context<React.FC> = React.createContext(Login);
 export function RouterContextProvider({children}: any){
-
     let urlRoute = window.location.pathname;
     let urlParams = window.location.search;
-
-    if(window.location.hash){
-        urlRoute = window.location.hash.substring(1);
-        const splited = urlRoute.split("?");
-        if (splited.length>=2){
-            urlRoute = splited[0];
-            urlParams = splited[1];
+    let urlProps: {[param: string]: string|number|boolean} = {};
+    try{
+        if(window.location.hash){
+            urlRoute = window.location.hash.substring(1);
+            const splited = urlRoute.split("?");
+            if (splited.length>=2){
+                urlRoute = splited[0];
+                urlParams = splited[1];
+            }
         }
-    }
 
-    const params = new URLSearchParams(urlParams);
-    const urlProps: {[param: string]: string|number|boolean} = {};
-    params.forEach((value, param) => {
-        urlProps[param] = JSON.parse(value);
-    });
+        const params = new URLSearchParams(urlParams);
+        params.forEach((value, param) => {
+            urlProps[param] = JSON.parse(value);
+        });
 
 
-    if(Object.keys(history).length<=0 && localStorage.getItem("history")){
-        history = JSON.parse(localStorage.getItem("history") as string);
-        // Keeping contained size of history
-        const historyLenght = Object.keys(history).length;
-        const maxNEntries = 400;
-        if (historyLenght>maxNEntries){
-            let nDeletes = 0;
-            // (key1, key2) =>{ return (key1 as unknown as number) - (key2 as unknown as number)})
-            for (const entry of Object.keys(history).sort(key=> key as unknown as number)){
-                const n_entry = entry as unknown as number;
-                delete history[n_entry];
-                nDeletes +=1;
-                if (nDeletes>= (historyLenght-maxNEntries)){
-                    break;
+        if(Object.keys(history).length<=0 && localStorage.getItem("history")){
+            history = JSON.parse(localStorage.getItem("history") as string);
+            // Keeping contained size of history
+            const historyLenght = Object.keys(history).length;
+            const maxNEntries = 400;
+            if (historyLenght>maxNEntries){
+                let nDeletes = 0;
+                // (key1, key2) =>{ return (key1 as unknown as number) - (key2 as unknown as number)})
+                for (const entry of Object.keys(history).sort(key=> key as unknown as number)){
+                    const n_entry = entry as unknown as number;
+                    delete history[n_entry];
+                    nDeletes +=1;
+                    if (nDeletes>= (historyLenght-maxNEntries)){
+                        break;
+                    }
                 }
-            }
-            /*
-            // Updating index of entries
-            for (const entry of Object.keys(history).sort(key=> key as unknown as number)){
-                const n_entry = entry as unknown as number;
-                history[n_entry-nDeletes]= history[n_entry];
-                delete history[n_entry];
-            }
-            */
+                /*
+                // Updating index of entries
+                for (const entry of Object.keys(history).sort(key=> key as unknown as number)){
+                    const n_entry = entry as unknown as number;
+                    history[n_entry-nDeletes]= history[n_entry];
+                    delete history[n_entry];
+                }
+                */
 
-            localStorage.setItem("history", JSON.stringify(history));
+                localStorage.setItem("history", JSON.stringify(history));
+            }
         }
+    }catch(error){
+        urlRoute="/not-found";
+        urlProps = {};
     }
+
 
     const [props, setProps] = useState<{[prop: string]: any}>(urlProps);
     const [token,setToken] = useContext(TokenContext);
@@ -143,14 +147,19 @@ export function RouterContextProvider({children}: any){
 
     const setRouteWithParams: Function = (newRoute: string, newProps :{[prop: string]: any}={}) =>{
         if((newRoute+JSON.stringify(newProps)) !== (route+JSON.stringify(props))){
-            setRoute(newRoute);
-            setProps(newProps);
-            const entry: number = Object.keys(history).length!=0?Math.max(Object.keys(history).map(key=> key as unknown as number).sort(n=>-n)[0])+1:0;
-            window.history.pushState({entry: entry}, "GalleryBox", newRoute+propsToQuery(newProps));
-            console.log("Entry max");
-            console.log(entry);
-            history[entry]={route: newRoute, props: JSON.stringify(newProps)};
-            localStorage.setItem("history", JSON.stringify(history));
+            try{
+                setRoute(newRoute);
+                setProps(newProps);
+                const entry: number = Object.keys(history).length!=0?Math.max(Object.keys(history).map(key=> key as unknown as number).sort(n=>-n)[0])+1:0;
+                window.history.pushState({entry: entry}, "GalleryBox", newRoute+propsToQuery(newProps));
+                console.log("Entry max");
+                console.log(entry);
+                history[entry]={route: newRoute, props: JSON.stringify(newProps)};
+                localStorage.setItem("history", JSON.stringify(history));
+            }catch (error){
+                setRouteWithParams("/not-found");
+            }
+
         }
     }
 

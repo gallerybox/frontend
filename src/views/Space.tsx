@@ -34,41 +34,49 @@ const Space: React.FC<SpaceProps> = function ({spaceId}:SpaceProps){
     ThematicSpaceRepository.token.value = token;
 
     useEffect(() => {
-
-        ThematicSpaceRepository.getSpaceById(spaceId).then(
-            s=> {
-                console.log(s);
-                setSpace(s);
-                CollectibleRepository.getSpaceTimeline(s._id!)
-                    .then(data => {
-                        setCollectibles(data);
-                    })
-                UserRepository.getUserByOwnedSpaceId(s._id!)
-                    .then(data => {
-
-                        setOwner(data);
-                        UserRepository.getUsersByFollowedSpaceId(s._id!)
-                            .then(data2 => {
-                                if (data2){
-                                    setColaborators(data2);
-                                    const users = (data2 as Array<UserDTO>)
-                                    users.push(data as UserDTO);
-                                    const collections = users.filter(u=>u.collections && u.collections.length>0).map(u=>u.collections).flat().filter(c=> c.thematicSpace._id == spaceId);
-                                    setCollections(collections);
-
-                                }
-                            })
-                    })
-
-                    if (user) {
-                        UserRepository.getUser(user)
+        if(spaceId){
+            ThematicSpaceRepository.getSpaceById(spaceId).then(
+                s=> {
+                    if (s && s._id) {
+                        console.log(s);
+                        setSpace(s);
+                        CollectibleRepository.getSpaceTimeline(s._id!)
                             .then(data => {
-                                    setLoggedUser(data);
-                                }
-                        )
+                                setCollectibles(data);
+                            })
+                        UserRepository.getUserByOwnedSpaceId(s._id!)
+                            .then(data => {
+
+                                setOwner(data);
+                                UserRepository.getUsersByFollowedSpaceId(s._id!)
+                                    .then(data2 => {
+                                        if (data2) {
+                                            setColaborators(data2);
+                                            const users = (data2 as Array<UserDTO>)
+                                            users.push(data as UserDTO);
+                                            const collections = users.filter(u => u.collections && u.collections.length > 0).map(u => u.collections).flat().filter(c => c.thematicSpace._id == spaceId);
+                                            setCollections(collections);
+
+                                        }
+                                    })
+                            })
+
+                        if (user) {
+                            UserRepository.getUser(user)
+                                .then(data => {
+                                        setLoggedUser(data);
+                                    }
+                                )
+                        }
+                    }else{
+                        setView("/not-found");
                     }
-            }
-        )
+                }
+            )
+        }else{
+            setView("/not-found");
+        }
+
 
     },[]);
 

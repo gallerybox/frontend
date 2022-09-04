@@ -1,5 +1,5 @@
 import {Response} from "./ValueObjects";
-import {backend_url, headers} from "./config";
+import {backend_sheet_url, backend_url, headers} from "./config";
 
 export interface UserAuthDTO {
     "_id": string,
@@ -19,10 +19,10 @@ export interface PasswordDTO {
 }
 
 export module AuthRepository {
-    const url = backend_url
+    //const url = backend_url.url;
     export async function login(email: string, password: string): Promise<Response<UserLoginDTO>> {
 
-        const endpoint = url + "/auth/login/"
+        const endpoint = backend_url.url + "/auth/login/"
         const options = {
             method: "POST",
             headers: headers,
@@ -45,7 +45,7 @@ export module AuthRepository {
     export async function register(nombre: string, apellidos: string, nickname: string, 
         email: string, password: string, hasConsented: string) {
             
-        const endpoint = url + "/auth/register/"
+        const endpoint = backend_url.url + "/auth/register/"
         const options = {
             method: "POST",
             headers: headers,
@@ -71,9 +71,9 @@ export module AuthRepository {
     }
 
     export async function validateToken(token: string) {
-        const endpoint = url + "/auth/verify-token"
+        const endpoint = backend_url.url + "/auth/verify-token"
         const options = {
-            method: "GET",
+            method: "POST",
             mode: 'cors' as RequestMode,
             headers: headers,
             body: JSON.stringify({token: token})
@@ -92,7 +92,7 @@ export module AuthRepository {
 
     export async function forgotPassword(email: string) {
             
-        const endpoint = url + "/auth/forgot-password/"
+        const endpoint = backend_url.url + "/auth/forgot-password/"
         const options = {
             method: "POST",
             mode: 'cors' as RequestMode,
@@ -115,7 +115,7 @@ export module AuthRepository {
     
     export async function resetPassword(userId: string, token: string, password: string) {
             
-        const endpoint = url + "/auth/reset-password/" + userId + "/" + token;
+        const endpoint = backend_url.url + "/auth/reset-password/" + userId + "/" + token;
         const options = {
             method: "POST",
             headers: headers,

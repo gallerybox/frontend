@@ -33,7 +33,17 @@ const Users: React.FC<UsersProps> = function ({userId, followers, spaceId}:Users
                 )
             }else if (spaceId) {
                 UserRepository.getUsersByFollowedSpaceId(spaceId).then(
-                    data => setUsers(data as Array<UserDTO>)
+                    data =>{
+                        if (Array.isArray(data)){
+                            UserRepository.getUserByOwnedSpaceId(spaceId).then(data2 =>{
+                                if(data2._id){
+                                    data.push(data2)
+                                    setUsers(data as Array<UserDTO>)
+                                }
+                            })
+                        }
+
+                    }
                 )
             }
         },[])

@@ -47,7 +47,7 @@ const CollectibleForm: React.FC<CollectibleFormProps> = ({collectibleId=undefine
     useEffect( () =>{
         if (collectibleId){
             CollectibleRepository.findOne(collectibleId).then(data =>{
-                if (data){
+                if (data && data._id){
                     setCollectible(data);
                     const initalValues: {[tag: string]: any} = {};
                     Object.keys(data.attributes).forEach(tag =>{
@@ -57,7 +57,6 @@ const CollectibleForm: React.FC<CollectibleFormProps> = ({collectibleId=undefine
                 }else{
                     setView("/not-found");
                 }
-
             })
         }else if(spaceId){
             ThematicSpaceRepository.getSpaceById(spaceId).then(data =>{
@@ -101,10 +100,10 @@ const CollectibleForm: React.FC<CollectibleFormProps> = ({collectibleId=undefine
 
             }
             CollectibleRepository.upsertCollectible(formData).then( response =>{
+                    console.log(JSON.stringify(response));
                     setView("/collectible",{collectibleId: response.data._id});
                 }
             );
-            console.log("Entrar entramos");
         }
 
 /*

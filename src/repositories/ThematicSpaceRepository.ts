@@ -27,11 +27,11 @@ export interface ThematicSpaceDTO {
 }
 export module ThematicSpaceRepository {
 
-    const url = backend_url
+    //const url =  backend_url.url
     export const token: {value: string | boolean | null}= {value: null};
     export async function test(): Promise<ThematicSpaceDTO> {
 
-        const endpoint = url + "/thematic-spaces/";
+        const endpoint = backend_url.url + "/thematic-spaces/";
         headers["Authorization"] = `Bearer ${token.value}`;
         const options = {
             method: "GET",
@@ -57,7 +57,7 @@ export module ThematicSpaceRepository {
     }
     export async function getSpaceById(spaceId: string): Promise<Response<ThematicSpaceDTO>> {
 
-        const endpoint = url + `/thematic-spaces/id/${spaceId}`;
+        const endpoint = backend_url.url + `/thematic-spaces/id/${spaceId}`;
         headers["Authorization"] = `Bearer ${token.value}`;
         const options = {
             method: "GET",
@@ -83,7 +83,7 @@ export module ThematicSpaceRepository {
 
     export async function upsertSpace(space: ThematicSpaceDTO): Promise<Response<ThematicSpaceDTO>> {
 
-        const endpoint = url + `/thematic-spaces`;
+        const endpoint = backend_url.url + `/thematic-spaces`;
         headers["Authorization"] = `Bearer ${token.value}`;
         const options = {
             method: "POST",
@@ -103,7 +103,7 @@ export module ThematicSpaceRepository {
     }
 
     export async function followSpace(userId: string, thematicSpaceId: string) {
-        const endpoint = url + `/thematic-spaces/follow-space/${userId}/${thematicSpaceId}`;
+        const endpoint = backend_url.url + `/thematic-spaces/follow-space/${userId}/${thematicSpaceId}`;
 
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {

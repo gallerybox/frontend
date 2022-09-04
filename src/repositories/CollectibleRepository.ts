@@ -13,14 +13,14 @@ export interface CollectibleDTO {
     lastModified: Date;
 }
 export module CollectibleRepository {
-    const url = backend_url + "/collectible/"
+    //const url = backend_url.url + "/collectible/"
     export const token: {value: string | boolean | null}= {value: null};
 
     export async function createCollection(){
         // TODO
     }
     export async function getTimeline(userId: string): Promise<Array<CollectibleDTO>> {
-        const endpoint = url + "timeline/loggedUserId/" + userId;
+        const endpoint = backend_url.url + "/collectible/" + "timeline/loggedUserId/" + userId;
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "GET",
@@ -39,7 +39,7 @@ export module CollectibleRepository {
     }
     export async function getSpaceTimeline(thematicSpaceId: string): Promise<Array<CollectibleDTO>> {
 
-        const endpoint = url +  `timeline/thematicSpaceId/${thematicSpaceId}`;
+        const endpoint = backend_url.url + "/collectible/" +  `timeline/thematicSpaceId/${thematicSpaceId}`;
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "GET",
@@ -57,7 +57,7 @@ export module CollectibleRepository {
         return response;
     }
     export async function findOne(id: string): Promise<CollectibleDTO>{
-        const endpoint = url + "id/" + id;
+        const endpoint = backend_url.url + "/collectible/" + "id/" + id;
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "GET",
@@ -76,8 +76,7 @@ export module CollectibleRepository {
     }
 
     export async function findAll(): Promise<Array<CollectibleDTO>> {
-
-        const endpoint = url;
+        const endpoint = backend_url.url + "/collectible/";
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "GET",
@@ -95,8 +94,7 @@ export module CollectibleRepository {
     }
 
     export async function deleteCollectible(id: string): Promise<JsonType>{
-
-        const endpoint = url + id;
+        const endpoint = backend_url.url + "/collectible/" + id;
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "DELETE",
@@ -113,7 +111,7 @@ export module CollectibleRepository {
 
     export async function upsertCollectible(formData: FormData){
 
-        const endpoint = url + "create";
+        const endpoint = backend_url.url + "/collectible/" + "create";
         /*
         const options = {
             method: "POST",
