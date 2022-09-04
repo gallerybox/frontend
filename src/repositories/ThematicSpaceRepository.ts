@@ -27,34 +27,10 @@ export interface ThematicSpaceDTO {
 }
 export module ThematicSpaceRepository {
 
-    //const url =  backend_url.url
-    export const token: {value: string | boolean | null}= {value: null};
-    export async function test(): Promise<ThematicSpaceDTO> {
 
-        const endpoint = backend_url.url + "/thematic-spaces/";
-        headers["Authorization"] = `Bearer ${token.value}`;
-        const options = {
-            method: "GET",
-            mode: 'cors' as RequestMode,
-            headers: headers,
-            /*
-            body: JSON.stringify({
-                a: 10,
-                b: 20,
-            }),
-            */
+    //const url = backend_url.url
+    export const token: {value: string | boolean | null} = {value: null};
 
-        };
-        let response: ThematicSpaceDTO;
-        response = await fetch(endpoint, options)
-            .then((response) => responseMiddleware(response).json())
-            .then((data) => {
-
-                return data;
-            });
-
-        return response
-    }
     export async function getSpaceById(spaceId: string): Promise<Response<ThematicSpaceDTO>> {
 
         const endpoint = backend_url.url + `/thematic-spaces/id/${spaceId}`;
@@ -63,14 +39,8 @@ export module ThematicSpaceRepository {
             method: "GET",
             mode: 'cors' as RequestMode,
             headers: headers,
-            /*
-            body: JSON.stringify({
-                a: 10,
-                b: 20,
-            }),
-            */
-
         };
+
         let response: Response<ThematicSpaceDTO>;
         response = await fetch(endpoint, options)
             .then((response) => responseMiddleware(response).json())
@@ -81,6 +51,7 @@ export module ThematicSpaceRepository {
         return response
     }
 
+    
     export async function upsertSpace(space: ThematicSpaceDTO): Promise<Response<ThematicSpaceDTO>> {
 
         const endpoint = backend_url.url + `/thematic-spaces`;
@@ -102,6 +73,7 @@ export module ThematicSpaceRepository {
         return response
     }
 
+
     export async function followSpace(userId: string, thematicSpaceId: string) {
         const endpoint = backend_url.url + `/thematic-spaces/follow-space/${userId}/${thematicSpaceId}`;
 
@@ -117,7 +89,6 @@ export module ThematicSpaceRepository {
         response = await fetch(endpoint, options)
             .then(response => responseMiddleware(response).json())
             .then(data => data);
-
 
         return response;   
     }
