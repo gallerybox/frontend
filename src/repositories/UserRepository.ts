@@ -149,7 +149,7 @@ export module UserRepository {
     }
 
     export async function sendPersonalDataToEmail(userId: string) {
-        const endpoint = backend_url.url+ "/users" + `/profile/${userId}`;
+        const endpoint = backend_url.url + `/profile/${userId}`;
         headers["Authorization"] = `Bearer ${token.value}`
         const options = {
             method: "GET",
